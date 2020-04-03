@@ -33,12 +33,12 @@ public class MainController {
 
     @GetMapping(value = "/")
     public String root() {
-        return "index";
+        return "forward:/blog";
     }
 
     @GetMapping(value = "/index")
     public String index() {
-        return "redirect:/blog";
+        return "forward:/blog";
     }
 
     @GetMapping(value = "/login")
