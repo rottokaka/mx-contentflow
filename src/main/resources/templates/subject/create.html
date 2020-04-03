@@ -1,0 +1,18 @@
+<div class="container" id="subject">
+    <form data-th-action="@{/subjects}" method="post" id="subjectForm">
+        <input type="hidden" id="subjectVersionId" data-th-value="${versionId}">
+        <div class="form-group">
+            <label class="sr-only" for="name"></label>
+            <input type="text" class="form-control" id="name" placeholder="请输入专题名称">
+        </div>
+
+        <div class="form-group">
+            <label class="sr-only" for="description"></label>
+            <textarea rows="5" class="form-control" id="description" placeholder="请输入专题描述"></textarea>
+        </div>
+
+        <button type="button" class="btn btn-outline-primary btn-block btn-sm" id="subjectSubmit">新增专题</button>
+
+    </form>
+</div>
+<script type="text/javascript" src="../../static/js/subject/create.js" data-th-src="@{/js/subject/create.js}"></script>

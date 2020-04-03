@@ -1,0 +1,50 @@
+<div class="container-fluid">
+    <form data-th-action="@{/projects}" method="post" id="projectForm">
+        <div class="form-row">
+            <div class="form-group col-md-8">
+                <label for="name">名称</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="请输入项目名称">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="aboveProjectSelect">上级项目选择</label>
+                <select class="form-control-chosen" id="aboveProjectSelect" name="aboveProjectSelect" data-placeholder="可选择上级项目（可选）">
+                    <option value="">默认顶级项目</option>
+                    <option data-th-each="aboveProject : ${optionalAboveProjectList}" data-th-value="${aboveProject.projectId}"
+                            data-th-text="${aboveProject.name}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="description">描述</label>
+            <textarea rows="5" class="form-control" id="description" name="description" placeholder="可输入项目描述"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="website" class="col-form-label">网站</label>
+            <input type="text" class="form-control" id="website" name="website" maxlength="30" placeholder="可输入项目关联网址">
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="form-row">
+            <div class="form-group col-md-8">
+                <label for="scopeSelect">访问范围</label>
+                <select class="form-control" id="scopeSelect">
+                    <option value="0" selected>公开</option>
+                    <option value="3">私人</option>
+                    <option value="1" disabled>内容</option>
+                    <option value="2" disabled>秘密</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="contributionNotAllowed">投稿是否允许</label>
+                <select class="form-control" id="contributionNotAllowed" name="contributionNotAllowed"
+                        data-placeholder="可选择是否允许投稿">
+                    <option value="0" selected>是</option>
+                    <option value="1">否</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-outline-primary btn-block" id="projectSubmit">提交项目</button>
+
+    </form>
+</div>
+<script type="text/javascript" src="../../static/js/project/create.js" data-th-src="@{/js/project/create.js}"></script>

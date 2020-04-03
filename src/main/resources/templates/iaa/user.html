@@ -1,0 +1,58 @@
+<div class="container" data-th-if="${userList.size()} < 1">
+
+</div>
+<div class="container" data-th-if="${userList.size()} > 0">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                <a id="createUser" class="user-create" href="javascript:void (0)" data-toggle="modal" data-target="#userModal" title="新增用户">
+                    <i class="fa fa-plus-circle fa-lg"></i>
+                </a>
+            </th>
+            <th>编码</th>
+            <th>邮箱</th>
+            <th>账号</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="user : ${userList}">
+            <td></td>
+            <td data-th-text="${user.id}"></td>
+            <td data-th-text="${user.email}"></td>
+            <td data-th-text="${user.username}"></td>
+            <td class="d-flex align-items-center">
+                <a class="text-dark user-update" href="javascript:void (0)" data-th-attr="userId=${user.id}"
+                   data-toggle="modal" data-target="#userModal"  title="编辑用户">
+                    <i class="fa fa-pencil-square-o fa-lg fa-fw"></i>
+                </a>
+                <a class="text-dark user-delete" href="javascript:void (0)" data-th-attr="userId=${user.id}" title="删除用户">
+                    <i class="fa fa-times fa-lg fa-fw"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- userModal -->
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalLabel">新增/编辑</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="userModalContainer"></div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" id="submitUser">提交</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../../static/js/iaa/user.js" data-th-src="@{/js/iaa/user.js}"></script>

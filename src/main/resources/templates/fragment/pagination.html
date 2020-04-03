@@ -1,0 +1,104 @@
+<div class="d-flex justify-content-between" data-th-fragment="pagination">
+    <!-- 两部分：左边为导航；右边为概要和跳转 -->
+    <!-- 1. 导航，以下分情况显示 -->
+    <!-- 1.1 总页数>1页时，显示，最低两页 -->
+    <nav aria-label="Page navigation">
+
+        <!-- 1.2 总页数=2页时，只显示上一页和下一页 -->
+        <ul class="pagination" data-th-if="${page.totalPages} eq 2">
+            <!-- 上一页 -->
+            <li class="page-item" data-th-classappend="${page.first} ? 'disabled' : ''">
+                <a class="page-link" href="javascript: void(0)" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+            <!-- 下一页 -->
+            <li class="page-item" data-th-classappend="${page.last} ? 'disabled' : ''">
+                <a class="page-link" href="javascript: void(0)">Next</a>
+            </li>
+        </ul>
+
+        <!-- 1.3 页面总数小于等于7 -->
+        <ul class="pagination" data-th-if="${page.totalPages} gt 2 and ${page.totalPages} le 7">
+            <!-- 上一页 -->
+            <li class="page-item" data-th-classappend="${page.first} ? 'disabled' : ''">
+                <a class="page-link" href="javascript: void(0)" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+
+            <li class="page-item" data-th-each="i : ${#numbers.sequence(1, page.totalPages)}">
+                <a class="page-link" href="javascript: void(0)" data-th-text="${i}"></a>
+            </li>
+
+            <!-- 下一页 -->
+            <li class="page-item" data-th-classappend="${page.last} ? 'disabled' : ''">
+                <a class="page-link" href="javascript: void(0)">Next</a>
+            </li>
+        </ul>
+
+        <!-- 1.4 页面总数大于7 -->
+        <ul class="pagination" data-th-if="${page.totalPages} gt 7">
+            <!-- 上一页 -->
+            <!--<li class="page-item" data-th-classappend="${page.hasPrevious} ? 'active' : ''">
+                <a class="page-link" href="javascript: void(0)" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>-->
+
+            <!-- 首页 -->
+            <li class="page-item" data-th-classappend="${page.first} ? 'active' : ''">
+                <a class="page-link" href="javascript: void(0)">1</a>
+            </li>
+
+            <!-- 前连页码 -->
+            <li class="page-item disabled" data-th-if="${page.number + 1 - 1} ge 4">
+                <a class="page-link" href="javascript: void(0)">···</a>
+            </li>
+
+            <!-- 中间代码迭代 1 -->
+            <li class="page-item" data-th-if="${page.number + 1 - 1} lt 4 and ${page.totalPages - page.number - 1} ge 4"
+                data-th-each="i : ${#numbers.sequence(2, 6)}"
+                data-th-classappend="${page.number + 1} eq ${i} ? 'active' : ''">
+                <a class="page-link" href="javascript: void(0)" data-th-text="${i}"></a>
+            </li>
+            <!-- 中间代码迭代 2 -->
+
+            <li class="page-item" data-th-if="${page.number + 1 - 1} ge 4 and ${page.totalPages - page.number - 1} ge 4"
+                data-th-each="i : ${#numbers.sequence(page.number + 1 - 2, page.number + 1 + 2)}"
+                data-th-classappend="${page.number + 1} eq ${i} ? 'active' : ''">
+                <a class="page-link" href="javascript: void(0)" data-th-text="${i}"></a>
+            </li>
+
+            <!-- 中间代码迭代 3 -->
+
+            <li class="page-item" data-th-if="${page.number + 1 - 1} ge 4 and ${page.totalPages - page.number - 1} lt 4"
+                data-th-each="i : ${#numbers.sequence(page.totalPages - 5, page.totalPages - 1)}"
+                data-th-classappend="${page.number + 1} eq ${i} ? 'active' : ''">
+                <a class="page-link" href="javascript: void(0)" data-th-text="${i}"></a>
+            </li>
+
+            <!-- 后连页码 -->
+            <li class="page-item disabled" data-th-if="${page.totalPages - page.number - 1} ge 4">
+                <a class="page-link" href="javascript: void(0)">···</a>
+            </li>
+
+            <!-- 尾页 -->
+            <li class="page-item" data-th-classappend="${page.last} ? 'active' : ''">
+                <a class="page-link" href="javascript: void(0)" data-th-text="${page.totalPages}"></a>
+            </li>
+
+            <!-- 下一页 -->
+            <!--<li class="page-item" data-th-classappend="${page.hasNext} ? 'active' : ''">
+                <a class="page-link" href="javascript: void(0)" tabindex="-1" aria-disabled="true">Next</a>
+            </li>-->
+        </ul>
+
+    </nav>
+    <!-- 2. 概要和跳转 -->
+    <div class="d-flex justify-content-start" data-th-if="${page.totalPages} gt 7">
+        <div class="pagination-outline">
+            <span>[[${page.totalPages}]]&nbsp;页/[[${page.totalElements}]]&nbsp;篇，</span>
+        </div>
+        <div class="pagination-jump">
+            <span>跳至</span>
+            <label class="sr-only" for="pageJumpInput"></label>
+            <input type="text" min="1" class="page-jump-input" style="height: 21px; width: 50px" id="pageJumpInput">
+            <span>页</span>
+        </div>
+    </div>
+</div>

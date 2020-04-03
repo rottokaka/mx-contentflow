@@ -1,0 +1,98 @@
+<div class="container" data-th-if="${blogManageVoList} == null">
+    <h5>还没有任何博客</h5>
+</div>
+<div class="container" data-th-if="${blogManageVoList} != null">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>编码</th>
+            <th>标题</th>
+            <th>内容</th>
+            <th>是否隐藏</th>
+            <th>是否允许收录</th>
+            <th>创建时间</th>
+            <th>更新时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="blogManageVo : ${blogManageVoList}">
+            <td></td>
+            <td data-th-text="${blogManageVo.id}"></td>
+            <td data-th-text="${blogManageVo.title}"></td>
+            <td>
+                <a class="text-dark blog-view" href="javascript:void (0)" data-th-attr="blogId=${blogManageVo.id}"
+                   data-toggle="modal" data-target="#blogModal" title="查看">
+                    <i class="fa fa-eye fa-lg fa-fw"></i>
+                </a>
+            </td>
+            <td>
+                <span data-th-if="${blogManageVo.hidden} eq 0">公开</span>
+                <span data-th-if="${blogManageVo.hidden} eq 1">私密</span>
+            </td>
+            <td>
+                <span data-th-if="${blogManageVo.notAllowCollect} eq 0"> 允许</span>
+                <span data-th-if="${blogManageVo.notAllowCollect} eq 1"> 禁止</span>
+            </td>
+            <td>[[${#dates.format(blogManageVo.gmtCreate, 'yyyy-MM-dd')}]]</td>
+            <td>[[${#dates.format(blogManageVo.gmtModified, 'yyyy-MM-dd')}]]</td>
+            <td class="d-flex align-items-center">
+                <a class="text-dark blog-config" href="javascript:void (0)" data-th-attr="blogId=${blogManageVo.id}"
+                   data-toggle="modal" data-target="#blogConfigModal" title="修改配置">
+                    <i class="fa fa-cogs fa-lg fa-fw" aria-hidden="true"></i>
+                </a>
+                <a class="text-dark blog-update" href="javascript:void (0)" data-th-attr="blogId=${blogManageVo.id}"
+                   title="编辑内容">
+                    <i class="fa fa-pencil-square-o fa-lg fa-fw" aria-hidden="true"></i>
+                </a>
+                <a class="text-dark blog-delete" href="javascript:void (0)" data-th-attr="blogId=${blogManageVo.id}"
+                   title="删除博客">
+                    <i class="fa fa-times fa-lg fa-fw" aria-hidden="true"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- blogModal -->
+<div class="modal fade" id="blogModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">博客查看</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="blogModalContainer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- blogConfigModal -->
+<div class="modal fade" id="blogConfigModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">博客配置编辑</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="blogConfigModalContainer">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary btn-sm" id="submitBlogConfig">更新</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../../static/js/ccp/blog.js" data-th-src="@{/js/ccp/blog.js}"></script>

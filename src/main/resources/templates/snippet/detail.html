@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragment/head :: head(~{::title}, ~{}, ~{})}">
+    <title>查看片段 - 积录</title>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+<div class="container" id="wrapper">
+    <div id="mainContainer">
+        <div class="d-flex justify-content-between border-bottom border-dark mt-3">
+            <!-- 导航 -->
+            <ul class="nav nav-pills mb-1" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
+                        <i class="fa fa-file-o fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;内容
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
+                        <i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;信息
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">
+                        <i class="fa fa-comments-o fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;交流
+                    </a>
+                </li>
+            </ul>
+            <ul class="list-group list-group-horizontal">
+                <li class="list-group-item border-0 p-1">
+                    <a class="text-dark px-0" style="text-decoration: none" id="like" href="javascript:void (0)" title="I Like This">
+                        <i class="fa fa-thumbs-up fa-lg fa-fw" aria-hidden="true"></i>&nbsp;Like&nbsp;&nbsp;
+                    </a>
+                </li>
+                <li class="list-group-item border-0 p-1">
+                    <a class="text-dark px-0" id="dislike" href="javascript:void (0)" title="I Dislike This">
+                        <i class="fa fa-thumbs-down fa-lg fa-fw" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li class="list-group-item border-0 p-1">
+                    <a class="text-dark" href="javascript:void (0)" id="vote" title="Add To Favorites">
+                        <i class="fa fa-heart fa-lg fa-fw" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li class="list-group-item border-0 p-1">
+                    <a class="text-dark" href="javascript:void (0)" title="举报">
+                        <i class="fa fa-flag fa-lg fa-fw" aria-hidden="true"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <!-- 片段 -->
+                <div>
+                    <input type="hidden" id="snippetId" th:value="${snippetDetailVo.snippetId}">
+                    <div class="card-title" th:text="${snippetDetailVo.title}"></div>
+                    <div class="card-text" th:text="${snippetDetailVo.description}"></div>
+                </div>
+                <div class="card border-0">
+                    <div class="card-body p-0" id="snippetContainer">
+                        <!-- load snippet/detail_self.html -->
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="row mt-1">
+                    <div class="col-md-8">
+                        <div class="d-flex justify-content-start">
+                            <h6 class="text-dark"><strong>作者:</strong>&nbsp;&nbsp;</h6>
+                            <div>
+                                <a class="text-dark" style="text-decoration: none" href="../user/detail.html"
+                                   th:href="@{'/users/' + ${snippetDetailVo.creatorIdentity}}">
+                                    <span><i class="fa fa-id-card" aria-hidden="true"></i></span>
+                                    <span th:text="${snippetDetailVo.creatorIdentity}"></span>
+                                </a>
+                                <a class="text-dark snippet-update" style="text-decoration: none" href="javascript:void (0)"
+                                   th:if="${snippetDetailVo.hasAccess} == true" data-th-attr="snippetId=${snippetDetailVo.snippetId}" title="编辑片段">
+                                    <i class="fa fa-pencil-square-o fa-lg fa-fw" aria-hidden="true"></i>
+                                </a>
+                                <a class="text-dark snippet-delete" style="text-decoration: none" href="javascript:void (0)"
+                                   th:if="${snippetDetailVo.hasAccess} == true" data-th-attr="snippetId=${snippetDetailVo.snippetId}" title="删除片段">
+                                    <i class="fa fa-times fa-lg fa-fw" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-start">
+                            <h6 class="text-dark"><strong>更新时间:</strong>&nbsp;</h6>
+                            <div>
+                                <small class="text-muted">[[${#dates.format(snippetDetailVo.gmtCreate, 'yyyy-MM-dd HH:mm:ss')}]]</small>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-start">
+                            <h6 class="text-dark"><strong>发布时间:</strong>&nbsp;</h6>
+                            <div>
+                                <small class="text-muted">[[${#dates.format(snippetDetailVo.gmtModified, 'yyyy-MM-dd HH:mm:ss')}]]</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="list-group list-group-horizontal-sm d-flex justify-content-end">
+                            <li class="list-group-item p-2">
+                                <span id="counterSum">9999</span>
+                                <span>阅读</span>
+                            </li>
+                            <li class="list-group-item p-2">
+                                <span class="text-success"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
+                                <small class="text-muted" id="likePercent">70%</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragment/footer :: footer}"></div>
+<script th:inline="javascript">
+    const username = [[${#authentication.name}]];
+</script>
+<script type="text/javascript" src="../../static/js/snippet/detail.js" th:src="@{/js/snippet/detail.js}"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragment/head :: head(~{::title}, ~{}, ~{})}">
+    <title>积录 - 用户设置</title>
+</head>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+<div class="container-fluid" id="wrapper">
+    <div class="row mb-2">
+        <div class="col-md-3">
+            <h5 class="card-header">
+                <a class="text-dark" style="text-decoration: none" href="index.html" th:href="@{'/setting'}">
+                    <i class="fa fa-cog fa-fw" aria-hidden="true"></i>&nbsp; 设置中心
+                </a>
+            </h5>
+        </div>
+        <div class="col-md-9 border-bottom d-flex justify-content-end">
+            <a class="btn btn-primary m-1" href="../user/detail.html" th:href="@{'/user/' + ${#authentication.name}}">个人主页</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="list-group" th:if="${menuVoList} != null">
+                    <a class="list-group-item" style="text-decoration: none" href="javascript:void(0)"
+                       th:each="menuVo : ${menuVoList}" th:title="${menuVo.name}" th:text="${menuVo.name}"
+                       th:attr="url=${menuVo.url}"></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 pl-0" id="mainContainer">
+            <!-- 页面加载区域 -->
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragment/footer :: footer}"></div>
+<script th:inline="javascript">
+    const username = [[${#authentication.name}]]
+</script>
+<script type="text/javascript" src="../../static/js/iaa/index.js" th:src="@{/static/js/iaa/index.js}"></script>
+</body>
+</html>

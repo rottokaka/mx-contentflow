@@ -1,0 +1,80 @@
+buildscript {
+
+    ext {
+        springBootVersion = '2.1.9.RELEASE'
+    }
+
+    ext['thymeleaf.version'] = '3.0.11.RELEASE'
+    ext['thymeleaf-layout-dialect.version'] = '2.3.0'
+    ext['hibernate.version'] = '5.3.6.Final'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+apply plugin: 'war'
+
+group = 'org.mxframework'
+version = '0.0.1'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url 'https://repo.spring.io/libs-milestone'
+    }
+}
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+}
+dependencies {
+    developmentOnly('org.springframework.boot:spring-boot-devtools')
+
+    implementation('org.springframework.boot:spring-boot-starter-aop')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-security')
+    implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation 'org.springframework.social:spring-social-github:1.0.0.M4'
+    implementation('org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.0.4.RELEASE')
+    implementation('org.apache.commons:commons-lang3:3.5')
+    implementation('dom4j:dom4j:1.6.1')
+    implementation('com.alibaba:fastjson:1.2.54')
+    implementation('mysql:mysql-connector-java:8.0.11')
+
+    implementation('commons-io:commons-io:2.6')
+
+    implementation('io.springfox:springfox-swagger2:2.9.2')
+    implementation('io.springfox:springfox-swagger-ui:2.9.2')
+
+    annotationProcessor('org.projectlombok:lombok:1.18.10')
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    compileOnly('org.projectlombok:lombok:1.18.10')
+    testAnnotationProcessor('org.projectlombok:lombok:1.18.10')
+    testCompileOnly('org.projectlombok:lombok:1.18.10')
+
+    providedCompile("org.springframework.boot:spring-boot-starter-tomcat")
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+}
+
+bootRun {
+    sourceResources sourceSets.main
+}

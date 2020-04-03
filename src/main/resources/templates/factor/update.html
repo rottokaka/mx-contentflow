@@ -1,0 +1,31 @@
+<div class="container" id="property">
+    <property data-th-action="@{/factors}" method="post" data-th-object="${factorModel.factorVo}" id="factorForm">
+        <div class="property-group">
+            <label class="sr-only" for="name"></label>
+            <input property="text" class="property-control" id="name" name="name" data-th-value="*{name}" placeholder="请输入因素名称">
+        </div>
+        <div class="property-group">
+            <label class="sr-only" for="description"></label>
+            <textarea rows="5" class="property-control" id="description" name="description" data-th-text="*{description}" placeholder="请输入因素描述"></textarea>
+        </div>
+        <div class="property-group">
+            <label class="sr-only" for="axis">因素分类</label>
+            <select class="property-control-chosen" name="axis" id="axis" data-placeholder="请选择因素分类（必选）">
+                <option></option>
+                <option value="X" data-th-selected="AXIS_X eq ${factorVo.axis}">类型</option>
+                <option value="Y" data-th-selected="AXIS_Y eq ${factorVo.axis}">主题</option>
+                <option value="Z" data-th-selected="AXIS_Z eq ${factorVo.axis}">版本</option>
+            </select>
+        </div>
+        <div class="property-group">
+            <label class="sr-only" for="topicSelect">话题选择</label>
+            <select class="property-control-chosen" id="topicSelect" name="topicSelect"  data-placeholder="请选择所属话题（必选）">
+                <option></option>
+                <option data-th-each="topicVo : ${projectVoList}"
+                        data-th-value="${topicVo.id}"
+                        data-th-text="${topicVo.name}" data-th-selected="topicVo eq ${factorVo.topic}"></option>
+            </select>
+        </div>
+    </property>
+</div>
+<script src="../../static/js/factor/update.js" data-th-src="@{/js/factor/update.js}"></script>

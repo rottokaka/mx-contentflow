@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="card-body p-0">
+        <div class="jumbotron mb-0 pb-0">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <a class="h2 text-dark" href="javascript:void (0)">
+                        <i class="fa fa-book"></i> &nbsp;<span data-th-text="${bookVo.topic.name}"></span>
+                    </a>
+                </div>
+                <div class="btn-group">
+                    <a class="btn btn-default text-dark" id="preview" href="../project/view.html" data-th-href="@{'/topics/' + ${bookVo.topic.id}}">
+                        <i class="fa fa-rss fa-2x" title="查看话题"></i>
+                    </a>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="d-flex justify-content-between">
+                <p><em data-th-text="${bookVo.topic.description}"></em></p>
+            </div>
+        </div>
+    </div>
+    <div class="card" id="content">
+        <label>
+            <textarea style="display:none;" data-th-text="${bookVo.blog.content}"></textarea>
+        </label>
+    </div>
+</div>
+<script type="text/javascript" src="../../static/editor.md/editormd.min.js" data-th-src="@{/editor.md/editormd.min.js}"></script>
+<script type="text/javascript" src="../../static/editor.md/lib/marked.min.js" data-th-src="@{/editor.md/lib/marked.min.js}"></script>
+<script type="text/javascript" src="../../static/editor.md/lib/prettify.min.js" data-th-src="@{/editor.md/lib/prettify.min.js}"></script>
+<script type="text/javascript" src="../../static/editor.md/lib/raphael.min.js" data-th-src="@{/editor.md/lib/raphael.min.js}"></script>
+<script type="text/javascript" src="../../static/editor.md/lib/underscore.min.js" data-th-src="@{/editor.md/lib/underscore.min.js}"></script>
+<script type="text/javascript" src="../../static/editor.md/lib/sequence-diagram.min.js" data-th-src="@{/editor.md/lib/sequence-diagram.min.js}"></script>
+<script type="text/javascript" src="../../static/editor.md/lib/flowchart.min.js" data-th-src="@{/editor.md/lib/flowchart.min.js}"></script>
+<script type="text/javascript" src="../../static/editor.md/lib/jquery.flowchart.min.js" data-th-src="@{/editor.md/lib/jquery.flowchart.min.js}"></script>
+
+<script type="text/javascript" src="../../static/js/book/view_self.js" data-th-src="@{/js/book/view_self.js}"></script>

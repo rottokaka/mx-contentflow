@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragment/head :: head(~{::title}, ~{}, ~{})}">
+    <title>项目详情 - 积录</title>
+</head>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+<div class="container">
+    <div class="row">
+        <div class="container jumbotron m-0 p-3">
+            <div class="row">
+                <div class="col-md-9">
+                    <a class="h3 text-dark" style="text-decoration: none" id="project" href="javascript:void (0)"
+                       th:attr="projectId=${projectDetailVo.projectId}">
+                        <span><i class="fa fa-rss" aria-hidden="true"></i> &nbsp;</span>
+                        <span th:text="${projectDetailVo.name}"></span>
+                    </a>
+                    <p class="lead" th:text="${projectDetailVo.description}"></p>
+                </div>
+                <div class="col-md-3">
+                    <ul class="list-group list-group-horizontal-md">
+                        <li class="list-group-item flex-fill">
+                            <div>关注者</div>
+                            <strong title="999">9,999</strong>
+                        </li>
+                        <li class="list-group-item flex-fill">
+                            <div>贡献者</div>
+                            <strong title="999">9,999</strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-1">
+                <div>
+                    <a class="btn btn-outline-secondary btn-sm text-dark text-center" href="javascript:void (0)">
+                        <span>未订阅</span>
+                    </a>
+                    <a class="btn btn-default btn-sm text-dark" id="contribute" href="javascript:void (0)"
+                       th:attr="projectId=${projectDetailVo.projectId}" data-toggle="modal"
+                       data-target="#contributeModal">
+                        <span><i class="fa fa-archive fa-lg" title="投稿"></i></span>
+                        <span>&nbsp;投稿</span>
+                    </a>
+                    <a class="btn btn-default btn-sm text-dark" id="website" href="javascript:void (0)"
+                       th:attr="website=${projectDetailVo.website}">
+                        <span><i class="fa fa-github-square fa-lg" title="Github"></i></span>
+                        <span>&nbsp;Github</span>
+                    </a>
+                    <a class="btn btn-default btn-sm text-dark" id="preview" href="javascript:void (0)">
+                        <span><i class="fa fa-book fa-lg" title="图书预览"></i></span>
+                        <span>&nbsp;图书预览</span>
+                    </a>
+                </div>
+
+            </div>
+            <hr class="my-2">
+            <p class="mb-0 ml-1" th:if="${projectDetailVo.appointedVersionVo} != null"
+               th:text="${projectDetailVo.appointedVersionVo.description}"></p>
+            <p class="mb-0 ml-1" th:if="${projectDetailVo.appointedVersionVo} == null"
+               th:text="${projectDetailVo.description}"></p>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-md-9">
+            <!-- 类型 -->
+            <div id="sectionGroup" th:if="${projectDetailVo.sectionItemVoList} != null">
+                <div class="list-group list-group-horizontal-sm" id="sectionList">
+                    <a class="list-group-item list-group-item-action text-dark p-1 type" style="text-decoration: none"
+                       href="javascript:void (0)"
+                       th:each="sectionItemVo : ${projectDetailVo.sectionItemVoList}"
+                       th:attr="sectionId=${sectionItemVo.sectionId}">
+                        <span class="d-flex justify-content-center" th:text="${sectionItemVo.name}"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-1" id="mainContainer">
+
+            </div>
+        </div>
+        <div class="col-md-3 pl-0">
+            <!-- 版本 -->
+            <div class="form-group mb-0 border" id="versionGroup">
+                <label class="sr-only" for="versionSelect">版本选择</label>
+                <select class="custom-select" name="version" id="versionSelect" data-placeholder="可选版本">
+                    <option value="">请选择版本</option>
+                    <option th:each="versionItemVo : ${projectDetailVo.versionItemVoList}"
+                            th:value="${versionItemVo.versionId}" th:text="${versionItemVo.name}"
+                            th:selected="${projectDetailVo.appointedVersionVo.versionId} eq ${versionItemVo.versionId}"></option>
+                </select>
+            </div>
+
+            <div class="border mt-2" th:if="${projectDetailVo.subjectItemVoList} != null">
+                <h5 class="mb-0"><i class="fa fa-bookmark fa-fw"></i> <strong>专题集</strong></h5>
+                <div class="border-top" id="subjectGroup">
+                    <div class="list-group list-group-flush" id="subjectList">
+                        <a href="javascript:void (0)"
+                           class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-1"
+                           th:each="subjectItemVo : ${projectDetailVo.subjectItemVoList}"
+                           th:attr="subjectId=${subjectItemVo.subjectId}">
+                            <span class="subject ml-2" th:text="${subjectItemVo.name}"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border mt-2" th:if="${projectDetailVo.aboveProjectItemVo} !=null or ${projectDetailVo.belowProjectItemVoList} != null">
+                <h5 class="mb-0"><i class="fa fa-tasks fa-fw"></i> <strong>项目关系</strong></h5>
+                <ul class="list-group-flush mb-0">
+                    <li class="list-group-item d-flex justify-content-end p-0" th:if="${projectDetailVo.aboveProjectItemVo} != null">
+                        <strong class="ml-2">上级</strong>
+                    </li>
+                    <li class="list-group-item list-group-item-action d-flex justify-content-between p-1" th:if="${projectDetailVo.aboveProjectItemVo} != null">
+                        <span class="mr-2">
+                            <a class="text-dark" style="text-decoration: none" href="javascript:void (0)" th:text="${projectDetailVo.aboveProjectItemVo.name}"></a>
+                        </span>
+                        <span class="badge badge-pill">
+                            <a class="text-dark" title="查看项目" href="detail.html"
+                               th:href="@{'/project/' + ${projectDetailVo.aboveProjectItemVo.projectId} + '/detail'}">
+                                <i class="fa fa-external-link fa-lg"></i>
+                            </a>
+                        </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-end p-0" th:if="${projectDetailVo.belowProjectItemVoList} != null">
+                        <strong class="mr-2">下级</strong>
+                    </li>
+                    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-1"
+                        th:if="${projectDetailVo.belowProjectItemVoList} != null" th:each="belowProjectItemVo : ${projectDetailVo.belowProjectItemVoList}">
+                        <span class="ml-2">
+                            <a class="text-dark" style="text-decoration: none" href="javascript:void (0)" th:text="${belowProjectItemVo.name}"></a>
+                        </span>
+                        <span class="badge badge-pill">
+                            <a class="text-dark" title="查看项目" href="detail.html" th:href="@{'/project/' + ${belowProjectItemVo.projectId} + '/detail'}">
+                                <i class="fa fa-external-link fa-lg"></i>
+                            </a>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragment/footer :: footer}"></div>
+<!-- contributeModal -->
+<div class="modal fade" id="contributeModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">选择参与投稿的博客</div>
+            <div class="modal-body" id="contributeModalContainer">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                        th:attr="username=${#authentication.name}" id="submitBlogList">提交
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    const username = [[${#authentication.name}]]
+</script>
+<script type="text/javascript" src="../../static/js/project/detail.js" th:src="@{/js/project/detail.js}"></script>
+</body>
+</html>

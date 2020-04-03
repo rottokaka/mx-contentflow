@@ -1,0 +1,32 @@
+<div class="container" data-th-if="${blogVOSet.size()} < 1">
+    <p>还未创建任何博客</p>
+</div>
+<div class="container" data-th-if="${blogVOSet.size()} > 0">
+    <div class="card">
+        <div class="card-body border-top d-flex justify-content-start" data-th-each="blog : ${blogVOSet}">
+            <label for="blogCheck">
+                <input type="checkbox" class="form-check-input ml-1" id="blogCheck" name="insertCheck" data-th-attr="blogId=${blog.id}">
+            </label>
+            <div class=" ml-5">
+                <div class="row" data-th-if="${blog.tagSet.size()} > 1">
+                    <ul class="list-inline float-left">
+                        <li class="list-inline-item">
+                            <i class="fa fa-tags fa-fw" aria-hidden="true"></i>
+                            <a href="javascript:void (0)" data-th-each="tag : ${blog.tagSet}">
+                                <span class="badge badge-pill badge-info" data-th-text="${tag.name}"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <p class="card-text" data-th-if="${blog.summary} != null"
+                       data-th-text="${blog.summary}"></p>
+                    <p class="card-text" data-th-if="${blog.summary} == null">
+                        <em data-th-if="${blog.content.length()} <= 140" data-th-text="${blog.content}"></em>
+                        <em data-th-if="${blog.content.length()} > 140" data-th-text="${#strings.substring(blog.content, 0, 140)}"></em>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

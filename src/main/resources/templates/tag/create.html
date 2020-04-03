@@ -1,0 +1,40 @@
+<div class="container p-0">
+    <form data-th-action="@{/tags}" id="tagForm">
+
+        <div class="form-group">
+            <label for="name">名称</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="请输入标签名称">
+        </div>
+
+        <div class="form-group">
+            <label for="description">描述</label>
+            <textarea rows="5" class="form-control" id="description" name="description" placeholder="请输入标签描述"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="propertySelect">性质</label>
+            <select id="propertySelect" class="form-control form-control-chosen-required" name="propertySelect" data-placeholder="请选择标签作用">
+                <option value="2">标记标签</option>
+                <option value="3">管理标签</option>
+            </select>
+        </div>
+
+        <div class="form-group" id="aboveTagGroup">
+            <label for="aboveTagSelect">管理标签</label>
+            <select id="aboveTagSelect" class="form-control form-control-chosen" data-placeholder="请选择管理标签">
+                <option value="0">未选择任何管理标签</option>
+            </select>
+        </div>
+
+        <div class="form-group" id="belowTagListGroup">
+            <label for="belowTagListSelect">待被管理标签列表</label>
+            <select id="belowTagListSelect" class="form-control form-control-chosen" data-placeholder="请选择待管理标签" multiple>
+            </select>
+        </div>
+
+        <button type="button" class="btn btn-outline-primary btn-block" id="tagSubmit">新建</button>
+
+    </form>
+</div>
+
+<script type="text/javascript" src="../../static/js/tag/create.js" data-th-src="@{/js/tag/create.js}"></script>

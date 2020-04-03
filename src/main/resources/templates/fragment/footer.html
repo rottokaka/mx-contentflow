@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<footer th:fragment="footer">
+    <!--<div class="container position-sticky">
+        <hr>
+        <div class="d-flex justify-content-end">
+            <p>2019©<a href="https://github.com/rottokaka">GitHub</a></p>
+        </div>
+    </div>-->
+    <!-- blogModal -->
+    <div class="modal fade" id="blogModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">积录，趁你还么而忘记，..</h4>
+                    <a href="javascript:void (0)" class="btn btn-link blog-content"
+                       th:attr="username=${#authentication.name}">
+                        <i class="fa fa-link" aria-hidden="true" title="详细创建"></i>&nbsp; 详细
+                    </a>
+                </div>
+                <div class="modal-body" id="blogModalContainer">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" th:attr="username=${#authentication.name}"
+                            id="quickSubmit">提交
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- JavaScript -->
+    <script type="text/javascript" src="../../static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script type="text/javascript" src="../../static/js/jquery.form.min.js" th:src="@{/js/jquery.form.min.js}"></script>
+    <script type="text/javascript" src="../../static/js/jquery.caret.min.js" th:src="@{/js/jquery.caret.min.js}"></script>
+    <script type="text/javascript" src="../../static/js/jquery.tag-editor.min.js" th:src="@{/js/jquery.tag-editor.min.js}"></script>
+    <!-- 顺序：popper.js > bootstrap.js -->
+    <!-- Bootstrap dropdown require Popper.js -->
+    <script type="text/javascript" src="../../static/js/popper.min.js" th:src="@{/js/popper.min.js}"></script>
+    <script type="text/javascript" src="../../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" src="../../static/js/typeahead.bundle.js" th:src="@{/js/typeahead.bundle.js}"></script>
+    <script type="text/javascript" src="../../static/js/angular.min.js" th:src="@{/js/angular.min.js}"></script>
+    <script type="text/javascript" src="../../static/js/bootstrap-tagsinput.min.js" th:src="@{/js/bootstrap-tagsinput.min.js}"></script>
+    <script type="text/javascript" src="../../static/js/bootstrap-tagsinput-angular.min.js" th:src="@{/js/bootstrap-tagsinput-angular.min.js}"></script>
+    <script type="text/javascript" src="../../static/js/nprogress.js" th:src="@{/js/nprogress.js}"></script>
+    <script type="text/javascript" src="../../static/js/tether.min.js" th:src="@{/js/tether.min.js}"></script>
+    <script type="text/javascript" src="../../static/js/chosen.jquery.js" th:src="@{/js/chosen.jquery.js}"></script>
+    <script type="text/javascript" src="../../static/js/toastr.min.js" th:src="@{/js/toastr.min.js}"></script>
+    <script type="text/javascript" src="../../static/js/cropbox.js" th:src="@{/js/cropbox.js}"></script>
+    <script type="text/javascript" src="../../static/js/thymeleaf-bootstrap-paginator.js" th:src="@{/js/thymeleaf-bootstrap-paginator.js}"></script>
+    <script type="text/javascript" src="../../static/js/catalog-generator.js" th:src="@{/js/catalog-generator.js}"></script>
+
+    <script type="text/javascript" src="../../static/js/main.js" th:src="@{/js/main.js}"></script>
+</footer>
+</body>
+</html>

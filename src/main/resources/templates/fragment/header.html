@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+<header th:fragment="header">
+
+    <div class="navbar bg-dark d-flex flex-row justify-content-around bg-light p-0">
+
+        <div class="col-md-3 d-flex justify-content-start p-2">
+            <div class="ml-5">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-white p-2" href="/">&nbsp;&nbsp;首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white p-2" href="/project">&nbsp;&nbsp;项目</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white p-2" href="/tag">&nbsp;&nbsp;标签</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white p-2" href="/blog">&nbsp;&nbsp;博客</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white p-2" href="/snippet">&nbsp;&nbsp;片段</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center p-2">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button class="btn text-dark">Mx`</button>
+                </div>
+                <input class="form-control" id="keyword" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn text-secondary" type="submit" id="searchSubmit">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 d-flex justify-content-end p-2">
+            <div class="mr-5" sec:authorize="isAuthenticated()">
+                <ul class="nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-white dropdown-toggle p-2" href="javascript: void (0)" id="userDropdown"
+                           role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user-circle-o fa-lg fa-fw" title="个人中心"></i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="userDropdown">
+                            <a class="dropdown-item text-dark user-home" href="../user/detail.html"
+                               th:href="@{'/user/' + ${#authentication.name}}">
+                                <i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;我的主页
+                            </a>
+                            <a class="dropdown-item text-dark" id="iaa" href="../iaa/index.html"
+                               th:href="@{'/iaa'}">
+                                <i class="fa fa-cog fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;账户设置
+                            </a>
+                            <a class="dropdown-item text-dark" id="ccp" href="../ccp/index.html"
+                               th:href="@{'/ccp'}">
+                                <i class="fa fa-book fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;产品管理
+                            </a>
+
+                            <a class="dropdown-item text-dark" id="pmc" href="../pmc/index.html"
+                               th:href="@{'/pmc'}">
+                                <i class="fa fa-book fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;项目管理
+                            </a>
+                            <a class="dropdown-item text-dark" id="sis" href="../ccp/index.html"
+                               th:href="@{'/sis'}">
+                                <i class="fa fa-book fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;社交管理
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-dark" href="/logout">
+                                <i class="fa fa-power-off fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;退出
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-white dropdown-toggle p-2" href="javascript: void (0)" id="blogDropdown"
+                           role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-plus fa-lg fa-fw" title="新增"></i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="blogDropdown">
+                            <a class="dropdown-item text-dark" id="snippet" href="javascript:void (0)"
+                               th:attr="username=${#authentication.name}" role="button">
+                                <i class="fa fa-file-o fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;片段
+                            </a>
+                            <a class="dropdown-item text-dark" id="blog" href="javascript:void (0)">
+                                <i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;博客
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-dark file-upload" href="javascript:void (0)">
+                                <i class="fa fa-upload fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;上传
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="mr-5" sec:authorize="isAnonymous()">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/login">
+                            <i class="fa fa-user-o fa-lg">&nbsp;&nbsp;登陆</i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+</body>

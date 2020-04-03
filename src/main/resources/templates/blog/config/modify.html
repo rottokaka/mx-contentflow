@@ -1,0 +1,22 @@
+<div class="container">
+    <form data-th-action="@{/blogs}" method="post" id="blogConfigUpdateForm">
+        <h5>修改的博客标题：<span data-th-text="${blogConfigModifyVo.title}"></span></h5>
+        <hr>
+        <input type="hidden" id="blogConfigId" data-th-value="${blogConfigModifyVo.id}">
+        <div class="form-group">
+            <label for="scopeState">范围状态</label>
+            <select id="scopeState" class="form-control">
+                <option value="0" data-th-selected="${blogConfigModifyVo.scope} eq 1">公开</option>
+                <option value="1" data-th-selected="${blogConfigModifyVo.scope} eq 1">内部</option>
+                <option value="2" data-th-selected="${blogConfigModifyVo.scope} eq 1">秘密</option>
+                <option value="3" data-th-selected="${blogConfigModifyVo.scope} eq 1">私人</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input class="type-check-input" type="checkbox" id="collectionNotAllowed"
+                   data-th-checked="${blogConfigModifyVo.collectionNotAllowed} eq 1">
+            <label class="type-check-label" for="collectionNotAllowed">&nbsp;禁止收录</label>
+            <small class="badge badge-danger">&nbsp;*默认允许收录</small>
+        </div>
+    </form>
+</div>

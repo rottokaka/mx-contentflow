@@ -1,0 +1,73 @@
+<div class="container" data-th-if="${projectItemVoList} == null">
+    <h5>还未任何坐标可以管理，请先创建项目</h5>
+</div>
+<div class="container p-0" data-th-if="${projectItemVoList} != null">
+    <form class="form-inline border-bottom form-row">
+        <div class="form-group m-1" id="projectGroup">
+            <label for="projectSelect">项目：</label>
+            <select class="custom-select" name="projectSelect" id="projectSelect" data-placeholder="请选择项目">
+                <option value="" disabled>请选择项目</option>
+                <option data-th-each="projectItemVo : ${projectItemVoList}" data-th-value="${projectItemVo.projectId}" data-th-text="${projectItemVo.name}"
+                        data-th-selected="${projectId} eq ${projectItemVo.projectId}"></option>
+            </select>
+        </div>
+        <div class="form-group m-1" id="versionGroup">
+            <label for="versionSelect">版本：</label>
+            <select class="custom-select" name="versionSelect" id="versionSelect" data-placeholder="请选择项目版本">
+                <option value="" selected>请选择项目版本</option>
+            </select>
+        </div>
+        <div class="form-group m-1" id="subjectGroup">
+            <label for="subjectSelect">专题：</label>
+            <select class="custom-select" name="subjectSelect" id="subjectSelect" data-placeholder="请选择项目主题">
+                <option value="" selected>请选择项目专题</option>
+            </select>
+        </div>
+        <div class="form-group m-1" id="sectionGroup">
+            <label for="sectionSelect">类型：</label>
+            <select class="custom-select" name="sectionSelect" id="sectionSelect" data-placeholder="请选择项目篇章">
+                <option value="" selected>请选择项目类型</option>
+            </select>
+        </div>
+        <div class="form-group m-1">
+            <a class="btn btn-default text-dark p-0" id="searchBlog" href="javascript: void (0)" data-th-attr="username=${#authentication.name}">
+                <i class="fa fa-search fa-lg"></i>
+            </a>
+        </div>
+        <div class="form-group m-1">
+            <a class="btn btn-light text-dark p-0" id="removeBlog" href="javascript:void (0)">
+                <i class="fa fa-minus-circle fa-lg" title="移除"></i>
+            </a>
+        </div>
+        <div class="form-group m-1">
+            <a class="btn btn-light text-dark p-0" id="deleteBlog" href="javascript:void (0)">
+                <i class="fa fa-times-circle fa-lg" title="删除"></i>
+            </a>
+        </div>
+        <div class="form-group m-1">
+            <a class="btn btn-light text-dark p-0" id="contribute" href="javascript:void (0)" data-toggle="modal" data-target="#blogAbbrModal">
+                <i class="fa fa-archive fa-lg" title="投稿"></i>
+            </a>
+        </div>
+    </form>
+    <div class="container p-0" id="mainAxisContainer">
+
+    </div>
+</div>
+<!-- blogAbbrModal -->
+<div class="modal fade" id="blogAbbrModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">选择参与投稿的博客</div>
+            <div class="modal-body" id="blogAbbrModalContainer">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-th-attr="username=${#authentication.name}" id="submitBlogList">提交</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../../static/js/pmc/axis.js" data-th-src="@{/js/pmc/axis.js}"></script>

@@ -1,0 +1,14 @@
+<div data-th-if="${projectVoSet} != null and ${projectVoSet.size()} < 1">
+    <p></p>
+</div>
+<ul class="list-group">
+    <li class="list-group-item" data-th-if="${projectVoSet.size()} > 0" data-th-each="projectVO : ${projectVoSet}">
+        <div class="d-flex justify-content-between">
+            <a class="text-dark" style="text-decoration: none" data-th-href="@{'/topics/' + ${projectVO.id}}" target="_blank" data-th-text="${projectVO.name}"></a>
+            <a class="btn btn-outline-primary btn-sm" id="insertCollection" href="javascript: void (0)"
+               data-th-attr="topicId=${projectVO.id}" data-th-if="${projectVO.collected} == 0">未收录</a>
+            <a class="btn btn-outline-danger btn-sm" id="removeCollection" href="javascript: void (0)"
+               data-th-attr="topicId=${projectVO.id}" data-th-if="${projectVO.collected} == 1">已收录</a>
+        </div>
+    </li>
+</ul>

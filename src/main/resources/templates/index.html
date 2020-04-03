@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragment/head :: head(~{::title}, ~{}, ~{})}">
+    <title>积录 - 趁你还未忘记</title>
+</head>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+<div class="container" id="wrapper">
+    <div class="card">
+        <div class="card-header p-0">
+            <div class="jumbotron mb-0">
+                <h1 class="display-4">mxxxxxxx.com</h1>
+                <p class="lead">Mark Anything，积录，趁你还没忘记</p>
+                <hr class="my-4">
+                <p>积少成多，目之以录，所谓积录</p>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="card-title d-flex justify-content-between">
+                <div>
+                    <p>7x代表一周的七天</p>
+                </div>
+                <div>
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">星期</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">颜色</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>星期\吃饭</th>
+                    <th>早上</th>
+                    <th>中午</th>
+                    <th>晚上</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>x[1]:星期一</td>
+                    <td>星期一早上吃饭</td>
+                    <td>星期一中午吃饭</td>
+                    <td>星期一晚上吃饭</td>
+                </tr>
+                <tr>
+                    <td>x[2]:星期二</td>
+                    <td>星期二早上吃饭</td>
+                    <td>星期二中午吃饭</td>
+                    <td>星期二晚上吃饭</td>
+                </tr>
+                <tr>
+                    <td>x[3]:星期三</td>
+                    <td>星期三早上吃饭</td>
+                    <td>星期三中午吃饭</td>
+                    <td>星期三晚上吃饭</td>
+                </tr>
+                <tr>
+                    <td>x[4]:星期四</td>
+                    <td>星期四早上吃饭</td>
+                    <td>星期四中午吃饭</td>
+                    <td>星期四晚上吃饭</td>
+                </tr>
+                <tr>
+                    <td>x[5]:星期五</td>
+                    <td>星期五早上吃饭</td>
+                    <td>星期五中午吃饭</td>
+                    <td>星期五晚上吃饭</td>
+                </tr>
+                <tr>
+                    <td>x[6]星期六</td>
+                    <td>星期六早上吃饭</td>
+                    <td>星期六中午吃饭</td>
+                    <td>星期六晚上吃饭</td>
+                </tr>
+                <tr>
+                    <td>x[7]:星期七</td>
+                    <td>星期七早上吃饭</td>
+                    <td>星期七中午吃饭</td>
+                    <td>星期七晚上吃饭</td>
+                </tr>
+                </tbody>
+            </table>
+            <hr>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>颜色\代码</th>
+                    <th>RGB</th>
+                    <th>十六进制</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>x[1]:红</td>
+                    <td>255,0,0</td>
+                    <td>#FF0000</td>
+                </tr>
+                <tr>
+                    <td>x[2]:橙</td>
+                    <td>255,165,0</td>
+                    <td>FFA500</td>
+                </tr>
+                <tr>
+                    <td>x[3]:黄</td>
+                    <td>255,255,0</td>
+                    <td>#FFFF00</td>
+                </tr>
+                <tr>
+                    <td>x[4]:绿</td>
+                    <td>0,128,0</td>
+                    <td>#008000</td>
+                </tr>
+                <tr>
+                    <td>x[5]:青</td>
+                    <td>0,255,255</td>
+                    <td>#00FFFF</td>
+                </tr>
+                <tr>
+                    <td>x[6]蓝</td>
+                    <td>0,0,255</td>
+                    <td>#0000FF</td>
+                </tr>
+                <tr>
+                    <td>x[7]:紫</td>
+                    <td>128,0,128</td>
+                    <td>#800080</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragment/footer :: footer}"></div>
+</body>
+</html>

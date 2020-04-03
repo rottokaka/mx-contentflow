@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragment/head :: head(~{::title}, ~{}, ~{})}">
+    <title>积录 - 趁你还未忘记</title>
+</head>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+<div class="container" id="wrapper">
+    <div class="row">
+        <div class="col-md-9">
+            <div id="bookMainContainer">
+
+            </div>
+        </div>
+        <div class="col-md-3">
+            <h3><i class="fa fa-tasks"></i>&nbsp; 图书列表</h3>
+            <hr>
+            <div th:if="${topicList.size()} < 1">
+                <p>还未任何话题</p>
+            </div>
+            <ul class="list-group" th:if="${topicList.size()} > 0">
+                <li class="list-group-item d-flex justify-content-between align-items-center p-1"
+                    th:each="topic : ${topicList}" th:attr="topicId=${topic.id}">
+                    <span class="ml-2">
+                        <a class="text-dark" href="javascript:void (0)" th:text="${topic.name}"></a>
+                    </span>
+                    <span class="badge badge-pill">
+                        <a class="text-dark" title="查看话题" href="../project/view.html" th:href="@{'/topics/' + ${topic.id}}">
+                            <i class="fa fa-external-link fa-lg" aria-hidden="true"></i>
+                        </a>
+                    </span>
+                </li>
+            </ul>
+            <div class="mb-2 p-0">
+                <div class="form-row">
+                    <div class="col p-0">
+                        <div class="form-group m-0">
+                            <label class="sr-only" for="version">版本：</label>
+                            <select class="form-control form-control-chosen" name="version" id="version" data-placeholder="请选择版本">
+                                <option th:each="version : ${versionList}" th:value="${version.id}" th:text="${version.name}"
+                                        th:selected="${version} eq ${version}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col p-0">
+                        <div class="form-group m-0">
+                            <label class="sr-only" for="pattern">模式：</label>
+                            <select class="form-control form-control-chosen" name="pattern" id="pattern" data-placeholder="请选择模式">
+                                <option value="PATTERN_THEME" th:selected="PATTERN_THEME eq ${pattern}">主题优先</option>
+                                <option value="PATTERN_TYPE" th:selected="PATTERN_TYPE eq ${pattern}">类型优先</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragment/footer :: footer}"></div>
+<script type="text/javascript" src="../../static/js/book/main.js" th:src="@{/js/book/main.js}"></script>
+
+</body>
+</html>

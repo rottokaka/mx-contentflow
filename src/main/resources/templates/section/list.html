@@ -1,0 +1,62 @@
+<div class="container d-flex justify-content-start" data-th-if="${typeList} != null and ${typeList.size()} < 1">
+    <a class="btn type-create" role="button" data-toggle="modal" data-target="#typeModal" title="新增主题">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+    </a>
+    <p class="pt-2">还未任何类型</p>
+</div>
+<div class="container p-0" id="typeMainContainer">
+    <table class="table table-striped" id="typeList" data-th-if="${typeList} != null and ${typeList.size()} > 0">
+        <thead>
+        <tr>
+            <th scope="col">
+                <a class="btn btn-outline-light type-create" data-toggle="modal" data-target="#typeModal" title="新增主题">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">编号</th>
+            <th scope="col">名称</th>
+            <th scope="col">描述</th>
+            <th scope="col">版本</th>
+            <th scope="col">排序</th>
+            <th scope="col">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="type : ${typeList}">
+            <td></td>
+            <td data-th-text="${type.id}"></td>
+            <td data-th-text="${type.name}"></td>
+            <td data-th-text="${type.description}"></td>
+            <td data-th-text="${type.version.name}"></td>
+            <td data-th-text="${type.rank}"></td>
+            <td class="p-1">
+                <a class="btn type-update" data-th-attr="typeId=${type.id}" data-toggle="modal" data-target="#typeModal">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </a>
+                <a class="btn type-delete" data-th-attr="typeId=${type.id}">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<!-- typeModal -->
+<div class="modal fade" id="typeModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">创建/编辑*类型</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="typeModalContainer">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../static/js/type/list.js" data-th-src="@{/js/type/list.js}"></script>

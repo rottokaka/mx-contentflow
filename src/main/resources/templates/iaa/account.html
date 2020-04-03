@@ -1,0 +1,41 @@
+<div class="container pl-0">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <div><i class="fa fa-list" aria-hidden="true"></i>&nbsp;&nbsp;<strong>账号设置</strong></div>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-start">
+                        <div><span><i class="fa fa-envelope-o fa-2x" aria-hidden="true"></i></span></div>
+                        <div class="ml-3">
+                            <div>
+                                <span class="h6">邮箱：</span>
+                                <span data-th-text="${userBaseVo.email}"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-outline-primary btn-sm">更改</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- userModal -->
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">编辑*个人信息</div>
+            <div class="modal-body" id="userModalContainer">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="submitUser">提交</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../../static/js/iaa/account.js" data-th-src="@{/js/iaa/account.js}"></script>

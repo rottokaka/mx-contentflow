@@ -1,0 +1,70 @@
+<div class="container d-flex justify-content-start"
+     data-th-if="${tagPersonManageVoList} == null">
+    <h5>还没有任何标签</h5>
+    <a class="tag-create ml-2" href="javascript:void (0)" data-toggle="modal" data-target="#tagModal" title="新增话题">
+        <i class="fa fa-plus-circle fa-lg"></i>
+    </a>
+</div>
+<div class="container" data-th-if="${tagPersonManageVoList} != null">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>
+                <a class="tag-create" href="javascript:void (0)" data-toggle="modal" data-target="#tagModal"
+                   title="新增标签">
+                    <i class="fa fa-plus-circle fa-lg"></i>
+                </a>
+            </th>
+            <th>编码</th>
+            <th>名称</th>
+            <th>性质</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="tagPersonManageVo : ${tagPersonManageVoList}">
+            <td></td>
+            <td data-th-text="${tagPersonManageVo.tagId}"></td>
+            <td>
+                <a class="text-dark" data-th-href="@{'/tag/' + ${tagPersonManageVo.tagId} + '/detail'}" target="_blank">
+                    <span data-th-text="${tagPersonManageVo.tagName}"></span>
+                </a>
+            </td>
+            <td>
+                <span data-th-if="${tagPersonManageVo.property} == 2"> 标记标签</span>
+                <span data-th-if="${tagPersonManageVo.property} == 3"> 管理标签</span>
+            </td>
+            <td class="d-flex align-items-center">
+                <a class="text-dark tag-update" href="javascript:void (0)"
+                   data-th-attr="tagId=${tagPersonManageVo.tagId}"
+                   data-toggle="modal" data-target="#tagModal" title="编辑标签">
+                    <i class="fa fa-pencil-square-o fa-lg fa-fw"></i>
+                </a>
+                <a class="text-dark tag-delete" href="javascript:void (0)"
+                   data-th-attr="tagId=${tagPersonManageVo.tagId}" title="删除标签">
+                    <i class="fa fa-times fa-lg fa-fw"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- tagModal -->
+<div class="modal fade" id="tagModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">创建/编辑*标签</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="tagModalContainer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../../static/js/sis/tag.js" data-th-src="@{/js/sis/tag.js}"></script>

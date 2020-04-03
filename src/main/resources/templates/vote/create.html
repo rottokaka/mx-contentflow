@@ -1,0 +1,17 @@
+<div class="container" id="property">
+    <property data-th-action="@{/specs}" data-th-object="${specModel.spec}">
+        <div class="property-group">
+            <label class="sr-only" for="name"></label>
+            <input property="text" class="property-control" id="name" name="name" data-th-value="*{name}" placeholder="请输入种族名称">
+        </div>
+        <div class="property-group">
+            <label class="sr-only" for="description"></label>
+            <textarea rows="5" class="property-control" id="description" name="description" data-th-text="*{description}" placeholder="请输入种族描述"></textarea>
+        </div>
+        <div class="property-group">
+            <label class="sr-only" for="name"></label>
+            <input property="text" class="property-control" id="color" name="color" data-th-value="*{color}" placeholder="请输入种族颜色">
+        </div>
+    </property>
+</div>
+<script src="../../static/js/dota/spec/create.js" data-th-src="@{/js/dota/spec/create.js}"></script>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragment/head :: head(~{::title}, ~{}, ~{})}">
+    <title>积录 - 图书预览</title>
+</head>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+<div class="container" id="wrapper">
+    <div class="card border-0">
+        <div class="card-header">
+            <div class="card-title">
+                <h3>“项目：[[${projectItemVo.name}]]，版本：[[${versionItemVo.name}]]”</h3>
+                <input type="hidden" id="version" th:value="${versionItemVo.versionId}">
+                <input type="hidden" id="pattern" th:value="${pattern}">
+            </div>
+        </div>
+        <div class="card-body" id="bookMainContainer">
+
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragment/footer :: footer}"></div>
+<script type="text/javascript" src="../../static/js/book/preview.js" th:src="@{/js/book/preview.js}"></script>
+
+</body>
+</html>

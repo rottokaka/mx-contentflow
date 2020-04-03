@@ -1,0 +1,20 @@
+<p class="mt-1" data-th-if="${userSet.size()} < 1">&nbsp;&nbsp; 还未任何用户，</p>
+<div class="card border-0 mt-1" data-th-if="${userSet.size()} > 0">
+    <div class="card-body border mb-2" data-th-each="user : ${userSet}">
+        <div class="row">
+            <div class="col-md-2 pr-0">
+                <i class="fa fa-id-card fa-3x"></i>
+            </div>
+            <div class="col-md-10 pl-0">
+                <div class="card-text">
+                    <a href="view.html" data-th-href="@{'/users/' + ${user.username}}"
+                       data-th-text="${user.username}"></a>
+                    <p class="mb-0" data-th-text="${user.email}"></p>
+                    <p class="mb-0" data-th-text="${user.note}"></p>
+                    <p class="mb-0">加入时间：[[${#dates.format(user.gmtCreate, 'yyyy-MM-dd')}]]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../static/js/user/list_self.js" data-th-src="@{/js/user/list_self.js}"></script>

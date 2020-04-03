@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+>
+<head th:replace="~{fragment/head :: head(~{::title}, ~{::link}, ~{})}">
+    <title>创建片段 - 积录</title>
+    <link rel="stylesheet" href="../../static/editor.md/css/editormd.min.css"
+          th:href="@{/editor.md/css/editormd.min.css}"/>
+</head>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+<div class="container" id="wrapper">
+    <div class="px-3 my-3 bg-light">
+        <h1 class="text-center">Instantly mark some good things.</h1>
+    </div>
+    <form th:action="@{/blogs}" method="post" id="snippetForm">
+
+        <div class="row">
+            <div class="col-md-8">
+                <label class="sr-only" for="title">可输入标题</label>
+                <input type="text" class="form-control" id="title" placeholder="请输入标题">
+            </div>
+            <div class="col-md-2">
+                <div class="form-group mb-0">
+                    <label class="sr-only" for="scopeSelect">Scope Select</label>
+                    <select class="custom-select" id="scopeSelect">
+                        <option value="0" selected>公开</option>
+                        <option value="3">私人</option>
+                        <option value="1" disabled>内容</option>
+                        <option value="2" disabled>秘密</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <a href="javascript:void (0)" class="btn btn-block btn-outline-primary" id="snippetPublish">发布</a>
+            </div>
+        </div>
+
+        <div id="editormd" class="mt-2">
+            <label class="sr-only" for="blogCreateMain"></label>
+            <textarea rows="21" class="form-control editormd-markdown-textarea"
+                      id="blogCreateMain" placeholder="快速提交，字数限制在140内..."></textarea>
+            <!-- Tips: Editor.md can auto append a `<textarea>` tag -->
+            <label>
+                <textarea style="display:none;">### Hello Editor.md !</textarea>
+            </label>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="sr-only" for="description">可输入描述</label>
+                <input type="text" class="form-control" id="description" placeholder="可输入描述">
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<div th:replace="~{fragment/footer :: footer}"></div>
+<script th:inline="javascript">
+    const username = [[${#authentication.name}]]
+</script>
+<script type="text/javascript" src="../../static/editor.md/editormd.min.js" th:src="@{/editor.md/editormd.min.js}"></script>
+<script type="text/javascript" src="../../static/js/snippet/create.js" th:src="@{/js/snippet/create.js}"></script>
+</body>
+</html>

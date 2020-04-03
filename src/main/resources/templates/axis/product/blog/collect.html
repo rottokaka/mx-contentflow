@@ -1,0 +1,18 @@
+<div data-th-if="${projectAtBlogVoList} == null or ${projectAtBlogVoList.size() < 1}">
+    <div class="d-flex justify-content-start">
+        <span class="h5 text-danger"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;&nbsp;</span>
+        <p data-th-text="${message}"></p>
+    </div>
+</div>
+<ul class="list-group">
+    <li class="list-group-item" data-th-if="${projectAtBlogVoList} !=null and ${projectAtBlogVoList.size()} > 0" data-th-each="projectAtBlogVo : ${projectAtBlogVoList}">
+        <div class="d-flex justify-content-between">
+            <a class="text-dark" style="text-decoration: none" data-th-href="@{'/projects/' + ${projectAtBlogVo.projectId}}" target="_blank" data-th-text="${projectAtBlogVo.name}"></a>
+            <a class="btn btn-outline-primary btn-sm" id="insertCollection" href="javascript: void (0)"
+               data-th-attr="projectId=${projectAtBlogVo.projectId}" data-th-if="${projectAtBlogVo.collected} == 0">未收录</a>
+            <a class="btn btn-outline-danger btn-sm" id="removeCollection" href="javascript: void (0)"
+               data-th-attr="projectId=${projectAtBlogVo.projectId}" data-th-if="${projectAtBlogVo.collected} == 1">已收录</a>
+        </div>
+    </li>
+</ul>
+<script type="text/javascript" src="../../../../static/js/axis/blog/collect.js" data-th-src="@{/js/axis/blog/collect.js}"></script>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragment/head :: head(~{::title}, ~{}, ~{})}">
+    <title>项目主页 - 积录</title>
+</head>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+<div class="container" id="wrapper">
+    <div class="row">
+        <div class="col-md-9" id="mainContainer">
+            <p th:if="${projectItemVoList} == null">&nbsp;&nbsp; 还未任何项目，</p>
+        </div>
+        <div class="col-md-3">
+            <div>
+                <h3><i class="fa fa-tasks"></i>&nbsp; 项目列表</h3>
+                <hr>
+                <div th:if="${projectItemVoList} != null">
+                    <p>还未任何项目</p>
+                </div>
+                <ul class="list-group" th:if="${projectItemVoList} !=null and ${projectItemVoList.size()} > 0">
+                    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-1"
+                        th:each="projectItemVO : ${projectItemVoList}" th:attr="projectId=${projectItemVO.projectId}">
+                    <span class="ml-2">
+                        <a class="text-dark" style="text-decoration: none" href="javascript:void (0)" th:text="${projectItemVO.name}"></a>
+                    </span>
+                        <span class="badge badge-pill">
+                        <a class="text-dark" title="查看项目" href="detail.html"
+                           th:href="@{'/project/' + ${projectItemVO.projectId} + '/detail'}">
+                            <i class="fa fa-external-link fa-lg"></i>
+                        </a>
+                    </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragment/footer :: footer}"></div>
+<script data-th-inline="javascript">
+    const username = [[${#authentication.name}]]
+</script>
+<script type="text/javascript" src="../../static/js/project/index.js" th:src="@{/js/project/index.js}"></script>
+</body>
+</html>

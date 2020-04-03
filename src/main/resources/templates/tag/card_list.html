@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragment/head :: head(~{::title}, ~{}, ~{})}">
+    <title>标签主页 - 积录</title>
+</head>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+<div class="container p-0" id="wrapper">
+    <div class="row">
+        <div class="jumbotron jumbotron-fluid p-4">
+            <div class="container">
+                <h1 class="display-4">标签</h1>
+                <p class="lead">标签是工具，用来用来辅助内容（描述，文章，博客，讨论等）的组织，比话题级别低；标签与话题的关系：标签可以上升到话题；标签，标记；非针对个人，而是针对整个系统。</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="card-columns">
+            <div class="card" th:each="tagCardVo : ${tagCardVoList}">
+                <div class="card-body p-2">
+                    <div>
+                        <a th:href="@{'/tag/' + ${tagCardVo.name}}"><span class="badge badge-info" th:text="${tagCardVo.name}"></span></a>
+                        <span>x</span>
+                        <span class="badge badge-light" th:text="${tagCardVo.blogCounter}"></span>
+                    </div>
+                    <p class="card-text" th:text="${tagCardVo.description}">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragment/footer :: footer}"></div>
+<script type="text/javascript" src="../../static/js/tag/card_list.js" data-th-src="@{/js/tag/card_list.js}"></script>
+</body>
+</html>

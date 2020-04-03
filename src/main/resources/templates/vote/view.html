@@ -1,0 +1,6 @@
+<a class="vote-create text-dark m-1" href="javascript:void (0)" th:attr="voteId=${vote.id}" th:if="${vote} != null">
+    <i class="fa fa-heart-o fa-lg" aria-hidden="true"></i>
+</a>
+<a class="vote-delete text-dark m-1" href="javascript:void (0)" th:attr="voteId=${vote.id}" th:if="${vote} == null">
+    <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+</a>

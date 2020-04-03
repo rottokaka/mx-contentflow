@@ -1,0 +1,62 @@
+<div class="container-fluid" id="subjectMainContainer">
+    <input type="hidden" id="versionId" data-th-value="${versionId}">
+    <div class="d-flex" data-th-if="${subjectManageVoList} == null or ${subjectManageVoList.size()} < 1">
+        <a class="btn text-dark subject-create" href="javascript: void (0)" role="button" title="新增专题"
+           data-toggle="modal" data-target="#subjectModal">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+        </a>
+        <p class="pt-2">还未任何专题</p>
+    </div>
+    <table class="table" id="subjectList" data-th-if="${subjectManageVoList} != null and ${subjectManageVoList.size()} > 0">
+        <thead>
+        <tr>
+            <th class="p-2" scope="col">
+                <a class="btn text-dark subject-create" href="javascript: void (0)" role="button" title="新增专题"
+                   data-toggle="modal" data-target="#subjectModal" data-th-attr="username=${#authentication.name}">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">编号</th>
+            <th scope="col">名称</th>
+            <th scope="col">描述</th>
+            <th scope="col">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="subjectManageVo : ${subjectManageVoList}">
+            <td></td>
+            <td data-th-text="${subjectManageVo.subjectId}"></td>
+            <td data-th-text="${subjectManageVo.name}"></td>
+            <td data-th-text="${subjectManageVo.description}"></td>
+            <td>
+                <a class="text-dark subject-update" href="javascript:void (0)" data-th-attr="subjectId=${subjectManageVo.subjectId}"
+                   data-toggle="modal" data-target="#subjectModal">
+                    <i class="fa fa-pencil-square-o fa-fg" aria-hidden="true"></i>
+                </a>
+                <a class="text-dark subject-delete" href="javascript:void (0)" data-th-attr="subjectId=${subjectManageVo.subjectId}">
+                    <i class="fa fa-times fa-fg" aria-hidden="true"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- subjectModal -->
+<div class="modal fade" id="subjectModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">创建/编辑*专题</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="subjectModalContainer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../../static/js/subject/manage-list.js" data-th-src="@{/js/subject/manage-list.js}"></script>

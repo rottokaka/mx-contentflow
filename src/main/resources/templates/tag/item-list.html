@@ -1,0 +1,23 @@
+<div class="btn-group d-block" role="group" aria-label="Basic example">
+    <button type="button" class="btn border-0 p-0 mr-2"
+            data-th-if="${tagAtProductVoList} != null and ${tagAtProductVoList.size()} > 0"
+            data-th-each="tagOfBlogVo : ${tagAtProductVoList}">
+        <a href="javascript:void (0)" data-th-if="${tagOfBlogVo.labeled} == 0"
+           class="btn btn-outline-info p-0 border-1 blog-tag" data-th-attr="tagName=${tagOfBlogVo.tagName}" title="使用标签">
+            <span class="text-dark" data-th-text="${tagOfBlogVo.tagName}"></span>
+            <span class="badge badge-light tag-size" data-th-text="${tagOfBlogVo.counter}"></span>
+        </a>
+        <a href="javascript:void (0)" data-th-if="${tagOfBlogVo.labeled} == 1"
+           class="btn btn-info p-0 border-1 blog-tag" data-th-attr="tagName=${tagOfBlogVo.tagName}" title="取消标签">
+            <span data-th-text="${tagOfBlogVo.tagName}"></span>
+            <span class="badge badge-light tag-size" data-th-text="${tagOfBlogVo.counter}"></span>
+        </a>
+    </button>
+
+    <button type="button" class="btn border p-0" id="insertTag" title="添加标签">
+        <a style="text-decoration: none" href="javascript:void (0)" data-toggle="modal" data-target="#tagModal">
+            <span class="text-dark">添加标签</span>
+            <span class="text-info"><i class="fa fa-plus-circle" aria-hidden="true"></i></span>
+        </a>
+    </button>
+</div>

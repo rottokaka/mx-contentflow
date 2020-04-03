@@ -1,0 +1,22 @@
+<div class="form-group mt-1">
+    <div class="d-flex">
+        <label class="sr-only" for="commentContent"></label>
+        <textarea class="form-control" id="commentContent" rows="3"
+                  placeholder="原则上没有字数限制，建议提炼文字，简明扼要。"></textarea>
+    </div>
+    <div class="d-flex justify-content-between mt-1">
+        <div>
+            <h5 class="mt-1 mb-0">
+                <span><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;</span>
+                <small class="text-muted">请文明用语，该评论会被展示在个人主页</small>
+            </h5>
+        </div>
+        <div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary mr-2" id="cancelCommentBtn">取消</button>
+                <button type="button" class="btn btn-success" id="submitCommentBtn">发布</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../static/js/comment/create.js" data-th-src="@{/js/comment/create.js}"></script>

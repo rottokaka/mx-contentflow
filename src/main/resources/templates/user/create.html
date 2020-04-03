@@ -1,0 +1,37 @@
+<div class="container">
+    <form data-th-object="${userModel.userCreateForm}" id="userForm">
+
+        <div class="form-group">
+            <label for="email" class="col-form-label">邮箱</label>
+            <input type="email" class="form-control" id="email" name="email" maxlength="50" placeholder="请输入邮箱">
+        </div>
+
+        <div class="form-group">
+            <label for="username" class="col-form-label">账号</label>
+            <input type="text" class="form-control" id="username" name="username" minlength="2" maxlength="50" placeholder="请输入账号，至少2个字符，至多20个">
+        </div>
+
+        <div class="form-group">
+            <label for="password" class="col-form-label">密码</label>
+            <input type="password" class="form-control" id="password" name="password" maxlength="30" placeholder="请输入密码，字母或特殊符号和数字结合">
+        </div>
+
+        <hr>
+
+        <div class="form-group">
+            <label for="website" class="col-form-label">网站</label>
+            <input type="text" class="form-control" id="website" name="website" maxlength="30" placeholder="可输入个人网站地址">
+        </div>
+
+        <div class="form-group">
+            <label for="note" class="col-form-label">说明</label>
+            <input type="text" class="form-control" id="note" name="note" maxlength="100" placeholder="可简短介绍自己，至多100字符">
+        </div>
+
+        <div class="form-group">
+            <label for="notice" class="col-form-label">公告</label>
+            <textarea class="form-control" id="notice" name="notice" maxlength="300" placeholder="可输入公告，至多300个"></textarea>
+        </div>
+
+    </form>
+</div>

@@ -1,0 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /*margin-top: 70px;*/
+    /*background-color: #f5f5d5;*/
+    /*background-color: #C7EDCC;*/
+}
+
+.gotop {
+    position: fixed;
+    top: 60%;/* 离左边50% */
+    right: 5%;/* 离顶部50% */
+}
+
+#wrapper {
+}
+
+#sidebar {
+    width: 400px;
+    height: 100%;
+    position: sticky;
+    top: 100px;
+    right: 0;
+    overflow: hidden;
+    background: #fff;
+    z-index: 100;
+    padding: 18px;
+    border-left: 1px solid #ddd;
+}
+
+.border-left-nav {
+    padding-left: 8px;
+    border-left: 8px solid #343A40;
+}

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head></head>
+<body>
+<div th:fragment="nav">
+    <div class="collapse show pr-2" id="collapseExample">
+        <div class="list-group">
+            <a class="list-group-item" href="/"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp; 首页</a>
+            <a class="list-group-item" href="/blogs"><i class="fa fa-book fa-fw" aria-hidden="true"></i>&nbsp; 博客</a>
+            <a class="list-group-item" href="/users"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; 作者</a>
+        </div>
+        <div data-th-if="${projectVoList.size()} > 0">
+            <h5><i class="fa fa-rss fa-fw" aria-hidden="true"></i> 话题</h5>
+            <hr class="mt-0 mb-1">
+            <div class="list-group" role="tablist">
+                <li class="list-group-item btn-link btn-primary pt-1 pb-1" th:each="topicVo : ${projectVoList}" th:attr="id=${topicVo.id}">
+                    <span data-th-text="${topicVo.name}"></span>
+                    <span>
+                            <a class="badge badge-light badge-pill float-right" href="../project/view.html" th:href="@{'/topics/' + ${topicVo.id}}">
+                                <i class="fa fa-external-link"></i>
+                            </a>
+                        </span>
+                </li>
+            </div>
+        </div>
+        <div data-th-if="${tagDetailVOList.size()} > 0">
+            <h5><i class="fa fa-tags fa-fw" aria-hidden="true"></i> 标签</h5>
+            <hr class="mt-0 mb-1">
+            <a href="javascript:void (0)"><span class="badge badge-info mr-2" th:each="tag : ${tagDetailVOList}" th:text="${tag.name}"></span></a>
+        </div>
+    </div>
+</div>
+</body>

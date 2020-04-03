@@ -1,0 +1,6 @@
+<ul class="nav nav-pills ml-2 mt-1 mb-1 border" id="typeList" data-th-if="${typeItemVoList.size()} > 0">
+    <li class="nav-item" data-th-each="typeItemVo : ${typeItemVoList}">
+        <a class="nav-link text-dark type" href="javascript:void (0)" data-th-attr="typeId=${typeItemVo.id}"
+           data-th-text="${typeItemVo.name}"></a>
+    </li>
+</ul>

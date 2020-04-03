@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.232.131:3306/mx_contentflow_test?useSSL=false&serverTimezone=UTC&characterEncoding=utf-8
+    username: root
+    password: root
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: NON_NULL
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: true
+    show-sql: true
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    mode: HTML
+  jmx:
+    enabled: false
+
+file:
+  #文件导入路径
+  importPath: D:\Users\rotto\Documents\工作\项目\mx-blog\
+  #文件导出路径
+  exportPath: D:\Workspaces\mx-projects\mx-blog\export\
+  #文件上传路径
+  upload-dir: D:\Workspaces\mx-projects\mx-blog\uploads\
+  #文件下载路径
+  download-dir: D:\Workspaces\mx-projects\mx-blog\downloads\

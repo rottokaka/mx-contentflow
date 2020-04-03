@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragment/head :: head(~{::title}, ~{}, ~{})}">
+    <title>用户主页 - 积录</title>
+</head>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+<div class="container" id="wrapper">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-start">
+                            <div class="mt-1">
+                                <a id="username" th:href="@{'/user/' + ${userDetailVo.username}}"
+                                   th:attr="username=${userDetailVo.username}">
+                                    <img class="img-fluid" style="width: 50px; height: 50px"
+                                         src="../../static/images/avatar-mx-132x132.jpg"
+                                         th:src="@{/images/avatar-mx-132x132.jpg}" alt="个人主页" th:alt="${userDetailVo.username}">
+                                </a>
+                            </div>
+                            <div>
+                                <div><span class="h3 ml-2" th:text="${userDetailVo.nickname}"></span></div>
+                                <div class="text-secondary ml-2" th:text="${userDetailVo.note}"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <a class="mr-1 text-dark" th:if="${userDetailVo.owned} == true" href="../iaa/index.html" th:href="@{'/setting'}">
+                                <i class="fa fa-cog fa-2x" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9 mt-2" id="userMainContainer">
+            <div id="mainContainer">
+
+            </div>
+        </div>
+        <div class="col-md-3 mt-2 pl-0">
+            <div class="border mt-1">
+                <h5 class="mb-0"><i class="fa fa-bullhorn fa-fw" aria-hidden="true"></i> 公告</h5>
+                <hr class="mt-0 mb-1">
+                <p class="mb-0" th:if="${#strings.isEmpty(userDetailVo.notice)}">还未发布任何公告</p>
+                <p class="m-0 p-1" th:if="!${#strings.isEmpty(userDetailVo.notice)}">&nbsp;&nbsp;[[${userDetailVo.notice}]]</p>
+            </div>
+            <div class="border mt-2">
+                <h5 class="mb-0"><i class="fa fa-rss fa-fw" aria-hidden="true"></i> 项目</h5>
+                <hr class="m-0 mb-1">
+                <p class="mb-0" th:if="${projectItemVoList} == null">还未创建任何项目</p>
+                <div class="list-group list-group-flush project-group" th:if="${projectItemVoList} != nul">
+                    <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-1"
+                            th:each="projectItemVo : ${projectItemVoList}" th:attr="projectId=${projectItemVo.projectId}">
+                        <span class="ml-2">
+                            <a class="text-dark" style="text-decoration: none" href="javascript:void (0)" th:text="${projectItemVo.name}"></a>
+                        </span>
+                        <span class="badge badge-pill">
+                            <a class="text-dark" title="查看项目" href="../project/detail.html"
+                               th:href="@{'/project/' + ${projectItemVo.projectId} + '/detail'}">
+                                <i class="fa fa-external-link fa-lg" aria-hidden="true"></i>
+                            </a>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="border mt-2">
+                <h5 class="mb-0"><i class="fa fa-tags fa-fw" aria-hidden="true"></i> 标签</h5>
+                <hr class="m-0 mb-1">
+                <p class="mb-0" th:if="${tagItemVoList} == null">还未创建任何标签</p>
+                <!-- 标签列表 -->
+                <div class="btn-group" style="display: inline" id="tagList" th:if="${tagItemVoList} != null">
+                    <button type="button" class="btn btn-outline-info btn-sm text-dark mr-2 p-0 blog-tag"
+                            th:each="tagItemVo : ${tagItemVoList}" th:attr="tagId=${tagItemVo.tagId}">
+                        <span data-th-text="${tagItemVo.name}"></span>
+                        <!--<span class="badge badge-light tag-size" data-th-text="${tagItemVo.count}" }></span>-->
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragment/footer :: footer}"></div>
+<script th:inline="javascript">
+    const username = [[${#authentication.name}]]
+</script>
+<script type="text/javascript" src="../../static/js/user/detail.js" th:src="@{/js/user/detail.js}"></script>
+</body>
+</html>

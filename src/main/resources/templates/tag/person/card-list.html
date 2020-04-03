@@ -1,0 +1,21 @@
+<div class="container-fluid mt-1">
+    <p data-th-if="${userCardVoList} == null">&nbsp;&nbsp; 还未任何用户，</p>
+    <div class="card border-0" data-th-if="${userCardVoList} != null">
+        <div class="card-body border mb-2" data-th-each="userCardVo : ${userCardVoList}">
+            <div class="row">
+                <div class="col-md-2 pr-0">
+                    <i class="fa fa-id-card fa-3x"></i>
+                </div>
+                <div class="col-md-10 pl-0">
+                    <div class="card-text">
+                        <a href="../detail.html" data-th-href="@{'/users/' + ${userCardVo.username}}"
+                           data-th-text="${userCardVo.username}"></a>
+                        <p class="mb-0" data-th-text="${userCardVo.email}"></p>
+                        <p class="mb-0" data-th-text="${userCardVo.note}"></p>
+                        <p class="mb-0">加入时间：[[${#dates.format(userCardVo.gmtCreate, 'yyyy-MM-dd')}]]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="btn-group" role="group" aria-label="Basic example">
+    <ul class="list-group list-group-horizontal-sm">
+        <li class="list-group-item p-2" data-th-if="${projectItemVoList.size()} > 0" data-th-each="projectItemVo : ${projectItemVoList}">
+            <a style="text-decoration: none" data-th-href="@{'/project/'+ ${projectItemVo.projectId} + '/detail'}" 
+               target="_blank" data-th-attr="topicId=${projectItemVo.id}">
+                <span class="text-dark" data-th-text="${projectItemVo.name}"></span>
+            </a>
+        </li>
+        <li class="list-group-item p-2" title="项目收录管理">
+            <a style="text-decoration: none" href="javascript:void (0)" data-toggle="modal" data-target="#projectModal">
+                <span class="text-dark">项目收录</span>
+                <span class="text-primary"><i class="fa fa-plus-circle" aria-hidden="true"></i></span>
+            </a>
+        </li>
+    </ul>
+</div>

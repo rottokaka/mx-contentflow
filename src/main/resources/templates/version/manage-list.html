@@ -1,0 +1,59 @@
+<div class="container d-flex justify-content-start" data-th-if="${versionManageVoList} != null and ${versionManageVoList.size()} < 1">
+    <a class="text-dark version-create" href="javascript:void (0)" role="button"  data-toggle="modal" data-target="#versionModal" title="新增主题">
+        <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
+    </a>
+    <p class="pt-2">该条件没有任何版本</p>
+</div>
+<div class="container p-0" id="versionMainContainer">
+    <input type="hidden" id="projectId" data-th-value="${projectId}">
+    <table class="table table-striped" id="versionList" data-th-if="${versionManageVoList} != null and ${versionManageVoList.size()} > 0">
+        <thead>
+        <tr>
+            <th scope="col">
+                <a class="text-dark version-create" href="javascript:void (0)" data-toggle="modal" data-target="#versionModal" title="新增版本">
+                    <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
+                </a>
+            </th>
+            <th scope="col">编号</th>
+            <th scope="col">名称</th>
+            <th scope="col">描述</th>
+            <th scope="col">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="versionManageVo : ${versionManageVoList}">
+            <td></td>
+            <td data-th-text="${versionManageVo.versionId}"></td>
+            <td data-th-text="${versionManageVo.name}"></td>
+            <td data-th-text="${versionManageVo.description}"></td>
+            <td>
+                <a class="text-dark version-update" href="javascript:void (0)" data-th-attr="versionId=${versionManageVo.versionId}"
+                   data-toggle="modal" data-target="#versionModal">
+                    <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                </a>
+                <a class="text-dark version-delete" href="javascript:void (0)" data-th-attr="versionId=${versionManageVo.versionId}">
+                    <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- versionModal -->
+<div class="modal fade" id="versionModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">创建/编辑*版本</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="versionModalContainer">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../static/js/version/manage-list.js" data-th-src="@{/js/version/manage-list.js}"></script>

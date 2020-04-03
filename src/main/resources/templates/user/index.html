@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragment/head :: head(~{::title}, ~{}, ~{})}">
+    <title>用户列表 - 积录</title>
+</head>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+<div class="container" id="wrapper">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title mb-0"><i class="fa fa-list"></i>&nbsp; 用户列表</h4>
+        </div>
+        <div class="card-body border-top" th:each="userVo : ${userVoList}">
+            <div class="card-text">
+                账号：<a href="detail.html" th:href="@{'/users/' + ${userVo.username}}" th:text="${userVo.username}"></a>
+                <p>邮箱：<span class="h6" th:text="${userVo.email}"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragment/footer :: footer}"></div>
+<script th:inline="javascript">
+    const username = [[${#authentication.name}]]
+</script>
+<script type="text/javascript" src="../../static/js/user/list.js" th:src="@{/js/users/list.js}"></script>
+</body>
+</html>

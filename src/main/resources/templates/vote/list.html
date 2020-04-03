@@ -1,0 +1,29 @@
+<div class="container p-0">
+    <p data-th-if="${specList.size()} < 1">
+        还未任何种族，
+    </p>
+    <table class="table table-striped" data-th-if="${specList.size()} > 0">
+        <tr>
+            <th>编号</th>
+            <th>名称</th>
+            <th>描述</th>
+            <th>颜色</th>
+            <th>操作</th>
+        </tr>
+        <tr data-th-each="spec : ${specList}">
+            <td class="p-1" data-th-text="${spec.id}"></td>
+            <td class="p-1" data-th-text="${spec.name}"></td>
+            <td class="p-1" data-th-text="${spec.description}"></td>
+            <td class="p-1" data-th-text="${spec.color}"></td>
+            <td class="p-1">
+                <a class="btn btn-light spec-update" data-toggle="modal" data-target="#specModal" role="button" data-th-attr="specId=${spec.id}">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                </a>
+                <a class="btn btn-light spec-delete" role="button" data-th-attr="specId=${spec.id}">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+<script src="../../static/js/dota/spec/list.js" data-th-src="@{/js/dota/spec/list.js}"></script>

@@ -1,0 +1,19 @@
+<div class="container" id="version">
+    <form data-th-action="@{/versions}" method="post" id="versionForm">
+        <input type="hidden" id="projectId" data-th-value="${projectId}">
+        <div class="form-group">
+            <label class="sr-only" for="name"></label>
+            <input type="text" class="form-control" id="name" placeholder="请输入版本名称">
+        </div>
+
+        <div class="form-group">
+            <label class="sr-only" for="description"></label>
+            <textarea rows="5" class="form-control" id="description" placeholder="请输入版本描述"></textarea>
+        </div>
+
+        <button type="button" class="btn btn-outline-primary btn-block btn-sm" id="versionSubmit">新增</button>
+
+    </form>
+</div>
+
+<script type="text/javascript" src="../../static/js/version/create.js" data-th-src="@{/js/version/create.js}"></script>

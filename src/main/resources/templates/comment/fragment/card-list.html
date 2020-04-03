@@ -1,0 +1,38 @@
+<div data-th-if="${commentSet} == null or ${commentSet.size()} < 1">
+    <p>该博客下暂无任何评论，可以点击添加评论</p>
+</div>
+<ul class="list-group list-group-flush" data-th-if="${commentSet.size()} > 0">
+    <li class="list-group-item pl-0" data-th-each="comment : ${commentSet}">
+        <div class="card pl-0 border-0">
+            <div class="card-body pb-0">
+                <div class="card-title mb-2">
+                    <a class="h5 text-dark" href="../../user/detail.html" data-th-href="@{'/users/' + ${comment.user.username}}">
+                        <span><i class="fa fa-id-card"></i>&nbsp;</span>
+                        <span data-th-text="${comment.user.username}">Effy</span>
+                    </a>
+                    <small class="text-muted">[[${#dates.format(comment.gmtModified, 'yyyy-MM-dd HH:mm:ss')}]]</small>
+                </div>
+                <p class="card-text" data-th-text="${comment.content}"></p>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <a class="text-dark pl-0" style="text-decoration: none" href="javascript:void (0)" title="支持">
+                            <span><i class="fa fa-caret-square-o-up" aria-hidden="true"></i></span>
+                            <small>&nbsp;支持</small>
+                        </a>
+                        <a class="text-dark" style="text-decoration: none" href="javascript:void (0)" title="回复">
+                            <span><i class="fa fa-comment-o" aria-hidden="true"></i></span>
+                            <small>&nbsp;回复</small>
+                        </a>
+                    </div>
+                    <div>
+                        <a class="text-dark pr-0" href="javascript:void (0)" title="举报">
+                            <span><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
+                            <small>&nbsp;举报</small>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+<script src="../../../static/js/comment/list.js" data-th-src="@{/js/comment/list.js}"></script>

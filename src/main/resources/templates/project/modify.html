@@ -1,0 +1,36 @@
+<div class="container" id="projectContainer">
+    <form data-th-action="@{/projects}" method="post" data-th-object="${projectModel.projectModifyForm}" id="projectForm">
+        <input type="hidden" id="projectId" name="projectId" data-th-value="${projectId}">
+
+        <div class="form-group">
+            <label for="name">名称</label>
+            <input type="text" class="form-control" id="name" name="name" data-th-value="*{name}">
+        </div>
+
+        <div class="form-group">
+            <label for="description">描述</label>
+            <textarea rows="5" class="form-control" id="description" name="description" data-th-if="*{description} != null"
+                      data-th-text="*{description}" data-placeholder="请输入项目描述"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="website" class="col-form-label">网站</label>
+            <input type="text" class="form-control" id="website" name="website"
+                   data-th-value="*{website}" maxlength="100" data-placeholder="请输入项目关联网站地址">
+        </div>
+
+        <div class="form-group">
+            <label for="projectAboveSelect">上级话题选择</label>
+            <select class="custom-select" id="projectAboveSelect" name="projectAboveSelect" data-placeholder="选择上级话题（可选）">
+                <option value="">默认顶级话题</option>
+                <option data-th-each="aboveProjectItemVo : ${aboveProjectItemVoList}"
+                        data-th-value="${aboveProjectItemVo.projectId}" data-th-text="${aboveProjectItemVo.name}"
+                        data-th-selected="${aboveProjectItemVo.projectId} eq *{aboveProjectId}"></option>
+            </select>
+        </div>
+
+        <button type="button" class="btn btn-outline-primary btn-block" id="projectUpdate">更新</button>
+
+    </form>
+</div>
+<script type="text/javascript" src="../../static/js/project/modify.js" data-th-src="@{/js/project/modify.js}"></script>

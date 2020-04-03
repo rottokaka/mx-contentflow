@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragment/head :: head(~{::title}, ~{}, ~{})}">
+    <title>博客详情 - 积录</title>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+<div class="container" id="wrapper">
+    <div class="container" id="mainContainer">
+        <!-- 导航 -->
+        <div class="mt-3" id="aboutContainer">
+            <div class="d-flex justify-content-between border-bottom border-dark">
+                <ul class="nav nav-pills mb-1" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-content-tab" data-toggle="pill" href="#pills-content" role="tab" aria-controls="pills-content" aria-selected="true">
+                            <i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;内容
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
+                            <i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;信息
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
+                            <i class="fa fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;关系
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-download-tab" data-toggle="pill" href="#pills-download" role="tab" aria-controls="pills-download" aria-selected="false">
+                            <i class="fa fa-comments-o fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;交流
+                        </a>
+                    </li>
+                </ul>
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item border-0 p-1">
+                        <a class="text-dark px-0" style="text-decoration: none" id="like" href="javascript:void (0)" title="I Like This">
+                            <i class="fa fa-thumbs-up fa-lg fa-fw" aria-hidden="true"></i>&nbsp;Like&nbsp;&nbsp;
+                        </a>
+                    </li>
+                    <li class="list-group-item border-0 p-1">
+                        <a class="text-dark px-0" id="dislike" href="javascript:void (0)" title="I Dislike This">
+                            <i class="fa fa-thumbs-down fa-lg fa-fw" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li class="list-group-item border-0 p-1">
+                        <a class="text-dark" href="javascript:void (0)" id="vote" title="Add To Favorites">
+                            <i class="fa fa-heart fa-lg fa-fw" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li class="list-group-item border-0 p-1">
+                        <a class="text-dark" href="javascript:void (0)" title="举报">
+                            <i class="fa fa-flag fa-lg fa-fw" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content" id="pills-tabContent">
+                <!-- 博客 -->
+                <div class="tab-pane fade show active" id="pills-content" role="tabpanel" aria-labelledby="pills-content-tab">
+                    <div class="card border-0">
+                        <input type="hidden" id="blogId" th:value="${blogDetailVo.blogId}">
+                        <div class="card-body p-0" th:replace="~{blog/fragment/view-self :: blogDetailVoContent}"></div>
+                    </div>
+                </div>
+                <!-- 信息 -->
+                <div class="tab-pane fade" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div class="row mt-1">
+                        <div class="col-md-8">
+                            <div class="d-flex justify-content-start">
+                                <h6 class="text-dark"><strong>作者:</strong>&nbsp;&nbsp;</h6>
+                                <div>
+                                    <a class="text-dark" style="text-decoration: none" href="../user/detail.html"
+                                       th:href="@{'/users/' + ${blogDetailVo.bloggerIdentity}}">
+                                        <span><i class="fa fa-id-card" aria-hidden="true"></i></span>
+                                        <span th:text="${blogDetailVo.bloggerIdentity}"></span>
+                                    </a>
+                                    <a class="text-dark blog-update" style="text-decoration: none" href="javascript:void (0)"
+                                       th:if="${blogDetailVo.authored} == true" data-th-attr="blogId=${blogDetailVo.blogId}" title="编辑博客">
+                                        <i class="fa fa-pencil-square-o fa-lg fa-fw" aria-hidden="true"></i>
+                                    </a>
+                                    <a class="text-dark blog-delete" style="text-decoration: none" href="javascript:void (0)"
+                                       th:if="${blogDetailVo.authored} == true" data-th-attr="blogId=${blogDetailVo.blogId}" title="删除博客">
+                                        <i class="fa fa-times fa-lg fa-fw" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start">
+                                <h6 class="text-dark"><strong>更新时间:</strong>&nbsp;</h6>
+                                <div>
+                                    <small class="text-muted">[[${#dates.format(blogDetailVo.gmtCreate, 'yyyy-MM-dd HH:mm:ss')}]]</small>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start">
+                                <h6 class="text-dark"><strong>发布时间:</strong>&nbsp;</h6>
+                                <div>
+                                    <small class="text-muted">[[${#dates.format(blogDetailVo.gmtModified, 'yyyy-MM-dd HH:mm:ss')}]]</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <ul class="list-group list-group-horizontal-sm d-flex justify-content-end">
+                                <li class="list-group-item p-2">
+                                    <span id="counterSum">9999</span>
+                                    <span>阅读</span>
+                                </li>
+                                <li class="list-group-item p-2">
+                                    <span class="text-success"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
+                                    <small class="text-muted" id="likePercent">70%</small>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-3" id="shareContainer">
+                        <div class="d-flex justify-content-between align-items-center p-0">
+                            <h5 class="pr-3 border-left-nav mb-0">分享</h5>
+                            <div id="shareGroup">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3" id="downloadContainer">
+                        <div class="d-flex justify-content-between align-items-center p-0">
+                            <h5 class="pr-3 border-left-nav mb-0">下载</h5>
+                            <div id="downloadGroup">
+
+                            </div>
+                        </div>
+                        <div class="mt-2" id="downlaodList">
+                            <a class="btn btn-secondary" th:href="@{'/files/' + ${blogDetailVo.blogId}}">
+                                <span>.md</span>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 标签 -->
+                    <div class="ml-1" id="tagContainer">
+                        <!-- 加载标签新建页面 -->
+                        <div id="tagCreate">
+
+                        </div>
+                        <div class="mt-1" id="tagList">
+
+                        </div>
+                    </div>
+                </div>
+                <!-- 关系 -->
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <!-- 片段 -->
+                    <div class="mt-3" id="snippetContainer">
+                        <div class="d-flex justify-content-between align-items-center p-0">
+                            <h5 class="pr-3 border-left-nav mb-0">片段</h5>
+                            <div id="snippetGroup">
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- 项目 -->
+                    <div class="mt-3" id="projectContainer">
+                        <div class="d-flex justify-content-between align-items-center p-0">
+                            <h5 class="pr-3 border-left-nav mb-0">项目</h5>
+                            <div id="projectGroup">
+                                
+                            </div>
+                        </div>
+                        <div class="mt-2" id="projectList">
+                            <div class="btn-group" role="group" aria-label="Project Group">
+                                <button type="button" class="btn btn-primary"></button>
+                                <button type="button" class="btn btn-primary">
+                                    <span class="fa fa-plus" aria-hidden="true"></span>
+                                    <span class="">收录</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 交流 -->
+                <div class="tab-pane fade" id="pills-download" role="tabpanel" aria-labelledby="pills-download-tab">
+                    <!-- 评论 -->
+                    <div class="mt-3" id="commentContainer">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="pr-3 border-left-nav mb-0">评论</h5>
+                        </div>
+                        <!-- 评论新建区域 -->
+                        <div id="commentCreate">
+
+                        </div>
+                        <div id="commentList">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- tagModal -->
+<div class="modal fade" id="tagModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">添加标签</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="tagModalContainer">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- projectListModal -->
+<div class="modal fade" id="projectModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">项目收录操作</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="projectModalContainer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragment/footer :: footer}"></div>
+<script th:inline="javascript">
+    const username = [[${#authentication.name}]];
+</script>
+<script type="text/javascript" src="../../static/editor.md/editormd.min.js" data-th-src="@{/editor.md/editormd.min.js}"></script>
+<script type="text/javascript" src="../../static/editor.md/lib/marked.min.js" data-th-src="@{/editor.md/lib/marked.min.js}"></script>
+<script type="text/javascript" src="../../static/editor.md/lib/prettify.min.js" data-th-src="@{/editor.md/lib/prettify.min.js}"></script>
+<script type="text/javascript" src="../../static/editor.md/lib/raphael.min.js" data-th-src="@{/editor.md/lib/raphael.min.js}"></script>
+<script type="text/javascript" src="../../static/editor.md/lib/underscore.min.js" data-th-src="@{/editor.md/lib/underscore.min.js}"></script>
+<script type="text/javascript" src="../../static/editor.md/lib/sequence-diagram.min.js" data-th-src="@{/editor.md/lib/sequence-diagram.min.js}"></script>
+<script type="text/javascript" src="../../static/editor.md/lib/flowchart.min.js" data-th-src="@{/editor.md/lib/flowchart.min.js}"></script>
+<script type="text/javascript" src="../../static/editor.md/lib/jquery.flowchart.min.js" data-th-src="@{/editor.md/lib/jquery.flowchart.min.js}"></script>
+
+<script type="text/javascript" src="../../static/js/blog/detail.js" th:src="@{/js/blog/detail.js}"></script>
+</body>
+</html>

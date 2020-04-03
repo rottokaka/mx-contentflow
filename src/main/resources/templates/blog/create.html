@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragment/head :: head(~{::title}, ~{::link}, ~{})}">
+    <title>新建博客 - 积录</title>
+    <link rel="stylesheet" href="../../static/editor.md/css/editormd.min.css" th:href="@{/editor.md/css/editormd.min.css}"/>
+</head>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+<div class="container" id="wrapper">
+    <form th:action="@{/blogs}" method="post" data-th-object="${blogModel.blogCreateForm}" id="blogForm">
+
+        <div class="row">
+            <div class="col-md-8">
+                <label class="sr-only" for="title">可输入标题</label>
+                <input type="text" class="form-control" id="title" placeholder="请输入标题">
+            </div>
+            <div class="col-md-1 px-0">
+                <div class="form-group mb-0">
+                    <label class="sr-only" for="scopeSelect">Scope Select</label>
+                    <select class="form-control" id="scopeSelect">
+                        <option value="0" th:selected="${blogCreateForm.scope} == 0">公开</option>
+                        <option value="3" th:selected="${blogCreateForm.scope} == 3">私人</option>
+                        <option value="1" th:selected="${blogCreateForm.scope} == 1" disabled>内容</option>
+                        <option value="2" th:selected="${blogCreateForm.scope} == 2" disabled>秘密</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <a href="javascript:void (0)" class="btn btn-block btn-outline-primary" id="insertBlog">发布</a>
+            </div>
+
+        </div>
+        <!-- 标签 -->
+        <div class="row mt-1">
+            <div class="col-md-12">
+                <label class="sr-only" for="tags">可输入标签</label>
+                <input type="text" class="form-control form-control-tag" id="tags">
+            </div>
+        </div>
+        <!-- 配置 -->
+        <div class="row">
+            <div class="col-md-3 offset-md-9">
+                <input class="type-check-input" type="checkbox" value="" id="collectionNotAllowed"
+                       data-th-checked="${blogCreateForm.collectionNotAllowed} eq 1">
+                <label class="type-check-label mb-0" for="collectionNotAllowed">&nbsp;不允许收录</label>
+                <small class="badge badge-danger">&nbsp;*默认允许收录</small>
+            </div>
+        </div>
+
+        <div id="editormd" class="mt-2">
+            <label class="sr-only" for="blogCreateMain"></label>
+            <textarea rows="21" class="form-control editormd-markdown-textarea"
+                      id="blogCreateMain" placeholder="快速提交，字数限制在140内..."></textarea>
+            <!-- Tips: Editor.md can auto append a `<textarea>` tag -->
+            <label>
+                <textarea style="display:none;">### Hello Editor.md !</textarea>
+            </label>
+        </div>
+
+    </form>
+</div>
+<div th:replace="~{fragment/footer :: footer}"></div>
+<script th:inline="javascript">
+    const username = [[${#authentication.name}]]
+</script>
+<script type="text/javascript" src="../../static/editor.md/editormd.min.js" th:src="@{/editor.md/editormd.min.js}"></script>
+<script type="text/javascript" src="../../static/js/blog/create.js" th:src="@{/js/blog/create.js}"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<div class="container">
+    <form data-th-action="@{/projectConfigs}" method="post" id="projectConfigForm" data-th-object="${projectModel.projectConfigModifyForm}">
+        <h5>修改项目：<span data-th-text="${projectConfigModifyForm.projectName}"></span></h5>
+        <hr>
+
+        <input type="hidden" id="projectConfigId" data-th-value="*{projectId}">
+        <div class="form-group">
+            <label for="scopeSelect">访问范围</label>
+            <select class="custom-select" id="scopeSelect" name="scopeSelect" data-placeholder="访问范围">
+                <option value="0" data-th-selected="*{scope} eq 0">公开</option>
+                <option value="3" data-th-selected="*{scope} eq 3">私人</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="contributionNotAllowedSelect">投稿是否允许</label>
+            <select class="custom-select" id="contributionNotAllowedSelect" name="contributionNotAllowedSelect" data-placeholder="请选择是否允许投稿">
+                <option value="0" data-th-selected="*{contributionNotAllowed} eq 0">是</option>
+                <option value="1" data-th-selected="*{contributionNotAllowed} eq 1">否</option>
+            </select>
+        </div>
+
+        <button type="button" class="btn btn-outline-primary btn-block" id="projectConfigUpdate">更新</button>
+
+    </form>
+</div>
+<script type="text/javascript" src="../../../static/js/project/config/modify.js" data-th-src="@{/js/project/config/modify.js}"></script>

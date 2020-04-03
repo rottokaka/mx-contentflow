@@ -1,0 +1,35 @@
+server:
+  port: 80
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mx_contentflow_prod?useSSL=false&serverTimezone=UTC&characterEncoding=utf-8
+    username: root
+    password: Kangda2019!
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: NON_NULL
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: true
+    show-sql: true
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    mode: HTML
+  jmx:
+    enabled: false
+
+file:
+  #文件导入路径
+  importPath: /var/import/
+  #文件导出路径
+  exportPath: /var/export/
+  #文件上传路径
+  upload-dir: /var/uploads/
+  #文件下载路径
+  download-dir: /var/downloads/

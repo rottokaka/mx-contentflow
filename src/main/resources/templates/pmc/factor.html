@@ -1,0 +1,48 @@
+<div class="container" data-th-if="${projectItemVoList} == null">
+    <h5>还未任何因素可以管理，请先创建项目</h5>
+</div>
+<div class="container p-0" data-th-if="${projectItemVoList} != null">
+    <form class="form-inline border-bottom">
+        <div class="form-group">
+            <a class="text-dark" id="searchFactor" href="javascript: void (0)"
+               data-th-attr="username=${#authentication.name}">
+                <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="form-group m-3" id="factorFormGroup">
+            <label for="factorSelect">因素：</label>
+            <select class="custom-select" id="factorSelect" name="factorSelect" data-placeholder="请选择因素类型">
+                <option value="" disabled>请因素</option>
+                <option value="FACTOR_VERSION">版本</option>
+                <option value="FACTOR_SUBJECT">专题</option>
+                <option value="FACTOR_SECTION">类型</option>
+            </select>
+        </div>
+        <div class="form-group m-3">
+            <label for="projectSelect">项目：</label>
+            <select class="custom-select" id="projectSelect" name="projectSelect" data-placeholder="请选择项目">
+                <option value="" disabled>请选择项目</option>
+                <option data-th-each="projectItemVo : ${projectItemVoList}" data-th-value="${projectItemVo.projectId}"
+                        data-th-text="${projectItemVo.name}"
+                        data-th-selected="${projectId} eq ${projectItemVo.projectId}"></option>
+            </select>
+        </div>
+        <div class="form-group m-3" id="versionFormGroup">
+            <label for="versionSelect">版本：</label>
+            <select class="custom-select" id="versionSelect" name="versionSelect" data-placeholder="请选择项目版本">
+                <option value="" disabled>请选择项目版本</option>
+            </select>
+        </div>
+        <div class="form-group m-3" id="subjectFormGroup">
+            <label for="subjectSelect">专题：</label>
+            <select class="custom-select" id="subjectSelect" name="subjectSelect" data-placeholder="请选择项目专题">
+
+            </select>
+        </div>
+    </form>
+    <div class="container p-0" id="mainFactorContainer">
+
+    </div>
+</div>
+
+<script type="text/javascript" src="../../static/js/pmc/factor.js" data-th-src="@{/js/pmc/factor.js}"></script>

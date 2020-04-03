@@ -1,0 +1,43 @@
+<div class="card-body" data-th-fragment="snippetCardVoList">
+    <ul class="list-group">
+        <li class="list-group-item p-0 my-1" data-th-each="snippetCardVo: ${snippetCardVoList}">
+            <div class="card border-0">
+                <div class="card-body">
+                    <!-- 第一行 标题 -->
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="card-title" data-th-if="${snippetCardVo.title} != null">
+                                <a class="h5" style="text-decoration: none" href="../detail.html"
+                                   data-th-href="@{'/snippet/' + ${snippetCardVo.snippetId} + '/detail'}">
+                                    <span><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;</span>
+                                    <span data-th-text="${snippetCardVo.title}"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 第二行 描述 -->
+                    <div class="row ml-4">
+                        <p class="card-text" data-th-text="${snippetCardVo.description}"></p>
+                    </div>
+                    <!-- 第三行 信息：作者，时间；快捷：阅读全文 -->
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="d-flex justify-content-start">
+                                <a class="badge badge-light" style="text-decoration: none" href="../../user/detail.html"
+                                   data-th-href="@{'/users/' + ${snippetCardVo.creatorIdentity}}"
+                                   data-th-text="${snippetCardVo.creatorIdentity}"></a>
+                                <small class="text-muted">&nbsp;更新于&nbsp;[[${#dates.format(snippetCardVo.gmtModified, 'yyyy-MM-dd')}]]</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="d-flex justify-content-end">
+                                <a class="btn btn-outline-secondary btn-sm" id="snippetCardVoDetail"
+                                   data-th-href="@{'/snippet/' + ${snippetCardVo.snippetId} + '/detail'}">阅读全文</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

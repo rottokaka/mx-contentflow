@@ -1,0 +1,18 @@
+<div class="container" id="subject">
+    <form data-th-action="@{/subjects}" method="post" data-th-object="${subjectModel.subjectModifyVo}" id="subjectForm">
+        <input type="hidden" name="subjectId" id="subjectId" data-th-value="*{subjectId}">
+
+        <div class="form-group">
+            <label class="sr-only" for="name"></label>
+            <input type="text" class="form-control" id="name" name="name" data-th-value="*{name}" placeholder="请输入因素名称">
+        </div>
+
+        <div class="form-group">
+            <label class="sr-only" for="description"></label>
+            <textarea rows="5" class="form-control" id="description" name="description" data-th-text="*{description}" placeholder="请输入因素描述"></textarea>
+        </div>
+
+        <button type="button" class="btn btn-outline-primary btn-block btn-sm" id="subjectUpdate">更新专题</button>
+
+    </form>
+</div>

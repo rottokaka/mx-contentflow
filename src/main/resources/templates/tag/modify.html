@@ -1,0 +1,20 @@
+<div class="container">
+    <form data-th-action="@{/tags}" data-th-object="${tagModel.tagModifyForm}" id="tagForm">
+        <input type="hidden" id="tagId" name="tagId" data-th-value="*{id}">
+
+        <div class="form-group">
+            <label for="name">名称</label>
+            <input type="text" class="form-control" id="name" name="name" data-th-value="*{name}"  placeholder="请输入标签名称">
+        </div>
+
+        <div class="form-group">
+            <label for="description">描述</label>
+            <textarea rows="5" class="form-control" id="description" name="description" data-th-text="*{description}" placeholder="请输入标签描述"></textarea>
+        </div>
+
+        <button type="button" class="btn btn-outline-primary btn-block" id="updateTag">更新</button>
+
+    </form>
+</div>
+
+<script type="text/javascript" src="../../static/js/tag/modify.js" data-th-src="@{/js/tag/modify.js}"></script>

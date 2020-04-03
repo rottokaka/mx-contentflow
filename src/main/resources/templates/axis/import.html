@@ -1,0 +1,32 @@
+<div class="container" data-th-if="${blogCardVoList} !=null and ${blogCardVoList.size()} < 1">
+    <p>还未创建任何博客</p>
+</div>
+<div class="container" data-th-if="${blogCardVoList} !=null and ${blogCardVoList.size()} > 0">
+    <div class="card">
+        <div class="card-body border-top d-flex justify-content-start" data-th-each="blogCardVo : ${blogCardVoList}">
+            <label for="blogCheck">
+                <input type="checkbox" class="form-check-input ml-1" id="blogCheck" name="insertCheck" data-th-attr="blogId=${blogCardVo.blogId}">
+            </label>
+            <div class=" ml-5">
+                <div class="row" data-th-if="${blogCardVo.tagItemVoList} != null and ${blogCardVo.tagItemVoList.size()} > 0">
+                    <ul class="list-inline float-left">
+                        <li class="list-inline-item">
+                            <i class="fa fa-tags fa-fw" aria-hidden="true"></i>
+                            <a href="javascript:void (0)" data-th-each="tagItemVo : ${blogCardVo.tagItemVoList}">
+                                <span class="badge badge-pill badge-info" data-th-text="${tagItemVo.name}"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <p class="card-text" data-th-if="${blogCardVo.summary} != null"
+                       data-th-text="${blogCardVo.summary}"></p>
+                    <p class="card-text" data-th-if="${blogCardVo.summary} == null">
+                        <em data-th-if="${blogCardVo.content.length()} <= 140" data-th-text="${blogCardVo.content}"></em>
+                        <em data-th-if="${blogCardVo.content.length()} > 140" data-th-text="${#strings.substring(blogCardVo.content, 0, 140)}"></em>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

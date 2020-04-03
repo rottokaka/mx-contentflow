@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragment/head :: head(~{::title}, ~{::link}, ~{})}">
+    <title>修改片段 - 积录</title>
+    <link rel="stylesheet" href="../../static/editor.md/css/editormd.min.css"
+          th:href="@{/editor.md/css/editormd.min.css}"/>
+</head>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+<div class="container" id="wrapper">
+    <div class="px-3 my-3 bg-light">
+        <h1 class="text-center">Instantly mark some good things.</h1>
+    </div>
+    <form th:action="@{/snippets}" method="post" data-th-object="${snippetModel.snippetModifyForm}" id="snippetForm">
+        <input type="hidden" id="snippetId" th:value="${snippetId}">
+        <div class="row">
+            <div class="col-md-8">
+                <label class="sr-only" for="title">可输入标题</label>
+                <input type="text" class="form-control" id="title" th:value="${snippetModifyForm.title}" placeholder="请输入标题">
+            </div>
+            <div class="col-md-2">
+                <div class="form-group mb-0">
+                    <label class="sr-only" for="scopeSelect">Scope Select</label>
+                    <select class="custom-select" id="scopeSelect">
+                        <option value="0" th:selected="${snippetModifyForm.scope} == 0">公开</option>
+                        <option value="3" th:selected="${snippetModifyForm.scope} == 3">私人</option>
+                        <option value="1" th:selected="${snippetModifyForm.scope} == 1" disabled>内容</option>
+                        <option value="2" th:selected="${snippetModifyForm.scope} == 2" disabled>秘密</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <a href="javascript:void (0)" class="btn btn-block btn-outline-primary" id="snippetUpdate">更新</a>
+            </div>
+        </div>
+
+        <div id="editormd" class="mt-2">
+            <label class="sr-only" for="content"></label>
+            <textarea rows="21" class="form-control editormd-markdown-textarea"
+                      id="content" th:text="${snippetModifyForm.content}" placeholder="快速提交，字数限制在140内..."></textarea>
+            <!-- Tips: Editor.md can auto append a `<textarea>` tag -->
+            <label>
+                <textarea style="display:none;">### Hello Editor.md !</textarea>
+            </label>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="sr-only" for="description">可输入描述</label>
+                <input type="text" class="form-control" id="description" th:value="${snippetModifyForm.description}" placeholder="可输入描述">
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<div th:replace="~{fragment/footer :: footer}"></div>
+<script th:inline="javascript">
+    const username = [[${#authentication.name}]]
+</script>
+<script type="text/javascript" src="../../static/editor.md/editormd.min.js" th:src="@{/editor.md/editormd.min.js}"></script>
+<script type="text/javascript" src="../../static/js/snippet/modify.js" th:src="@{/js/snippet/modify.js}"></script>
+</body>
+</html>

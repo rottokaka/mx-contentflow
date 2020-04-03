@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title, links, styles)">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- CSRF -->
+    <!--<meta name="_csrf" th:content="${_csrf.token}"/>-->
+    <!-- default header name is X-CSRF-TOKEN -->
+    <!--<meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+
+    <title th:replace="${title}">Title</title>
+
+    <!-- Tether core CSS -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/tether.min.css" th:href="@{/css/tether.min.css}">
+    <!-- Bootstrap CSS v4.3.0 -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <!-- Bootstrap Tagsinput CSS -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/bootstrap-tagsinput.css" th:href="@{/css/bootstrap-tagsinput.css}">
+    <!-- Bootstrap chosen CSS -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/component-chosen.min.css" th:href="@{/css/component-chosen.min.css}">
+    <!-- Bootstrap tageditor CSS -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/component-tageditor.min.css" th:href="@{/css/component-tageditor.min.css}">
+    <!-- Font-Awesome CSS -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}">
+    <!-- NProgress CSS -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/nprogress.css" th:href="@{/css/nprogress.css}">
+    <!-- Prettify -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/prettify.css" th:href="@{/css/prettify.css}">
+    <!-- toastr CSS -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/toastr.min.css" th:href="@{/css/toastr.min.css}">
+    <!-- jQuery image cropping plugin CSS -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/cropbox.css" th:href="@{/css/cropbox.css}">
+    <!-- editormd CSS -->
+    <link rel="stylesheet" type="text/css" href="../../static/editor.md/css/editormd.preview.min.css" th:href="@{/editor.md/css/editormd.preview.min.css}"/>
+
+    <!-- Custom styles -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/blog/main.css" th:href="@{/css/blog/main.css}">
+
+    <th:block th:replace="${links}">Links</th:block>
+    <th:block th:replace="${styles}">Styles</th:block>
+</head>
+<body></body>

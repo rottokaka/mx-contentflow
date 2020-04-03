@@ -1,0 +1,19 @@
+<div class="container" id="section">
+    <form data-th-action="@{/sections}" method="post" data-th-object="${sectionModel.sectionModifyVo}" id="sectionForm">
+
+        <input type="hidden" id="sectionId" name="sectionId" data-th-value="${sectionId}">
+
+        <div class="form-group">
+            <label class="sr-only" for="name"></label>
+            <input type="text" class="form-control" id="name" name="name" data-th-value="*{name}" placeholder="请输入类型名称">
+        </div>
+
+        <div class="form-group">
+            <label class="sr-only" for="description"></label>
+            <textarea rows="5" class="form-control" id="description" name="description" data-th-text="*{description}" placeholder="请输入类型描述"></textarea>
+        </div>
+
+        <button type="button" class="btn btn-outline-primary btn-block btn-sm" id="sectionUpdate">更新类型</button>
+
+    </form>
+</div>

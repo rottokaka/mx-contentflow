@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragment/head :: head(~{::title}, ~{}, ~{})}">
+    <title>积录 - 标签视图</title>
+</head>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+<div class="container" id="wrapper">
+    <div class="row">
+        <input type="hidden" id="currentTag" th:attr="tagId=${tagDetailVo.tagId}">
+        <div class="col-md-9">
+            <div class="container p-0">
+                <div class="jumbotron p-4 mb-2">
+                    <!--
+                        以下两个去名称的方式都可以正确取到
+                        ${tagDetailVo.tag.name} 对应，tagDetailVo.getTag().getName
+                        尽管 tagDetailVo 没有 tag 属性，但是存在getTag()方法，也存在getTag().getName()方法
+                        我取名getTag()方法来获取Tag对象仅仅是凑巧，假如换个名称 getTag()则取不到名称，
+                        结论：thymeleaf ${}取值关系getXxx()的方法，包括嵌套的方式，而不是关系属性
+                      -->
+                    <!--<h2 th:text="${tagDetailVo.tag.name}"></h2>-->
+                    <h2 th:text="${tagDetailVo.name}"></h2>
+                    <hr class="my-4">
+                    <p class="lead" th:text="${tagDetailVo.description}"></p>
+                </div>
+                <div class="mainContainer">
+                    <ul class="nav nav-pills border p-2" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-blog-tab" data-toggle="pill" href="#pills-blog" role="tab"
+                               aria-controls="pills-blog" aria-selected="true">博客</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-user-tab" data-toggle="pill" href="#pills-user" role="tab"
+                               aria-controls="pills-user" aria-selected="false">用户</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade active show" id="pills-blog" role="tabpanel" aria-labelledby="pills-blog-tab">
+                            <div th:replace="~{blog/fragment/card-list :: blogCardVoList}"></div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-user" role="tabpanel" aria-labelledby="pills-user-tab">
+                            <div th:replace="~{user/fragment/card-list :: userCardVoList}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div>
+                <h5 class="mb-2"><strong> 关联标签</strong></h5>
+                <div th:if="${tagDetailVo.tagRelevantVoList} != null and ${tagDetailVo.tagRelevantVoList.size()} < 1">
+                    <span class="h6 ml-2">暂无任何关联标签</span>
+                </div>
+                <div class="ml-2" th:if="${tagDetailVo.tagRelevantVoList} != null and ${tagDetailVo.tagRelevantVoList.size()} > 0"
+                     th:each="tagRelevantVo : ${tagDetailVo.tagRelevantVoList}" >
+                    <a href="javascript:void (0)" th:href="@{'/tag/' + ${tagRelevantVo.tagName}}">
+                        <span class="badge badge-pill badge-info" th:text="${tagRelevantVo.tagName}"></span>
+                    </a>
+                    <span>*</span>
+                    <span class="badge tag-size" th:text="${tagRelevantVo.counter}"></span>
+                </div>
+            </div>
+            <hr>
+            <h3><i class="fa fa-tags"></i>&nbsp; <span>&nbsp;标签同义词</span></h3>
+            <hr>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragment/footer :: footer}"></div>
+<script type="text/javascript" src="../../static/js/tag/detail.js" th:src="@{/js/tag/detail.js}"></script>
+</body>
+</html>

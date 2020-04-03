@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragment/head :: head(~{::title}, ~{}, ~{})}">
+    <title>片段主页 - 积录</title>
+</head>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+<div class="container" id="wrapper">
+    <div class="card border-0">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="input-group">
+                        <input class="form-control" id="snippetK" type="search" placeholder="Search" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn text-secondary" type="submit" id="searchSnippet">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="snippetSort">排序:</label>
+                        </div>
+                        <select id="snippetSort" class="form-control form-control-chosen-require"
+                                data-placeholder="请选择排序方式">
+                            <option value="CREATED_RECENTLY">最新创建</option>
+                            <option value="UPDATED_RECENTLY">最新更新</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="card-body" th:replace="~{blog/fragment/card-list :: snippetCardVoList}"></div>
+        <div class="card-footer" th:insert="~{fragment/pagination :: pagination}"></div>
+    </div>
+</div>
+<div th:replace="~{fragment/footer :: footer}"></div>
+<script type="text/javascript" src="../../static/js/snippet/index.js" th:src="@{/js/snippet/index.js}"></script>
+</body>
+</html>

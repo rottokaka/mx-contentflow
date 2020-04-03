@@ -1,0 +1,7 @@
+<div class="row mt-1">
+    <label for="topicSelect"></label>
+    <select class="form-control form-control-chosen" id="topicSelect" data-placeholder="Please select..." multiple>
+        <option data-th-each="topic : ${topicSet}" data-th-value="${topic.id}" data-th-text="${topic.name}"></option>
+    </select>
+</div>
+<script src="../../static/js/project/create_input.js" data-th-src="@{/js/topic/create_input.js}"></script>

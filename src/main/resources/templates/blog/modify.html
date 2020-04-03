@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragment/head :: head(~{::title}, ~{::link}, ~{})}">
+    <title>积录 - 更新博客</title>
+    <link rel="stylesheet" href="../../static/editor.md/css/editormd.min.css" th:href="@{/editor.md/css/editormd.min.css}"/>
+</head>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+<div class="container" id="wrapper">
+    <form th:action="@{/blogs}" method="post" data-th-object="${blogModel.blogModifyForm}" id="blogForm">
+        <input type="hidden" id="blogId" name="blogId" th:value="${blogModifyForm.id}">
+
+        <div class="row">
+            <div class="col-md-9">
+                <label class="sr-only" for="title"></label>
+                <input type="text" class="form-control" id="title" th:value="${blogModifyForm.title}" placeholder="标题（可选）">
+            </div>
+            <div class="col-md-3">
+                <a href="javascript:void (0)" class="btn btn-block btn-outline-primary" id="updateBlog">更新</a>
+            </div>
+        </div>
+
+        <div id="editormd" class="mt-2">
+            <!-- Tips: Editor.md can auto append a `<textarea>` tag -->
+            <label class="sr-only" for="blogContent"></label>
+            <textarea id="blogContent" style="display:none;" th:text="${blogModifyForm.content}">### Hello Editor.md !</textarea>
+        </div>
+    </form>
+
+</div>
+<div th:replace="~{fragment/footer :: footer}"></div>
+<script th:inline="javascript">
+    const username = [[${#authentication.name}]]
+</script>
+<script type="text/javascript" src="../../static/editor.md/editormd.min.js" th:src="@{/editor.md/editormd.min.js}"></script>
+<script type="text/javascript" src="../../static/js/blog/update.js" th:src="@{/js/blog/update.js}"></script>
+</body>
+</html>

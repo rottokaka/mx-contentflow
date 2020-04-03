@@ -1,0 +1,98 @@
+<div class="card border-0">
+    <!--<div class="card-header">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="input-group">
+                    <input class="form-control" id="snippetK" type="search" placeholder="Search" aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn text-secondary" type="submit" id="searchSnippet">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="snippetSort">排序:</label>
+                    </div>
+                    <select id="snippetSort" class="form-control form-control-chosen-require" data-placeholder="请选择排序方式">
+                        <option value="CREATED_RECENTLY">最新创建</option>
+                        <option value="UPDATED_RECENTLY">最新更新</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+    </div>-->
+    <div class="card-body p-0" id="snippetCardContainer">
+        <ul class="list-group-flush">
+            <li class="list-group-item p-0" data-th-each="snippet: ${snippetList}">
+                <div class="card border-0">
+                    <div class="card-body">
+                        <!-- 第一行 标题 -->
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="card-title" data-th-if="${snippet.title} != null">
+                                    <a class="h5" style="text-decoration: none" href="detail.html" data-th-href="@{'/snippet/' + ${snippet.id}}">
+                                        <span><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;</span>
+                                        <span data-th-text="${snippet.title}"></span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!--<div class="col-md-3">
+                                <div class="d-flex justify-content-end">
+                                    <div>
+                                        <span data-th-text="${snippet.readerAtContentVO.counterSum}">999</span>
+                                        <small class="text-muted">阅读</small>
+                                    </div>
+                                    <div class="ml-2">
+                                        <span class="text-success"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
+                                        <small class="text-muted" data-th-text="${snippet.readerAtContentVO.likePercent}">70%</small>
+                                    </div>
+                                </div>
+                            </div>-->
+                        </div>
+                        <!-- 第二行 描述 -->
+                        <div class="row ml-4">
+                            <p class="card-text" data-th-text="${snippet.description}"></p>
+                        </div>
+                        <!-- 第三行 信息：作者，时间；快捷：阅读全文 -->
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="d-flex justify-content-start">
+                                    <a class="badge badge-light" style="text-decoration: none" href="../user/detail.html" data-th-href="@{'/users/' + ${snippet.user.username}}"
+                                       data-th-text="${snippet.user.username}"></a>
+                                    <small class="text-muted">&nbsp;更新于&nbsp;[[${#dates.format(snippet.gmtModified, 'yyyy-MM-dd')}]]</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="d-flex justify-content-end">
+                                    <a class="btn btn-outline-secondary btn-sm" id="snippetDetail" data-th-href="@{'/snippet/' + ${snippet.id}}">阅读全文</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+    <div class="card-footer">
+        <div>
+            <strong>总数量</strong> [[${snippetPage.totalElements}]]
+            <strong>总页数</strong> [[${snippetPage.totalPages}]]
+            <strong>当前页码数字</strong> [[${snippetPage.number}]]
+            <strong>指定页面数量</strong> [[${snippetPage.size}]]
+            <strong>当前页面数量</strong> [[${snippetPage.numberOfElements}]]
+            <strong>isFirst</strong> [[${snippetPage.first}]]
+            <strong>isLast</strong> [[${snippetPage.last}]]
+            <strong>isLast</strong> [[${snippetPage.last}]]
+            <strong>isLast</strong> [[${snippetPage.last}]]
+        </div>
+        <div id="pagination">
+            <div data-th-replace="~{fragment/pagination :: pagination}"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../static/js/snippet/card-list.js" data-th-src="@{/js/snippet/card-list.js}"></script>

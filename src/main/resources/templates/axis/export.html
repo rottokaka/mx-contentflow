@@ -1,0 +1,49 @@
+<div class="container" data-th-if="${productAtAxisVoList} == null or ${productAtAxisVoList.size()} < 1">
+    <p>还未任何博客，用于坐标管理</p>
+</div>
+<div class="container" data-th-if="${productAtAxisVoList} != null and ${productAtAxisVoList.size()} > 0">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">编号</th>
+            <th scope="col">标题</th>
+            <th scope="col">内容</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="productAtAxisVo : ${productAtAxisVoList}">
+            <th scope="row">
+                <label for="blog">
+                    <input type="checkbox" class="form-check-input ml-1" id="blog" name="updateCheck" data-th-attr="blogId=${productAtAxisVo.productId}">
+                </label>
+            </th>
+            <th scope="row" data-th-text="${productAtAxisVo.productId}">1</th>
+            <th scope="row" data-th-text="${productAtAxisVo.title}">1</th>
+            <th scope="row">
+                <a class="text-dark blog-view" href="javascript:void (0)" data-th-attr="blogId=${productAtAxisVo.productId}"
+                   data-toggle="modal" data-target="#blogViewModal" title="查看">
+                    <i class="fa fa-eye fa-lg fa-fw"></i>
+                </a>
+            </th>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!-- blogViewModal -->
+<div class="modal fade" id="blogViewModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">博客查看</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="blogViewModalContainer">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../static/js/axis/export.js" data-th-src="@{/js/axis/export.js}"></script>

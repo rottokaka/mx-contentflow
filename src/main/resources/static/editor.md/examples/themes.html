@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8" />
+        <title>Themes - Editor.md examples</title>
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="../css/editormd.css" />
+        <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon" />
+        <style>
+            /* Custom Editor.md subject css example */
+            /*
+            .editormd-subject-dark {
+                border-color: #1a1a17;
+
+            }
+
+            .editormd-subject-dark .editormd-toolbar {
+                background: #1A1A17;
+                border-color: #1a1a17;
+            }
+
+            .editormd-subject-dark .editormd-menu > li > a {
+                color: #777;
+                border-color: #1a1a17;
+            }
+
+            .editormd-subject-dark .editormd-menu > li.divider {
+                border-right: 1px solid #111;
+            }
+
+            .editormd-subject-dark .editormd-menu > li > a:hover, .editormd-menu > li > a.active {
+                border-color: #333;
+                background: #333;
+            }*/
+        </style>
+    </head>
+    <body>
+        <div id="layout">
+            <header>
+                <h1>Themes</h1>
+                <p>
+                    <select id="editormd-subject-select">
+                        <option selected="selected" value="">select Editor.md themes</option>
+                    </select>
+                    <select id="editor-area-subject-select">
+                        <option selected="selected" value="">select editor area themes</option>
+                    </select>
+                    <select id="preview-area-subject-select">
+                        <option selected="selected" value="">select preview area themes</option>
+                    </select>
+                </p>
+            </header>
+            <div id="test-editormd">
+                <textarea style="display:none;">[TOC]
+
+### Themes
+
+#### Setting
+
+configs:
+
+```javascript
+{
+    // Editor.md subject, default or dark, change at v1.5.0
+    // You can also custom css class .editormd-subject-xxxx
+    subject : "default | dark",
+
+    // Preview container subject, added v1.5.0
+    // You can also custom css class .editormd-preview-subject-xxxx
+    previewTheme : "default | dark",
+
+    // Added @v1.5.0 & after version this is CodeMirror (editor area) subject
+    editorTheme : editormd.editorThemes['subject-name']
+}
+```
+
+functions:
+
+```javascript
+editor.setTheme('subject-name');
+editor.setEditorTheme('subject-name');
+editor.setPreviewTheme('subject-name');
+```
+
+#### Default subject
+
+- Editor.md subject : `default`
+- Preview area subject : `default`
+- Editor area subject : `default`
+
+> Recommend `dark` subject.
+
+#### Recommend editor area themes
+
+- ambiance
+- eclipse
+- mdn-like
+- mbo
+- monokai
+- neat
+- pastel-on-dark
+
+#### Editor area themes
+
+- default
+- 3024-day
+- 3024-night
+- ambiance
+- ambiance-mobile
+- base16-dark
+- base16-light
+- blackboard
+- cobalt
+- eclipse
+- elegant
+- erlang-dark
+- lesser-dark
+- mbo
+- mdn-like
+- midnight
+- monokai
+- neat
+- neo
+- night
+- paraiso-dark
+- paraiso-light
+- pastel-on-dark
+- rubyblue
+- solarized
+- the-matrix
+- tomorrow-night-eighties
+- twilight
+- vibrant-ink
+- xq-dark
+- xq-light
+</textarea>
+            </div>
+        </div>
+        <script src="js/jquery.min.js"></script>
+        <script src="../editormd.js"></script>
+        <script type="text/javascript">
+			var testEditor;
+
+            function themeSelect(id, themes, lsKey, callback)
+            {
+                var select = $("#" + id);
+
+                for (var i = 0, len = themes.length; i < len; i ++)
+                {
+                    var subject    = themes[i];
+                    var selected = (localStorage[lsKey] == subject) ? " selected=\"selected\"" : "";
+
+                    select.append("<option value=\"" + subject + "\"" + selected + ">" + subject + "</option>");
+                }
+
+                select.bind("change", function(){
+                    var subject = $(this).val();
+
+                    if (subject === "")
+                    {
+                        alert("subject == \"\"");
+                        return false;
+                    }
+
+                    console.log("lsKey =>", lsKey, subject);
+
+                    localStorage[lsKey] = subject;
+                    callback(select, subject);
+                });
+
+                return select;
+            }
+
+            $(function() {
+                testEditor = editormd("test-editormd", {
+                    width        : "90%",
+                    height       : 720,
+
+                    // Editor.md subject, default or dark, change at v1.5.0
+                    // You can also custom css class .editormd-preview-subject-xxxx
+                    subject        : (localStorage.subject) ? localStorage.subject : "dark",
+
+                    // Preview container subject, added v1.5.0
+                    // You can also custom css class .editormd-preview-subject-xxxx
+                    previewTheme : (localStorage.previewTheme) ? localStorage.previewTheme : "dark",
+
+                    // Added @v1.5.0 & after version is CodeMirror (editor area) subject
+                    editorTheme  : (localStorage.editorTheme) ? localStorage.editorTheme : "pastel-on-dark",
+                    path         : '../lib/'
+                });
+
+                themeSelect("editormd-subject-select", editormd.themes, "subject", function($this, subject) {
+                    testEditor.setTheme(subject);
+                });
+
+                themeSelect("editor-area-subject-select", editormd.editorThemes, "editorTheme", function($this, subject) {
+                    testEditor.setCodeMirrorTheme(subject);
+                    // or testEditor.setEditorTheme(subject);
+                });
+
+                themeSelect("preview-area-subject-select", editormd.previewThemes, "previewTheme", function($this, subject) {
+                    testEditor.setPreviewTheme(subject);
+                });
+            });
+        </script>
+    </body>
+</html>
