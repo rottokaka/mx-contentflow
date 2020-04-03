@@ -15,6 +15,7 @@ import org.mxframework.contentflow.representation.iaa.vo.UserCardVO;
 import org.mxframework.contentflow.representation.iaa.vo.UserDetailVO;
 import org.mxframework.contentflow.representation.pmc.project.dto.ProjectItemDTO;
 import org.mxframework.contentflow.representation.pmc.project.vo.ProjectItemVO;
+import org.mxframework.contentflow.representation.sis.tag.dto.TagItemDTO;
 import org.mxframework.contentflow.representation.sis.tag.vo.TagItemVO;
 import org.mxframework.contentflow.service.iaa.ProjectTranslator;
 import org.mxframework.contentflow.service.iaa.TagTranslator;
@@ -116,7 +117,12 @@ public class UserApplicationService {
     }
 
     public List<TagItemVO> listTagItemVoByUsername(String username) {
-        return tagTranslator.convertToItemVo(tagApplicationService.listItemByIdentity(username));
+        List<TagItemDTO> tagItemDtoList = tagApplicationService.listItemByIdentity(username);
+        if (tagItemDtoList != null && tagItemDtoList.size() >0) {
+            return tagTranslator.convertToItemVo(tagItemDtoList);
+        } else {
+            return null;
+        }
     }
 
     public User post(UserCreateForm userCreateForm) {
