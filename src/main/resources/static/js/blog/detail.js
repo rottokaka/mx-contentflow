@@ -170,7 +170,7 @@ $(function () {
     function listProject() {
         $.ajax({
             type: 'GET',
-            url: '/axis/blog/project_item?blogId=' + blogId,
+            url: '/axis/product/' + blogId + '/project',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 $('#projectList').html(data);

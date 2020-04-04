@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -121,8 +122,8 @@ public class AxisController {
      * @param model  模型
      * @return 模型视图
      */
-    @GetMapping("/blog/project_item")
-    public ModelAndView listInBtnByBlog(String blogId, Model model) {
+    @GetMapping("product/{blogId}/project")
+    public ModelAndView listInBtnByBlog(@PathVariable String blogId, Model model) {
         model.addAttribute("projectItemVoList", axisApplicationService.listProjectItemVoByBlogId(blogId));
         model.addAttribute("flag", "blog");
         return new ModelAndView("axis/product/blog/project-item", "projectModel", model);

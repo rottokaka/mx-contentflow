@@ -2,7 +2,7 @@
     <ul class="list-group list-group-horizontal-sm">
         <li class="list-group-item p-2" data-th-if="${projectItemVoList.size()} > 0" data-th-each="projectItemVo : ${projectItemVoList}">
             <a style="text-decoration: none" data-th-href="@{'/project/'+ ${projectItemVo.projectId} + '/detail'}" 
-               target="_blank" data-th-attr="topicId=${projectItemVo.id}">
+               target="_blank" data-th-attr="topicId=${projectItemVo.projectId}">
                 <span class="text-dark" data-th-text="${projectItemVo.name}"></span>
             </a>
         </li>
