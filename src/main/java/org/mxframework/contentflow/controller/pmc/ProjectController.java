@@ -36,7 +36,7 @@ public class ProjectController {
      */
     @GetMapping
     public ModelAndView getIndex(Model model) {
-        List<ProjectItemVO> projectItemVoList = projectApplicationService.listItemVoPublic();
+        List<ProjectItemVO> projectItemVoList = projectApplicationService.listItemVoTop();
         model.addAttribute("projectItemVoList", projectItemVoList);
         return new ModelAndView("project/index", "projectModel", model);
     }

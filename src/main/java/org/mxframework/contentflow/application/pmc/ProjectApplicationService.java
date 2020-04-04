@@ -131,6 +131,16 @@ public class ProjectApplicationService {
         }
     }
 
+    public List<ProjectItemVO> listItemVoTop() {
+        List<Project> projectList = projectService.listByAboveProjectIdIdAndScope(ProjectConstant.PROJECT_DEFAULT_ABOVE_ID
+                , ScopeConstant.SCOPE_PUBLIC);
+        if (projectList != null && projectList.size() > 0) {
+            return projectTranslator.convertToItemVo(projectList);
+        } else {
+            return null;
+        }
+    }
+
     public List<ProjectManageVO> listManageVoByIdentity() {
         List<Project> projectList = projectService.listByCreator(new Creator(identityApplicationService.identity()));
         if (projectList != null && projectList.size() > 0) {
@@ -209,4 +219,5 @@ public class ProjectApplicationService {
         // 删除项目
         projectService.remove(projectService.getByProjectId(project.projectId()));
     }
+
 }

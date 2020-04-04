@@ -8,16 +8,16 @@
 <div class="container" id="wrapper">
     <div class="row">
         <div class="col-md-9" id="mainContainer">
-            <p th:if="${projectItemVoList} == null">&nbsp;&nbsp; 还未任何项目，</p>
+
         </div>
         <div class="col-md-3">
             <div>
                 <h3><i class="fa fa-tasks"></i>&nbsp; 项目列表</h3>
                 <hr>
-                <div th:if="${projectItemVoList} != null">
+                <div th:if="${projectItemVoList} == null">
                     <p>还未任何项目</p>
                 </div>
-                <ul class="list-group" th:if="${projectItemVoList} !=null and ${projectItemVoList.size()} > 0">
+                <ul class="list-group" th:if="${projectItemVoList} != null and ${projectItemVoList.size()} > 0">
                     <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-1"
                         th:each="projectItemVO : ${projectItemVoList}" th:attr="projectId=${projectItemVO.projectId}">
                     <span class="ml-2">

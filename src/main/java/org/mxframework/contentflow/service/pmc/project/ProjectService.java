@@ -52,6 +52,10 @@ public class ProjectService {
         return (List<Project>) projectRepository.projectsOfAboveProjectId(aboveProjectId);
     }
 
+    public List<Project> listByAboveProjectIdIdAndScope(String aboveProjectId, Integer scope) {
+        return (List<Project>) projectRepository.projectsOfAboveProjectIdAndScope(aboveProjectId, scope);
+    }
+
     public List<Project> listByCreator(Creator creator) {
         return (List<Project>) projectRepository.projectsOfCreator(creator);
     }
@@ -67,4 +71,5 @@ public class ProjectService {
     public void remove(Project project) {
         projectRepository.remove(project);
     }
+
 }

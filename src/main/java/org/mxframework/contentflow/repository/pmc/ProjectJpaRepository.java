@@ -6,6 +6,7 @@ import org.mxframework.contentflow.domain.model.pmc.project.ProjectId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -21,6 +22,8 @@ public interface ProjectJpaRepository extends JpaRepository<Project, Long> {
     List<Project> findAllByScope(Integer scope);
 
     List<Project> findAllByAboveProjectId(String aboveProjectId);
+
+    List<Project> findAllByAboveProjectIdAndScope(String aboveProjectId, Integer scope);
 
     List<Project> findAllByCreator(Creator creator);
 

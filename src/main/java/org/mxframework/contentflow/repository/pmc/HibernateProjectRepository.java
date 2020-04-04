@@ -57,6 +57,11 @@ public class HibernateProjectRepository implements ProjectRepository {
     }
 
     @Override
+    public Collection<Project> projectsOfAboveProjectIdAndScope(String aboveProjectId, Integer scope) {
+        return projectJpaRepository.findAllByAboveProjectIdAndScope(aboveProjectId, scope);
+    }
+
+    @Override
     public void add(Project project) {
         projectJpaRepository.save(project);
     }
