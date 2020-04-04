@@ -25,10 +25,20 @@ public interface SectionJpaRepository extends JpaRepository<Section, Long> {
     Section findBySectionId(SectionId sectionId);
 
     /**
+     * 查找类型
+     *
+     * @param versionId 版本ID
+     * @param name      名称
+     * @return 类型
+     */
+    Section findByVersionIdAndName(VersionId versionId, String name);
+
+    /**
      * 列出类型
      *
      * @param versionId 版本ID
      * @return 类型集合
      */
     List<Section> findAllByVersionId(VersionId versionId);
+
 }

@@ -28,20 +28,20 @@ public class SectionService {
         return sectionRepository.sectionOfSectionId(sectionId);
     }
 
+    public Section getByVersionIdAndName(VersionId versionId, String name) {
+        return sectionRepository.sectionOfVersionIdAndName(versionId, name);
+    }
+
     public List<Section> listByVersionId(VersionId versinId) {
         return (List<Section>) sectionRepository.sectionsOfVersionId(versinId);
     }
 
-    public void add(Section section) {
+    public void save(Section section) {
         sectionRepository.add(section);
     }
 
     public void update(Section section) {
         sectionRepository.add(section);
-    }
-
-    public void addAll(List<Section> sections) {
-        sectionRepository.addAll(sections);
     }
 
     public void delete(Section section) {

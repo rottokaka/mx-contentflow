@@ -3,13 +3,13 @@ package org.mxframework.contentflow.application.pmc;
 import org.mxframework.contentflow.domain.model.pmc.project.section.Section;
 import org.mxframework.contentflow.domain.model.pmc.project.section.SectionId;
 import org.mxframework.contentflow.domain.model.pmc.project.version.VersionId;
+import org.mxframework.contentflow.exception.MxException;
 import org.mxframework.contentflow.representation.pmc.section.form.SectionCreateForm;
 import org.mxframework.contentflow.representation.pmc.section.form.SectionModifyForm;
 import org.mxframework.contentflow.representation.pmc.section.vo.SectionBaseVO;
 import org.mxframework.contentflow.representation.pmc.section.vo.SectionItemVO;
 import org.mxframework.contentflow.representation.pmc.section.vo.SectionManageVO;
 import org.mxframework.contentflow.service.pmc.project.SectionService;
-import org.mxframework.contentflow.service.pmc.project.SubjectService;
 import org.mxframework.contentflow.service.pmc.translator.SectionTranslator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,8 +29,6 @@ public class SectionApplicationService {
 
     @Autowired
     private SectionService sectionService;
-    @Autowired
-    private SubjectService subjectService;
     @Autowired
     private SectionTranslator sectionTranslator;
 
@@ -61,20 +59,31 @@ public class SectionApplicationService {
         }
     }
 
-
     @Transactional(rollbackFor = {Exception.class})
     public Section post(SectionCreateForm sectionCreateForm) {
+        Section byVersionIdAndName = sectionService.getByVersionIdAndName(new VersionId(sectionCreateForm.getVersionId())
+                , sectionCreateForm.getName());
+        if (byVersionIdAndName != null) {
+            // TODO Exception Handle
+            throw new MxException("类型已创建！");
+        }
         SectionId sectionId = sectionService.nextIdentity();
         VersionId versionId = new VersionId(sectionCreateForm.getVersionId());
         Section section = new Section(sectionId, versionId, sectionCreateForm.getName());
         section.setRank(sectionService.listByVersionId(versionId).size() + 1);
-        sectionService.add(section);
+        sectionService.save(section);
         return sectionService.getBySectionId(sectionId);
     }
 
     @Transactional(rollbackFor = {Exception.class})
     public SectionBaseVO putBySectionId(String sectionId, SectionModifyForm sectionModifyForm) {
         Section bySectionId = sectionService.getBySectionId(new SectionId(sectionId));
+        Section byVersionIdAndName = sectionService.getByVersionIdAndName(bySectionId.versionId()
+                , sectionModifyForm.getName());
+        if (byVersionIdAndName != null) {
+            // TODO Exception Handle
+            throw new MxException("类型已存在！");
+        }
         bySectionId.setName(sectionModifyForm.getName());
         bySectionId.setDescription(sectionModifyForm.getDescription());
         sectionService.update(bySectionId);
@@ -83,10 +92,13 @@ public class SectionApplicationService {
 
     @Transactional(rollbackFor = {Exception.class})
     public void deleteBySectionId(String sectionId) {
-        Section section = sectionService.getBySectionId(new SectionId(sectionId));
+        Section bySectionId = sectionService.getBySectionId(new SectionId(sectionId));
+        if (bySectionId == null) {
+            throw new MxException("类型已删除！");
+        }
         // 关联坐标
         axisApplicationService.deleteAllBySectionId(sectionId);
-        sectionService.delete(section);
+        sectionService.delete(bySectionId);
     }
 
     @Transactional(rollbackFor = {Exception.class})

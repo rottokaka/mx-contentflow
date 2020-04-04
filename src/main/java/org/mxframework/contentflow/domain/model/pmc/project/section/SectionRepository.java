@@ -13,6 +13,8 @@ public interface SectionRepository {
 
     Section sectionOfSectionId(SectionId sectionId);
 
+    Section sectionOfVersionIdAndName(VersionId versionId, String name);
+
     Collection<Section> sectionsOfVersionId(VersionId versionId);
 
     void add(Section section);

@@ -33,6 +33,11 @@ public class HibernateSectionRepository implements SectionRepository {
     }
 
     @Override
+    public Section sectionOfVersionIdAndName(VersionId versionId, String name) {
+        return sectionJpaRepository.findByVersionIdAndName(versionId, name);
+    }
+
+    @Override
     public Collection<Section> sectionsOfVersionId(VersionId versionId) {
         return sectionJpaRepository.findAllByVersionId(versionId);
     }
