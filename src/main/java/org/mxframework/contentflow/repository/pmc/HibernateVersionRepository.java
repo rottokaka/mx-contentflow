@@ -16,7 +16,7 @@ import java.util.Collection;
 @Component
 public class HibernateVersionRepository implements VersionRepository {
 
-    private final static String VERSION_ID_PREFIX = "pmc-project-";
+    private final static String VERSION_ID_PREFIX = "pmc-version-";
 
     @Autowired
     private VersionJpaRepository versionJpaRepository;
@@ -29,6 +29,11 @@ public class HibernateVersionRepository implements VersionRepository {
     @Override
     public Version versionOfVersionId(VersionId versionId) {
         return versionJpaRepository.findByVersionId(versionId);
+    }
+
+    @Override
+    public Version versionOfProjectIdAndName(ProjectId projectId, String name) {
+        return versionJpaRepository.findByProjectIdAndName(projectId, name);
     }
 
     @Override

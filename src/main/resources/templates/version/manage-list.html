@@ -1,16 +1,16 @@
-<div class="container d-flex justify-content-start" data-th-if="${versionManageVoList} != null and ${versionManageVoList.size()} < 1">
-    <a class="text-dark version-create" href="javascript:void (0)" role="button"  data-toggle="modal" data-target="#versionModal" title="新增主题">
-        <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
-    </a>
-    <p class="pt-2">该条件没有任何版本</p>
-</div>
-<div class="container p-0" id="versionMainContainer">
+<div class="container-fluid d-flex justify-content-start" id="versionMainContainer">
     <input type="hidden" id="projectId" data-th-value="${projectId}">
+    <div class="d-flex" data-th-if="${versionManageVoList} == null or ${versionManageVoList.size()} < 1">
+        <a class="btn text-dark version-create" href="javascript:void (0)" role="button"  data-toggle="modal" data-target="#versionModal" title="新增主题">
+            <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
+        </a>
+        <p class="pt-2">该项目下没有任何版本</p>
+    </div>
     <table class="table table-striped" id="versionList" data-th-if="${versionManageVoList} != null and ${versionManageVoList.size()} > 0">
         <thead>
         <tr>
             <th scope="col">
-                <a class="text-dark version-create" href="javascript:void (0)" data-toggle="modal" data-target="#versionModal" title="新增版本">
+                <a class="btn text-dark version-create" href="javascript:void (0)" data-toggle="modal" data-target="#versionModal" title="新增版本">
                     <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
                 </a>
             </th>

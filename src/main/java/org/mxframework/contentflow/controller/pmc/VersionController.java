@@ -66,6 +66,6 @@ public class VersionController {
     @PreAuthorize("hasRole('USER')")
     public ModelAndView update(@PathVariable String versionId, Model model) {
         model.addAttribute("versionModifyForm", versionApplicationService.getModifyFormByVersionId(versionId));
-        return new ModelAndView("version/update", "versionModel", model);
+        return new ModelAndView("version/modify", "versionModel", model);
     }
 }

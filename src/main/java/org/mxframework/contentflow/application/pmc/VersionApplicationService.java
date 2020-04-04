@@ -3,6 +3,7 @@ package org.mxframework.contentflow.application.pmc;
 import org.mxframework.contentflow.domain.model.pmc.project.ProjectId;
 import org.mxframework.contentflow.domain.model.pmc.project.version.Version;
 import org.mxframework.contentflow.domain.model.pmc.project.version.VersionId;
+import org.mxframework.contentflow.exception.MxException;
 import org.mxframework.contentflow.representation.pmc.version.VersionCreateForm;
 import org.mxframework.contentflow.representation.pmc.version.VersionModifyForm;
 import org.mxframework.contentflow.representation.pmc.version.vo.VersionItemVO;
@@ -83,41 +84,61 @@ public class VersionApplicationService {
         }
     }
 
-    public void add(Version version) {
-        versionService.add(version);
+    @Transactional(rollbackFor = {Exception.class})
+    public void save(Version version) {
+        versionService.save(version);
     }
 
     @Transactional(rollbackFor = {Exception.class})
     public Version post(VersionCreateForm versionCreateForm) {
+        Version byProjectIdAndName = versionService.getByProjectIdAndName(new ProjectId(versionCreateForm.getProjectId())
+                , versionCreateForm.getName());
+        if (byProjectIdAndName != null) {
+            // TODO Exception Handle
+            throw new MxException("版本已创建！");
+        }
         VersionId versionId = versionService.nextIdentity();
         ProjectId projectId = new ProjectId(versionCreateForm.getProjectId());
         Version version = new Version(versionId, projectId, versionCreateForm.getName());
         version.setDescription(versionCreateForm.getDescription());
         version.setRank(versionService.listByProjectId(projectId).size() + 1);
-        versionService.add(version);
+        versionService.save(version);
         return versionService.getByVersionId(versionId);
     }
 
     @Transactional(rollbackFor = {Exception.class})
     public Version updateByVersionId(VersionId versionId, VersionModifyForm versionModifyForm) {
-        Version ofVersionId = versionService.getByVersionId(versionId);
-        ofVersionId.setName(versionModifyForm.getName());
-        ofVersionId.setDescription(versionModifyForm.getDescription());
-        versionService.add(ofVersionId);
-        return ofVersionId;
+        Version byVersionId = versionService.getByVersionId(versionId);
+        Version byProjectIdAndName = versionService.getByProjectIdAndName(byVersionId.projectId(), versionModifyForm.getName());
+        if (byProjectIdAndName != null) {
+            // TODO Exception Handle
+            throw new MxException("版本已存在！");
+        }
+        byVersionId.setName(versionModifyForm.getName());
+        byVersionId.setDescription(versionModifyForm.getDescription());
+        versionService.update(byVersionId);
+        return byVersionId;
     }
 
     @Transactional(rollbackFor = {Exception.class})
     public void deleteByVersionId(String versionId) {
         // 关联版本
-        Version version = versionService.getByVersionId(new VersionId(versionId));
+        Version byVersionId = versionService.getByVersionId(new VersionId(versionId));
+        if (byVersionId == null) {
+            // TODO Exception Handle
+            throw new MxException("版本已删除！");
+        }
+        List<Version> versionList = versionService.listByProjectId(byVersionId.projectId());
+        if (versionList == null || versionList.size() <=1) {
+            throw new MxException("至少保留一个版本！");
+        }
         // 1. 关联坐标
         axisApplicationService.deleteAllByVersionId(versionId);
         // 2. 关联专题
         subjectApplicationService.deleteAllByVersionId(versionId);
         // 3. 管理类型
         sectionApplicationService.deleteAllByVersionId(versionId);
-        versionService.delete(version);
+        versionService.delete(byVersionId);
     }
 
     public void deleteAllByProjectId(String projectId) {

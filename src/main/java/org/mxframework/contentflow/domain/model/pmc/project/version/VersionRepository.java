@@ -13,6 +13,8 @@ public interface VersionRepository {
 
     Version versionOfVersionId(VersionId versionId);
 
+    Version versionOfProjectIdAndName(ProjectId projectId, String name);
+
     Collection<Version> versionsOfProjectId(ProjectId projectId);
 
     void add(Version version);

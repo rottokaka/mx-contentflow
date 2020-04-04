@@ -1,5 +1,5 @@
 /**
- * related html: version/update.html
+ * related html: version/modify.html
  */
 
 $(function () {
@@ -18,7 +18,7 @@ $(function () {
         // 版本ID
         const versionId = $('#versionId').val();
         // 版本对象
-        const versionModifyVo = {
+        const versionModifyForm = {
             "name": $('#name').val(),
             "description": $('#description').val(),
         };
@@ -27,7 +27,7 @@ $(function () {
             type: 'PUT',
             url: '/versions/' + versionId,
             contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(versionModifyVo),
+            data: JSON.stringify(versionModifyForm),
             success: function (data) {
                 if (data.valid) {
                     $("#versionModal").modal('hide');

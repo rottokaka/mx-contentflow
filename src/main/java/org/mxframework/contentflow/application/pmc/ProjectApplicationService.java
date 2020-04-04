@@ -164,7 +164,7 @@ public class ProjectApplicationService {
         VersionId versionId = versionApplicationService.nextIdentity();
         Version version = new Version(versionId, projectId, projectName + VersionConstant.VERSION_DEFAULT_NAME_SUFFIX);
         version.setRank(versionApplicationService.listByProjectId(projectId.id()).size());
-        versionApplicationService.add(version);
+        versionApplicationService.save(version);
         projectService.add(project);
     }
 

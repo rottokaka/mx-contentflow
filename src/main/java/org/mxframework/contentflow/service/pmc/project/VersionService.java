@@ -6,7 +6,6 @@ import org.mxframework.contentflow.domain.model.pmc.project.version.VersionId;
 import org.mxframework.contentflow.domain.model.pmc.project.version.VersionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,6 +28,10 @@ public class VersionService {
         return versionRepository.versionOfVersionId(versionId);
     }
 
+    public Version getByProjectIdAndName(ProjectId projectId, String name) {
+        return versionRepository.versionOfProjectIdAndName(projectId, name);
+    }
+
     public Version getDefaultByProjectId(ProjectId projectId) {
         List<Version> versions = (List<Version>) versionRepository.versionsOfProjectId(projectId);
         return versions.get(0);
@@ -38,11 +41,14 @@ public class VersionService {
         return (List<Version>) versionRepository.versionsOfProjectId(projectId);
     }
 
-    public void add(Version version) {
+    public void save(Version version) {
         versionRepository.add(version);
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    public void update(Version version) {
+        versionRepository.add(version);
+    }
+
     public void delete(Version version) {
         versionRepository.remove(version);
     }

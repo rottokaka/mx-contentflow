@@ -24,4 +24,6 @@ public class SectionModifyForm {
         this.name = name;
         this.description = description;
     }
+
+    public SectionModifyForm() {}
 }

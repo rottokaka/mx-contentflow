@@ -55,7 +55,6 @@ $(function () {
                     $.each(data.data, function (i, value) {
                         subjectSelect.append("<option value=\"" + value.subjectId + "\">" + value.name + "</option>");
                     });
-                    listFactor();
                 } else {
                     toastr.warning(data.message);
                 }

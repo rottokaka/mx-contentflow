@@ -42,7 +42,7 @@ $(function () {
         // 类型ID
         const sectionId = $('#sectionId').val();
         // 类型更新视图对象
-        const A = {
+        const sectionModifyForm = {
             "name": $('#name').val(),
             "description": $('#description').val()
         };
@@ -51,7 +51,7 @@ $(function () {
             type: 'PUT',
             url: '/sections/' + sectionId,
             contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(A),
+            data: JSON.stringify(sectionModifyForm),
             success: function (data) {
                 if (data.valid) {
                     $("#sectionModal").modal('hide');

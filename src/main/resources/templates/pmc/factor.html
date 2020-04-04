@@ -1,7 +1,7 @@
-<div class="container" data-th-if="${projectItemVoList} == null">
+<div class="container-fluid" data-th-if="${projectItemVoList} == null">
     <h5>还未任何因素可以管理，请先创建项目</h5>
 </div>
-<div class="container p-0" data-th-if="${projectItemVoList} != null">
+<div class="container-fluid" data-th-if="${projectItemVoList} != null">
     <form class="form-inline border-bottom">
         <div class="form-group">
             <a class="text-dark" id="searchFactor" href="javascript: void (0)"
@@ -40,7 +40,7 @@
             </select>
         </div>
     </form>
-    <div class="container p-0" id="mainFactorContainer">
+    <div class="container-fluid" id="mainFactorContainer">
 
     </div>
 </div>

@@ -19,5 +19,8 @@ public interface VersionJpaRepository extends JpaRepository<Version, Long> {
 
     Version findByVersionId(VersionId versionId);
 
+    Version findByProjectIdAndName(ProjectId projectId, String name);
+
     List<Version> findAllByProjectId(ProjectId projectId);
+
 }

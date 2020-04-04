@@ -24,4 +24,6 @@ public class SubjectModifyForm {
         this.name = name;
         this.description = description;
     }
+
+    public SubjectModifyForm() {}
 }
