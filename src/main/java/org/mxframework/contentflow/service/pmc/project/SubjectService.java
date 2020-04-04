@@ -29,6 +29,10 @@ public class SubjectService {
         return subjectRepository.subjectOfSubjectId(subjectId);
     }
 
+    public Subject getByVersionIdAndName(VersionId versionId, String name) {
+        return subjectRepository.subjectOfVersionIdAndName(versionId, name);
+    }
+
     public List<Subject> listByVersionId(VersionId versionId) {
         return (List<Subject>) subjectRepository.subjectsOfVersionId(versionId);
     }

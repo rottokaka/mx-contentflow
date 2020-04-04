@@ -1,6 +1,6 @@
 <div class="container" id="subject">
     <form data-th-action="@{/subjects}" method="post" data-th-object="${subjectModel.subjectModifyVo}" id="subjectForm">
-        <input type="hidden" name="subjectId" id="subjectId" data-th-value="*{subjectId}">
+        <input type="hidden" name="subjectId" id="subjectId" data-th-value="${subjectId}">
 
         <div class="form-group">
             <label class="sr-only" for="name"></label>

@@ -7,13 +7,13 @@
         </a>
         <p class="pt-2">还未任何专题</p>
     </div>
-    <table class="table" id="subjectList" data-th-if="${subjectManageVoList} != null and ${subjectManageVoList.size()} > 0">
+    <table class="table table-striped" id="subjectList" data-th-if="${subjectManageVoList} != null and ${subjectManageVoList.size()} > 0">
         <thead>
         <tr>
             <th class="p-2" scope="col">
                 <a class="btn text-dark subject-create" href="javascript: void (0)" role="button" title="新增专题"
                    data-toggle="modal" data-target="#subjectModal" data-th-attr="username=${#authentication.name}">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
                 </a>
             </th>
             <th scope="col">编号</th>

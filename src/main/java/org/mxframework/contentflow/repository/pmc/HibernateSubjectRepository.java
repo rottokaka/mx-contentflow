@@ -34,6 +34,11 @@ public class HibernateSubjectRepository implements SubjectRepository {
     }
 
     @Override
+    public Subject subjectOfVersionIdAndName(VersionId versionId, String name) {
+        return subjectJpaRepository.findByVersionIdAndName(versionId, name);
+    }
+
+    @Override
     public Collection<Subject> subjectsOfVersionId(VersionId versionId) {
         return subjectJpaRepository.findAllByVersionId(versionId);
     }

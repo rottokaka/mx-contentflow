@@ -66,6 +66,7 @@ public class SubjectController {
     @PreAuthorize("hasRole('USER')")
     public ModelAndView getModify(String subjectId, Model model) {
         logger.info("获取专题修改页面");
+        model.addAttribute("subjectId", subjectId);
         model.addAttribute("subjectModifyVo", subjectApplicationService.getModifyFormBySubjectId(subjectId));
         return new ModelAndView("subject/modify", "subjectModel", model);
     }

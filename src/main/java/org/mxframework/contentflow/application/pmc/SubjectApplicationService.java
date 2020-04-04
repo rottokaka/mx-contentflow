@@ -3,6 +3,7 @@ package org.mxframework.contentflow.application.pmc;
 import org.mxframework.contentflow.domain.model.pmc.project.version.VersionId;
 import org.mxframework.contentflow.domain.model.pmc.project.subject.Subject;
 import org.mxframework.contentflow.domain.model.pmc.project.subject.SubjectId;
+import org.mxframework.contentflow.exception.MxException;
 import org.mxframework.contentflow.representation.pmc.subject.form.SubjectCreateForm;
 import org.mxframework.contentflow.representation.pmc.subject.vo.SubjectBaseVO;
 import org.mxframework.contentflow.representation.pmc.subject.vo.SubjectItemVO;
@@ -30,8 +31,6 @@ public class SubjectApplicationService {
 
     @Autowired
     private AxisApplicationService axisApplicationService;
-    @Autowired
-    private SectionApplicationService sectionApplicationService;
 
     public SubjectModifyForm getModifyFormBySubjectId(String subjectId) {
         Subject subject = subjectService.getBySubjectId(new SubjectId(subjectId));
@@ -62,12 +61,17 @@ public class SubjectApplicationService {
 
     @Transactional(rollbackFor = {Exception.class})
     public Subject post(SubjectCreateForm subjectCreateForm) {
+        Subject byVersionIdAndName = subjectService.getByVersionIdAndName(new VersionId(subjectCreateForm.getVersionId()), subjectCreateForm.getName());
+        if (byVersionIdAndName != null) {
+            throw new MxException("专题已创建！");
+        }
         SubjectId subjectId = subjectService.nextIdentity();
         Subject subject = new Subject(subjectId, subjectCreateForm.getName());
         subject.setDescription(subjectCreateForm.getDescription());
         // 专题允许单独存在，如果版本ID不为空，则绑定
         String versionId = subjectCreateForm.getVersionId();
         if (!"".equals(versionId)) {
+            // TODO Exception handle
             subject.setVersionId(new VersionId(versionId));
             subject.setRank(subjectService.listByVersionId(new VersionId(versionId)).size() + 1);
         }
@@ -78,6 +82,11 @@ public class SubjectApplicationService {
     @Transactional(rollbackFor = {Exception.class})
     public SubjectBaseVO putBySubjectId(String subjectId, SubjectModifyForm subjectModifyForm) {
         Subject bySubjectId = subjectService.getBySubjectId(new SubjectId(subjectId));
+        Subject byVersionIdAndName = subjectService.getByVersionIdAndName(bySubjectId.versionId(), subjectModifyForm.getName());
+        if (byVersionIdAndName != null) {
+            // TODO Exception handle
+            throw new MxException("专题已存在！");
+        }
         bySubjectId.setName(subjectModifyForm.getName());
         bySubjectId.setDescription(subjectModifyForm.getDescription());
         subjectService.update(bySubjectId);
@@ -86,10 +95,14 @@ public class SubjectApplicationService {
 
     @Transactional(rollbackFor = {Exception.class})
     public void deleteBySubjectId(String subjectId) {
+        Subject bySubjectId = subjectService.getBySubjectId(new SubjectId(subjectId));
+        if (bySubjectId == null) {
+            // TODO Exception handle
+            throw new MxException("专题已删除！");
+        }
         // 关联坐标
         axisApplicationService.deleteAllBySubjectId(subjectId);
-        Subject subject = subjectService.getBySubjectId(new SubjectId(subjectId));
-        subjectService.delete(subject);
+        subjectService.delete(bySubjectId);
     }
 
     @Transactional(rollbackFor = {Exception.class})

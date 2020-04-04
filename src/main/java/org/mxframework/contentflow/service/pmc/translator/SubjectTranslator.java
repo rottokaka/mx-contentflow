@@ -44,7 +44,7 @@ public class SubjectTranslator {
     }
 
     public SubjectModifyForm convertToModifyVo(Subject subject) {
-        return new SubjectModifyForm(subject.subjectId().id(), subject.name(), subject.description());
+        return new SubjectModifyForm(subject.name(), subject.description());
     }
 
 }

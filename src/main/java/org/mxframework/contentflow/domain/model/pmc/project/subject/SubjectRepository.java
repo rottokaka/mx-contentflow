@@ -13,6 +13,8 @@ public interface SubjectRepository {
 
     Subject subjectOfSubjectId(SubjectId subjectId);
 
+    Subject subjectOfVersionIdAndName(VersionId versionId, String name);
+
     Collection<Subject> subjectsOfVersionId(VersionId versionId);
 
     void add(Subject subject);
