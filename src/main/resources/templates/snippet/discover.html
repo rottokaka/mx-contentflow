@@ -8,7 +8,8 @@
 <body>
 <div th:replace="~{fragment/header :: header}"></div>
 <div class="container" id="wrapper">
-    <div class="card border-0">
+    <p th:if="${snippetCardVoList} == null or ${snippetCardVoList.size()} < 1">还未创建任何片段，</p>
+    <div class="card border-0" th:if="${snippetCardVoList} != null and ${snippetCardVoList.size()} > 0">
         <div class="card-header">
             <div class="row">
                 <div class="col-md-9">
