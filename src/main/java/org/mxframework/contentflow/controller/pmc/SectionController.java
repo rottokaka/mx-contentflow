@@ -67,6 +67,7 @@ public class SectionController {
     @PreAuthorize("hasRole('USER')")
     public ModelAndView getModify(String sectionId, Model model) {
         logger.info("获取类型修改页面");
+        model.addAttribute("sectionId", sectionId);
         model.addAttribute("sectionModifyVo", sectionApplicationService.getModifyFormBySectionId(sectionId));
         return new ModelAndView("section/modify", "sectionModel", model);
     }

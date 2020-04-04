@@ -5,6 +5,7 @@ import org.mxframework.contentflow.domain.model.pmc.project.section.SectionId;
 import org.mxframework.contentflow.domain.model.pmc.project.version.VersionId;
 import org.mxframework.contentflow.representation.pmc.section.form.SectionCreateForm;
 import org.mxframework.contentflow.representation.pmc.section.form.SectionModifyForm;
+import org.mxframework.contentflow.representation.pmc.section.vo.SectionBaseVO;
 import org.mxframework.contentflow.representation.pmc.section.vo.SectionItemVO;
 import org.mxframework.contentflow.representation.pmc.section.vo.SectionManageVO;
 import org.mxframework.contentflow.service.pmc.project.SectionService;
@@ -69,6 +70,15 @@ public class SectionApplicationService {
         section.setRank(sectionService.listByVersionId(versionId).size() + 1);
         sectionService.add(section);
         return sectionService.getBySectionId(sectionId);
+    }
+
+    @Transactional(rollbackFor = {Exception.class})
+    public SectionBaseVO putBySectionId(String sectionId, SectionModifyForm sectionModifyForm) {
+        Section bySectionId = sectionService.getBySectionId(new SectionId(sectionId));
+        bySectionId.setName(sectionModifyForm.getName());
+        bySectionId.setDescription(sectionModifyForm.getDescription());
+        sectionService.update(bySectionId);
+        return sectionTranslator.convertToBaseVo(bySectionId);
     }
 
     @Transactional(rollbackFor = {Exception.class})

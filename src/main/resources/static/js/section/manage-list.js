@@ -38,9 +38,9 @@ $(function () {
     //==================================================================================================================
 
     // 更新类型
-    sectionModalContainer.on('click', '#updateSection', function () {
+    sectionModalContainer.on('click', '#sectionUpdate', function () {
         // 类型ID
-        const updateSectionId = $('#updateSectionId').val();
+        const sectionId = $('#sectionId').val();
         // 类型更新视图对象
         const A = {
             "name": $('#name').val(),
@@ -49,7 +49,7 @@ $(function () {
 
         $.ajax({
             type: 'PUT',
-            url: '/sections/' + updateSectionId,
+            url: '/sections/' + sectionId,
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(A),
             success: function (data) {
@@ -115,7 +115,7 @@ $(function () {
         // 类型ID
         const sectionId = $(this).attr("sectionId");
         $.ajax({
-            url: "/sections/modify?sectionId=" + sectionId,
+            url: "/section/modify?sectionId=" + sectionId,
             success: function (data) {
                 $("#sectionModalContainer").html(data);
             },

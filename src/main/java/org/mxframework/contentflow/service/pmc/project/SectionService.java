@@ -36,6 +36,10 @@ public class SectionService {
         sectionRepository.add(section);
     }
 
+    public void update(Section section) {
+        sectionRepository.add(section);
+    }
+
     public void addAll(List<Section> sections) {
         sectionRepository.addAll(sections);
     }

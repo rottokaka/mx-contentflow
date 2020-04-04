@@ -2,6 +2,7 @@ package org.mxframework.contentflow.service.pmc.translator;
 
 import org.mxframework.contentflow.domain.model.pmc.project.section.Section;
 import org.mxframework.contentflow.representation.pmc.section.SectionBase;
+import org.mxframework.contentflow.representation.pmc.section.vo.SectionBaseVO;
 import org.mxframework.contentflow.representation.pmc.section.vo.SectionItemVO;
 import org.mxframework.contentflow.representation.pmc.section.vo.SectionManageVO;
 import org.mxframework.contentflow.representation.pmc.section.form.SectionModifyForm;
@@ -26,6 +27,10 @@ public class SectionTranslator {
         return sectionBase;
     }
 
+    public SectionBaseVO convertToBaseVo(Section section) {
+        return new SectionBaseVO(convertToBase(section));
+    }
+
     public List<SectionItemVO> convertToItemVo(List<Section> sectionList) {
         List<SectionItemVO> sectionItemVoList = new ArrayList<>(sectionList.size());
         sectionList.forEach(section -> sectionItemVoList.add(new SectionItemVO(convertToBase(section))));
@@ -41,4 +46,5 @@ public class SectionTranslator {
     public SectionModifyForm convertToModifyForm(Section section) {
         return new SectionModifyForm(section.name(), section.description());
     }
+
 }

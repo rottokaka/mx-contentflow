@@ -13,8 +13,6 @@ import javax.validation.constraints.Size;
 @Data
 public class SectionModifyForm {
 
-    private String sectionId;
-
     @NotBlank(message = "名称不能为空")
     @Size(min = 2, max = 20, message = "名称字符长度不能超出范围‘2~20’")
     private String name;
