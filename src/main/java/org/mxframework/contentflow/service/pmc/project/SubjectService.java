@@ -4,6 +4,7 @@ import org.mxframework.contentflow.domain.model.pmc.project.version.VersionId;
 import org.mxframework.contentflow.domain.model.pmc.project.subject.Subject;
 import org.mxframework.contentflow.domain.model.pmc.project.subject.SubjectId;
 import org.mxframework.contentflow.domain.model.pmc.project.subject.SubjectRepository;
+import org.mxframework.contentflow.representation.pmc.subject.vo.SubjectBaseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,10 @@ public class SubjectService {
         subjectRepository.add(subject);
     }
 
+    public void update(Subject subject) {
+        subjectRepository.add(subject);
+    }
+
     public void delete(Subject subject) {
         subjectRepository.remove(subject);
     }
@@ -43,4 +48,5 @@ public class SubjectService {
     public void deleteAll(List<Subject> subjectList) {
         subjectRepository.removeAll(subjectList);
     }
+
 }

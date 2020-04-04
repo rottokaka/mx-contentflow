@@ -4,6 +4,7 @@ import org.mxframework.contentflow.domain.model.pmc.project.version.VersionId;
 import org.mxframework.contentflow.domain.model.pmc.project.subject.Subject;
 import org.mxframework.contentflow.domain.model.pmc.project.subject.SubjectId;
 import org.mxframework.contentflow.representation.pmc.subject.form.SubjectCreateForm;
+import org.mxframework.contentflow.representation.pmc.subject.vo.SubjectBaseVO;
 import org.mxframework.contentflow.representation.pmc.subject.vo.SubjectItemVO;
 import org.mxframework.contentflow.representation.pmc.subject.vo.SubjectManageVO;
 import org.mxframework.contentflow.representation.pmc.subject.form.SubjectModifyForm;
@@ -72,6 +73,15 @@ public class SubjectApplicationService {
         }
         subjectService.save(subject);
         return subjectService.getBySubjectId(subjectId);
+    }
+
+    @Transactional(rollbackFor = {Exception.class})
+    public SubjectBaseVO putBySubjectId(String subjectId, SubjectModifyForm subjectModifyForm) {
+        Subject bySubjectId = subjectService.getBySubjectId(new SubjectId(subjectId));
+        bySubjectId.setName(subjectModifyForm.getName());
+        bySubjectId.setDescription(subjectModifyForm.getDescription());
+        subjectService.update(bySubjectId);
+        return subjectTranslator.convertToBaseVo(subjectService.getBySubjectId(new SubjectId(subjectId)));
     }
 
     @Transactional(rollbackFor = {Exception.class})

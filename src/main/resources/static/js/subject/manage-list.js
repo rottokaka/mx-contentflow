@@ -46,7 +46,7 @@ $(function () {
         // 主题ID
         const subjectId = $('#subjectId').val();
         // 主题插入视图对象
-        const subjectUpdateVo = {
+        const subjectModifyForm = {
             "name": $('#name').val(),
             "description": $('#description').val()
         };
@@ -55,7 +55,7 @@ $(function () {
             type: 'PUT',
             url: '/subjects/' + subjectId,
             contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(subjectUpdateVo),
+            data: JSON.stringify(subjectModifyForm),
             success: function (data) {
                 if (data.valid) {
                     subjectModal.modal('hide');

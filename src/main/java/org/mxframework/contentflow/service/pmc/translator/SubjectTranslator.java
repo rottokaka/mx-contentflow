@@ -3,6 +3,7 @@ package org.mxframework.contentflow.service.pmc.translator;
 import org.mxframework.contentflow.domain.model.pmc.project.subject.Subject;
 import org.mxframework.contentflow.representation.pmc.subject.SubjectBase;
 import org.mxframework.contentflow.representation.pmc.subject.form.SubjectModifyForm;
+import org.mxframework.contentflow.representation.pmc.subject.vo.SubjectBaseVO;
 import org.mxframework.contentflow.representation.pmc.subject.vo.SubjectItemVO;
 import org.mxframework.contentflow.representation.pmc.subject.vo.SubjectManageVO;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,10 @@ public class SubjectTranslator {
         return subjectBase;
     }
 
+    public SubjectBaseVO convertToBaseVo(Subject subject) {
+        return new SubjectBaseVO(convertToBase(subject));
+    }
+
     public List<SubjectItemVO> convertToItemVo(List<Subject> subjects) {
         List<SubjectItemVO> subjectItemVos = new ArrayList<>(subjects.size());
         subjects.forEach(subject -> subjectItemVos.add(new SubjectItemVO(convertToBase(subject))));
@@ -41,4 +46,5 @@ public class SubjectTranslator {
     public SubjectModifyForm convertToModifyVo(Subject subject) {
         return new SubjectModifyForm(subject.subjectId().id(), subject.name(), subject.description());
     }
+
 }

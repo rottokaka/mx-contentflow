@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiParam;
 import org.mxframework.contentflow.application.pmc.SubjectApplicationService;
 import org.mxframework.contentflow.representation.ResultVO;
 import org.mxframework.contentflow.representation.pmc.subject.form.SubjectCreateForm;
+import org.mxframework.contentflow.representation.pmc.subject.form.SubjectModifyForm;
 import org.mxframework.contentflow.util.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,22 @@ public class SubjectResource {
     @PreAuthorize("hasRole('USER')")
     public ResultVO post(@ApiParam("专题创建表单") @Valid @RequestBody SubjectCreateForm subjectCreateForm) {
         return ResultUtil.success(subjectApplicationService.post(subjectCreateForm));
+    }
+
+
+    /**
+     * 更新专题
+     *
+     * @param subjectId         专题ID
+     * @param subjectModifyForm 专题修改表单
+     * @return 结果[VO]
+     */
+    @ApiOperation("更新专题")
+    @PutMapping("{subjectId}")
+    @PreAuthorize("hasRole('USER')")
+    public ResultVO putBySubjectId(@ApiParam("专题ID") @PathVariable String subjectId
+            , @ApiParam("专题修改表单") @Valid @RequestBody SubjectModifyForm subjectModifyForm) {
+        return ResultUtil.success(subjectApplicationService.putBySubjectId(subjectId, subjectModifyForm));
     }
 
     /**
