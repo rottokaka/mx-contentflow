@@ -49,7 +49,7 @@ public class BlogController {
     public ModelAndView getIndex(Model model) {
         logger.info("获取博客主页页面");
         List<? extends BlogBaseVO> blogCardVoList = blogApplicationService.listPublicBlogs();
-        model.addAttribute("recentlyCreatedBlogCardVoList", blogCardVoList);
+        model.addAttribute("blogCardVoList", blogCardVoList);
         return new ModelAndView("blog/index", "blogModel", model);
     }
 
