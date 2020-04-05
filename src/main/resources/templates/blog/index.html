@@ -1,5 +1,7 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:replace="~{fragment/head :: head(~{::title}, ~{}, ~{})}">
     <title>博客主页 - 积录</title>
 </head>
@@ -10,6 +12,9 @@
         <p th:if="${blogCardVoList} == null">网站还未任何公开博客！</p>
         <div class="card mt-1 border-0" th:if="${blogCardVoList} != null">
             <div th:replace="~{blog/fragment/card-list :: blogCardVoList}"></div>
+            <div class="card-footer text-center p-0 ">
+                <a href="/blog/more">more>></a>
+            </div>
         </div>
     </div>
 </div>

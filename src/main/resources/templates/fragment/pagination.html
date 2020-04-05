@@ -5,40 +5,42 @@
     <nav aria-label="Page navigation">
 
         <!-- 1.2 总页数=2页时，只显示上一页和下一页 -->
-        <ul class="pagination" data-th-if="${page.totalPages} eq 2">
+        <ul class="pagination mb-0" data-th-if="${page.totalPages} eq 2">
             <!-- 上一页 -->
-            <li class="page-item" data-th-classappend="${page.first} ? 'disabled' : ''">
+            <li class="page-item pagination-previous" data-th-classappend="${page.first} ? 'disabled' : ''">
                 <a class="page-link" href="javascript: void(0)" tabindex="-1" aria-disabled="true">Previous</a>
             </li>
             <!-- 下一页 -->
-            <li class="page-item" data-th-classappend="${page.last} ? 'disabled' : ''">
+            <li class="page-item pagination-next" data-th-classappend="${page.last} ? 'disabled' : ''">
                 <a class="page-link" href="javascript: void(0)">Next</a>
             </li>
         </ul>
 
         <!-- 1.3 页面总数小于等于7 -->
-        <ul class="pagination" data-th-if="${page.totalPages} gt 2 and ${page.totalPages} le 7">
+        <ul class="pagination mb-0" data-th-if="${page.totalPages} gt 2 and ${page.totalPages} le 7">
             <!-- 上一页 -->
-            <li class="page-item" data-th-classappend="${page.first} ? 'disabled' : ''">
+            <li class="page-item pagination-previous" data-th-classappend="${page.first} ? 'disabled' : ''">
                 <a class="page-link" href="javascript: void(0)" tabindex="-1" aria-disabled="true">Previous</a>
             </li>
 
-            <li class="page-item" data-th-each="i : ${#numbers.sequence(1, page.totalPages)}">
+            <li class="page-item"
+                data-th-each="i : ${#numbers.sequence(1, page.totalPages)}"
+                data-th-classappend="${page.number + 1} eq ${i} ? 'active' : ''">
                 <a class="page-link" href="javascript: void(0)" data-th-text="${i}"></a>
             </li>
 
             <!-- 下一页 -->
-            <li class="page-item" data-th-classappend="${page.last} ? 'disabled' : ''">
+            <li class="page-item pagination-next" data-th-classappend="${page.last} ? 'disabled' : ''">
                 <a class="page-link" href="javascript: void(0)">Next</a>
             </li>
         </ul>
 
         <!-- 1.4 页面总数大于7 -->
-        <ul class="pagination" data-th-if="${page.totalPages} gt 7">
+        <ul class="pagination mb-0" data-th-if="${page.totalPages} gt 7">
             <!-- 上一页 -->
-            <!--<li class="page-item" data-th-classappend="${page.hasPrevious} ? 'active' : ''">
+            <li class="page-item pagination-previous" data-th-classappend="${page.first} ? 'disabled' : ''">
                 <a class="page-link" href="javascript: void(0)" tabindex="-1" aria-disabled="true">Previous</a>
-            </li>-->
+            </li>
 
             <!-- 首页 -->
             <li class="page-item" data-th-classappend="${page.first} ? 'active' : ''">
@@ -83,18 +85,19 @@
             </li>
 
             <!-- 下一页 -->
-            <!--<li class="page-item" data-th-classappend="${page.hasNext} ? 'active' : ''">
-                <a class="page-link" href="javascript: void(0)" tabindex="-1" aria-disabled="true">Next</a>
-            </li>-->
+            <li class="page-item pagination-next" data-th-classappend="${page.last} ? 'disabled' : ''">
+                <a class="page-link" href="javascript: void(0)">Next</a>
+            </li>
         </ul>
 
     </nav>
     <!-- 2. 概要和跳转 -->
-    <div class="d-flex justify-content-start" data-th-if="${page.totalPages} gt 7">
+    <div class="d-flex justify-content-start my-auto" data-th-if="${page.totalPages} gt 7">
         <div class="pagination-outline">
             <span>[[${page.totalPages}]]&nbsp;页/[[${page.totalElements}]]&nbsp;篇，</span>
         </div>
         <div class="pagination-jump">
+            <input type="hidden" id="pageTotalPages" data-th-value="${page.totalPages}">
             <span>跳至</span>
             <label class="sr-only" for="pageJumpInput"></label>
             <input type="text" min="1" class="page-jump-input" style="height: 21px; width: 50px" id="pageJumpInput">
