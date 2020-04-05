@@ -8,12 +8,36 @@
 <body>
 <div th:replace="~{fragment/header :: header}"></div>
 <div class="container" id="wrapper">
-    <div class="container">
-        <p th:if="${blogCardVoList} == null">网站还未任何公开博客！</p>
-        <div class="card mt-1 border-0" th:if="${blogCardVoList} != null">
-            <div th:replace="~{blog/fragment/card-list :: blogCardVoList}"></div>
-            <div class="card-footer text-center p-0 ">
-                <a href="/blog/more">more>></a>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="container-fluid">
+                <p th:if="${blogCardVoList} == null">网站还未任何公开博客！</p>
+                <div class="card mt-1 border-0" th:if="${blogCardVoList} != null">
+                    <div th:replace="~{blog/fragment/card-list :: blogCardVoList}"></div>
+                    <div class="card-footer text-center p-0 ">
+                        <a href="/blog/more">more>></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class=" mt-1">
+                <div class="text-center">
+                    <img class="img-thumbnail rounded" th:src="@{/images/avatar-mx-959x959.jpg}" src="../../static/images/avatar-mx-959x959.jpg" alt="MX">
+                </div>
+                <div class="border text-center"><strong>Make Anythings(X)</strong></div>
+                <ul class="list-group mt-2">
+                    <li class="list-group-item p-1" title="项目地址">
+                        <i class="fa fa-github fa-fw" aria-hidden="true"></i>&nbsp;<a href="https://github.com/rottokaka/mx-contentflow" target="_blank">rottokaka@github.com</a>
+                    </li>
+                    <li class="list-group-item p-1" title="邮箱地址">
+                        <i class="fa fa-envelope fa-fw" aria-hidden="true"></i>&nbsp;rottokaka@gmail.com
+                    </li>
+                    <li class="list-group-item p-1" title="登录帐号/密码">
+                        <i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>&nbsp;guest/guest
+                        <i class="fa fa-hand-o-left fa-fw float-md-right"></i>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
