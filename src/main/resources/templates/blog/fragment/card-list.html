@@ -3,7 +3,7 @@
     <h5 data-th-if="${blogCardVoList.size() < 1} and ${flag} == topic">暂没有任何博客，可<abbr title="把‘博客’归类于‘话题’的方式，即为‘投稿’。">投稿</abbr>，或者<abbr title="把‘博客’以‘话题’的方式划分，即为‘归档’。">归档</abbr>。</h5>
     <h5 data-th-if="${blogCardVoList.size() < 1} and ${flag} == tag">暂没有任何博客，可<abbr title="把‘标签’标记于‘博客’的方式，即为‘标记’。">标记</abbr>。</h5>
 </div>-->
-<div class="card-body border my-2" data-th-each="blogCardVo : ${blogCardVoList}" data-th-fragment="blogCardVoList">
+<div class="card-body border my-1" data-th-each="blogCardVo : ${blogCardVoList}" data-th-fragment="blogCardVoList">
     <div class="row">
         <div class="col-md-9">
             <div class="card-title" data-th-if="${blogCardVo.title} != null">

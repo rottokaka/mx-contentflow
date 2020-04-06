@@ -9,32 +9,34 @@
 <div th:replace="~{fragment/header :: header}"></div>
 <div class="container" id="wrapper">
     <div class="container">
-        <div class="card-header">
-            <div class="row">
-                <div class="col-md-9">
-                    <div class="input-group">
-                        <input class="form-control" id="blogKeyword" type="search" th:value="${keyword}" placeholder="Search" aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn text-secondary" type="submit" id="searchBlog">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </button>
+        <div class="border-0 mt-1">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="input-group">
+                            <input class="form-control" id="blogKeyword" type="search" th:value="${keyword}" placeholder="Search" aria-label="Search">
+                            <div class="input-group-append">
+                                <button class="btn text-secondary" type="submit" id="searchBlog">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="blogSort">排序:</label>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="blogSort">排序:</label>
+                            </div>
+                            <select id="blogSort" class="form-control form-control-chosen-require" data-placeholder="请选择排序方式">
+                                <option value="CREATED_RECENTLY" th:selected="${sort} == CREATED_RECENTLY">最新创建</option>
+                                <option value="UPDATED_RECENTLY" th:selected="${sort} == UPDATED_RECENTLY">最新更新</option>
+                            </select>
                         </div>
-                        <select id="blogSort" class="form-control form-control-chosen-require" data-placeholder="请选择排序方式">
-                            <option value="CREATED_RECENTLY" th:selected="${sort} == CREATED_RECENTLY">最新创建</option>
-                            <option value="UPDATED_RECENTLY" th:selected="${sort} == UPDATED_RECENTLY">最新更新</option>
-                        </select>
                     </div>
                 </div>
             </div>
         </div>
-        <div th:replace="~{blog/fragment/card-List :: blogCardVoList}"></div>
+        <div th:if="${blogCardVoList} != null" th:replace="~{blog/fragment/card-list :: blogCardVoList}"></div>
         <div class="card-footer" th:if="${page.totalPages} > 1" data-th-insert="~{fragment/pagination :: pagination}"></div>
     </div>
 </div>
