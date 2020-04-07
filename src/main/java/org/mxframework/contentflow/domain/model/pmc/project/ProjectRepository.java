@@ -3,7 +3,6 @@ package org.mxframework.contentflow.domain.model.pmc.project;
 import org.mxframework.contentflow.domain.model.pmc.indentity.Creator;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * @author mx
@@ -13,6 +12,8 @@ public interface ProjectRepository {
     ProjectId nextIdentity();
 
     Project projectOfProjectId(ProjectId projectId);
+
+    Project projectOfCreatorAndName(Creator creator, String name);
 
     Collection<Project> projectsOfCreator(Creator creator);
 

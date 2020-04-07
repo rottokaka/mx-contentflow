@@ -100,6 +100,14 @@ public class ProjectTranslator {
         return projectBase;
     }
 
+    public ProjectBaseVO convertToBaseVo(Project project) {
+        return new ProjectBaseVO(convertToBase(project));
+    }
+
+    public ProjectBaseVO convertToProjectBaseVo(Project project) {
+        return new ProjectBaseVO(convertToBase(project));
+    }
+
     public List<ProjectAboveVO> convertToAboveVo(List<Project> projects) {
         List<ProjectAboveVO> projectAboveVoList = new ArrayList<>(projects.size());
         projects.forEach(project -> projectAboveVoList.add(new ProjectAboveVO(convertToBase(project))));
@@ -142,4 +150,5 @@ public class ProjectTranslator {
         projectList.forEach(project -> projectAtBlogVoList.add(new ProjectAtBlogVO(convertToBase(project))));
         return projectAtBlogVoList;
     }
+
 }

@@ -111,23 +111,18 @@ public class VersionApplicationService {
     public VersionBaseVO putByVersionId(VersionId versionId, VersionModifyForm versionModifyForm) {
         Version byVersionId = versionService.getByVersionId(versionId);
         // 可修改的版本字段，名称及其描述，参考 VersionModifyForm
-        // 1. 修改描述
-        if (byVersionId.name().equals(versionModifyForm.getName())) {
-            byVersionId.setDescription(versionModifyForm.getDescription());
-        }
-        // 2. 修改名称
-        else {
+        // 校验修改内容的名称，如果涉及内容包含名称，则需要判断新的名称是否存在
+        if (!byVersionId.name().equals(versionModifyForm.getName())) {
             // 判断新的名称是否已经存在
             Version byProjectIdAndName = versionService.getByProjectIdAndName(byVersionId.projectId()
                     , versionModifyForm.getName());
             if (byProjectIdAndName != null) {
                 // TODO Exception Handle
                 throw new MxException("版本已存在！");
-            } else {
-                byVersionId.setName(versionModifyForm.getName());
-                byVersionId.setDescription(versionModifyForm.getDescription());
             }
         }
+        byVersionId.setName(versionModifyForm.getName());
+        byVersionId.setDescription(versionModifyForm.getDescription());
         versionService.update(byVersionId);
         return versionTranslator.convertToBaseVo(byVersionId);
     }

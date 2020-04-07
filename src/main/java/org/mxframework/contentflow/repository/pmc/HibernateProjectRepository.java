@@ -32,6 +32,11 @@ public class HibernateProjectRepository implements ProjectRepository {
     }
 
     @Override
+    public Project projectOfCreatorAndName(Creator creator, String name) {
+        return projectJpaRepository.findByCreatorAndName(creator, name);
+    }
+
+    @Override
     public Collection<Project> projectsOfCreator(Creator creator) {
         return projectJpaRepository.findAllByCreator(creator);
     }

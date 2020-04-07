@@ -9,14 +9,12 @@ import org.mxframework.contentflow.domain.model.pmc.project.Project;
 import org.mxframework.contentflow.domain.model.pmc.project.ProjectId;
 import org.mxframework.contentflow.domain.model.pmc.project.version.Version;
 import org.mxframework.contentflow.domain.model.pmc.project.version.VersionId;
+import org.mxframework.contentflow.exception.ProjectException;
 import org.mxframework.contentflow.representation.pmc.project.dto.ProjectItemDTO;
 import org.mxframework.contentflow.representation.pmc.project.form.ProjectConfigModifyForm;
 import org.mxframework.contentflow.representation.pmc.project.form.ProjectCreateForm;
 import org.mxframework.contentflow.representation.pmc.project.form.ProjectModifyForm;
-import org.mxframework.contentflow.representation.pmc.project.vo.ProjectAboveVO;
-import org.mxframework.contentflow.representation.pmc.project.vo.ProjectDetailVO;
-import org.mxframework.contentflow.representation.pmc.project.vo.ProjectItemVO;
-import org.mxframework.contentflow.representation.pmc.project.vo.ProjectManageVO;
+import org.mxframework.contentflow.representation.pmc.project.vo.*;
 import org.mxframework.contentflow.service.pmc.project.ProjectService;
 import org.mxframework.contentflow.service.pmc.translator.ProjectTranslator;
 import org.springframework.beans.BeanUtils;
@@ -45,7 +43,11 @@ public class ProjectApplicationService {
     private IdentityApplicationService identityApplicationService;
 
     public Project getByProjectId(String projectId) {
-        return projectService.getByProjectId(new ProjectId(projectId));
+        Project byProjectId = projectService.getByProjectId(new ProjectId(projectId));
+        if (byProjectId == null) {
+            throw new ProjectException("项目不存在，项目ID：" + projectId);
+        }
+        return byProjectId;
     }
 
     public ProjectItemVO getItemVoByProjectId(String projectId) {
@@ -151,10 +153,16 @@ public class ProjectApplicationService {
     }
 
     @Transactional(rollbackFor = {Exception.class})
-    public void post(ProjectCreateForm projectCreateForm) {
+    public ProjectBaseVO post(ProjectCreateForm projectCreateForm) {
         ProjectId projectId = projectService.nextIdentity();
         String projectName = projectCreateForm.getName();
-        Project project = new Project(projectId, new Creator(identityApplicationService.identity()), projectName);
+        Creator creator = new Creator(identityApplicationService.identity());
+        // 判断该用户是否已经创建该项目，防止重复提交
+        Project byCreatorAndName = projectService.getByCreatorAndName(creator, projectName);
+        if (byCreatorAndName != null) {
+            throw new ProjectException("项目已创建！");
+        }
+        Project project = new Project(projectId, creator, projectName);
         project.setDescription(projectCreateForm.getDescription());
         project.setWebsite(projectCreateForm.getWebsite());
         project.setScope(projectCreateForm.getScope());
@@ -165,7 +173,8 @@ public class ProjectApplicationService {
         Version version = new Version(versionId, projectId, projectName + VersionConstant.VERSION_DEFAULT_NAME_SUFFIX);
         version.setRank(versionApplicationService.listByProjectId(projectId.id()).size());
         versionApplicationService.save(version);
-        projectService.add(project);
+        projectService.save(project);
+        return projectTranslator.convertToBaseVo(project);
     }
 
     @Transactional(rollbackFor = {Exception.class})
@@ -173,7 +182,7 @@ public class ProjectApplicationService {
         Project originalProject = projectService.getByProjectId(projectId);
         // 属性复制
         BeanUtils.copyProperties(projectModifyForm, originalProject, "id");
-        projectService.add(originalProject);
+        projectService.save(originalProject);
     }
 
     @Transactional(rollbackFor = {Exception.class})
@@ -181,12 +190,21 @@ public class ProjectApplicationService {
         Project byProjectId = projectService.getByProjectId(new ProjectId(projectId));
         byProjectId.setScope(projectConfigModifyForm.getScope());
         byProjectId.setContributionNotAllowed(projectConfigModifyForm.getContributionNotAllowed());
-        projectService.add(byProjectId);
+        projectService.save(byProjectId);
     }
 
     @Transactional(rollbackFor = {Exception.class})
-    public void updateByProjectId(String projectId, ProjectModifyForm projectModifyForm) {
+    public ProjectBaseVO putByProjectId(String projectId, ProjectModifyForm projectModifyForm) {
         Project byProjectId = projectService.getByProjectId(new ProjectId(projectId));
+        // 可修改的项目字段：名称，描述，网站地址和上级ID。参考 ProjectModifyForm
+        // 校验修改内容的名称，如果修改内容涉及名称，则需要判断新的名称是否存在
+        if (!byProjectId.name().equals(projectModifyForm.getName())) {
+            Project byCreatorAndName = projectService.getByCreatorAndName(byProjectId.creator()
+                    , projectModifyForm.getName());
+            if (byCreatorAndName != null) {
+                throw new ProjectException("项目已存在！");
+            }
+        }
         byProjectId.setName(projectModifyForm.getName());
         byProjectId.setDescription(projectModifyForm.getDescription());
         byProjectId.setWebsite(projectModifyForm.getWebsite());
@@ -196,7 +214,8 @@ public class ProjectApplicationService {
         } else {
             byProjectId.setAboveProjectId(ProjectConstant.PROJECT_DEFAULT_ABOVE_ID);
         }
-        projectService.add(byProjectId);
+        projectService.update(byProjectId);
+        return projectTranslator.convertToProjectBaseVo(byProjectId);
     }
 
     public void deleteByProjectId(String projectId) {

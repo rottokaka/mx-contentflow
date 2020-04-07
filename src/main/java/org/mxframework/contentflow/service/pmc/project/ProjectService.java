@@ -5,7 +5,6 @@ import org.mxframework.contentflow.domain.model.pmc.indentity.Creator;
 import org.mxframework.contentflow.domain.model.pmc.project.Project;
 import org.mxframework.contentflow.domain.model.pmc.project.ProjectId;
 import org.mxframework.contentflow.domain.model.pmc.project.ProjectRepository;
-import org.mxframework.contentflow.exception.ProjectException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,11 +28,11 @@ public class ProjectService {
     }
 
     public Project getByProjectId(ProjectId projectId) {
-        Project project = projectRepository.projectOfProjectId(projectId);
-        if (project == null) {
-            throw new ProjectException("项目不存在，项目ID：" + projectId.id());
-        }
-        return project;
+        return projectRepository.projectOfProjectId(projectId);
+    }
+
+    public Project getByCreatorAndName(Creator creator, String name) {
+        return projectRepository.projectOfCreatorAndName(creator, name);
     }
 
     public List<Project> listByCreatorAndScope(Creator creator, Integer scope) {
@@ -60,7 +59,11 @@ public class ProjectService {
         return (List<Project>) projectRepository.projectsOfCreator(creator);
     }
 
-    public void add(Project project) {
+    public void save(Project project) {
+        projectRepository.add(project);
+    }
+
+    public void update(Project project) {
         projectRepository.add(project);
     }
 

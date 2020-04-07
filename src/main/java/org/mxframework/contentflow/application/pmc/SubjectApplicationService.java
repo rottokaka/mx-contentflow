@@ -1,14 +1,14 @@
 package org.mxframework.contentflow.application.pmc;
 
-import org.mxframework.contentflow.domain.model.pmc.project.version.VersionId;
 import org.mxframework.contentflow.domain.model.pmc.project.subject.Subject;
 import org.mxframework.contentflow.domain.model.pmc.project.subject.SubjectId;
+import org.mxframework.contentflow.domain.model.pmc.project.version.VersionId;
 import org.mxframework.contentflow.exception.MxException;
 import org.mxframework.contentflow.representation.pmc.subject.form.SubjectCreateForm;
+import org.mxframework.contentflow.representation.pmc.subject.form.SubjectModifyForm;
 import org.mxframework.contentflow.representation.pmc.subject.vo.SubjectBaseVO;
 import org.mxframework.contentflow.representation.pmc.subject.vo.SubjectItemVO;
 import org.mxframework.contentflow.representation.pmc.subject.vo.SubjectManageVO;
-import org.mxframework.contentflow.representation.pmc.subject.form.SubjectModifyForm;
 import org.mxframework.contentflow.service.pmc.project.SubjectService;
 import org.mxframework.contentflow.service.pmc.translator.SubjectTranslator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,22 +83,17 @@ public class SubjectApplicationService {
     public SubjectBaseVO putBySubjectId(String subjectId, SubjectModifyForm subjectModifyForm) {
         Subject bySubjectId = subjectService.getBySubjectId(new SubjectId(subjectId));
         // 可修改的专题字段：名称及其描述。参考 SubjectModifyForm
-        // 1. 修改描述
-        if (bySubjectId.name().equals(subjectModifyForm.getName())) {
-            bySubjectId.setDescription(subjectModifyForm.getDescription());
-        }
-        // 2. 修改名称
-        else {
+        // 校验修改内容的名称，如果涉及内容包含名称，则需要判断新的名称是否存在
+        if (!bySubjectId.name().equals(subjectModifyForm.getName())) {
             Subject byVersionIdAndName = subjectService.getByVersionIdAndName(bySubjectId.versionId()
                     , subjectModifyForm.getName());
             if (byVersionIdAndName != null) {
                 // TODO Exception handle
                 throw new MxException("专题已存在！");
-            } else {
-                bySubjectId.setName(subjectModifyForm.getName());
-                bySubjectId.setDescription(subjectModifyForm.getDescription());
             }
         }
+        bySubjectId.setName(subjectModifyForm.getName());
+        bySubjectId.setDescription(subjectModifyForm.getDescription());
         subjectService.update(bySubjectId);
         return subjectTranslator.convertToBaseVo(bySubjectId);
     }

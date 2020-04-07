@@ -79,22 +79,18 @@ public class SectionApplicationService {
     public SectionBaseVO putBySectionId(String sectionId, SectionModifyForm sectionModifyForm) {
         Section bySectionId = sectionService.getBySectionId(new SectionId(sectionId));
         // 可修改的类型字段：名称及其描述。参考 SectionModifyForm
+        // 校验修改内容的名称，如果涉及内容包含名称，则需要判断新的名称是否存在
         // 1. 修改描述
-        if (bySectionId.name().equals(sectionModifyForm.getName())) {
-            bySectionId.setDescription(sectionModifyForm.getDescription());
-        }
-        // 2. 修改名称
-        else {
+        if (!bySectionId.name().equals(sectionModifyForm.getName())) {
             Section byVersionIdAndName = sectionService.getByVersionIdAndName(bySectionId.versionId()
                     , sectionModifyForm.getName());
             if (byVersionIdAndName != null) {
                 // TODO Exception Handle
                 throw new MxException("类型已存在！");
-            } else {
-                bySectionId.setName(sectionModifyForm.getName());
-                bySectionId.setDescription(sectionModifyForm.getDescription());
             }
         }
+        bySectionId.setName(sectionModifyForm.getName());
+        bySectionId.setDescription(sectionModifyForm.getDescription());
         sectionService.update(bySectionId);
         return sectionTranslator.convertToBaseVo(bySectionId);
     }
