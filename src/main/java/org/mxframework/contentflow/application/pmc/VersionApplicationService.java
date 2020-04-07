@@ -6,6 +6,7 @@ import org.mxframework.contentflow.domain.model.pmc.project.version.VersionId;
 import org.mxframework.contentflow.exception.MxException;
 import org.mxframework.contentflow.representation.pmc.version.VersionCreateForm;
 import org.mxframework.contentflow.representation.pmc.version.VersionModifyForm;
+import org.mxframework.contentflow.representation.pmc.version.vo.VersionBaseVO;
 import org.mxframework.contentflow.representation.pmc.version.vo.VersionItemVO;
 import org.mxframework.contentflow.representation.pmc.version.vo.VersionManageVO;
 import org.mxframework.contentflow.service.pmc.project.VersionService;
@@ -107,17 +108,28 @@ public class VersionApplicationService {
     }
 
     @Transactional(rollbackFor = {Exception.class})
-    public Version updateByVersionId(VersionId versionId, VersionModifyForm versionModifyForm) {
+    public VersionBaseVO putByVersionId(VersionId versionId, VersionModifyForm versionModifyForm) {
         Version byVersionId = versionService.getByVersionId(versionId);
-        Version byProjectIdAndName = versionService.getByProjectIdAndName(byVersionId.projectId(), versionModifyForm.getName());
-        if (byProjectIdAndName != null) {
-            // TODO Exception Handle
-            throw new MxException("版本已存在！");
+        // 可修改的版本字段，名称及其描述，参考 VersionModifyForm
+        // 1. 修改描述
+        if (byVersionId.name().equals(versionModifyForm.getName())) {
+            byVersionId.setDescription(versionModifyForm.getDescription());
         }
-        byVersionId.setName(versionModifyForm.getName());
-        byVersionId.setDescription(versionModifyForm.getDescription());
+        // 2. 修改名称
+        else {
+            // 判断新的名称是否已经存在
+            Version byProjectIdAndName = versionService.getByProjectIdAndName(byVersionId.projectId()
+                    , versionModifyForm.getName());
+            if (byProjectIdAndName != null) {
+                // TODO Exception Handle
+                throw new MxException("版本已存在！");
+            } else {
+                byVersionId.setName(versionModifyForm.getName());
+                byVersionId.setDescription(versionModifyForm.getDescription());
+            }
+        }
         versionService.update(byVersionId);
-        return byVersionId;
+        return versionTranslator.convertToBaseVo(byVersionId);
     }
 
     @Transactional(rollbackFor = {Exception.class})
@@ -129,7 +141,7 @@ public class VersionApplicationService {
             throw new MxException("版本已删除！");
         }
         List<Version> versionList = versionService.listByProjectId(byVersionId.projectId());
-        if (versionList == null || versionList.size() <=1) {
+        if (versionList == null || versionList.size() <= 1) {
             throw new MxException("至少保留一个版本！");
         }
         // 1. 关联坐标

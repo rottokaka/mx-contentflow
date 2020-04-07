@@ -66,7 +66,7 @@ public class VersionResource {
     @PreAuthorize("hasRole('USER')")
     public ResultVO updateById(@ApiParam("版本ID") @PathVariable String versionId
             , @ApiParam("版本修改表单") @Valid @RequestBody VersionModifyForm versionModifyForm) {
-        return ResultUtil.success(versionApplicationService.updateByVersionId(new VersionId(versionId), versionModifyForm));
+        return ResultUtil.success(versionApplicationService.putByVersionId(new VersionId(versionId), versionModifyForm));
     }
 
     /**

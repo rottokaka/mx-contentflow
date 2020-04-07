@@ -82,15 +82,25 @@ public class SubjectApplicationService {
     @Transactional(rollbackFor = {Exception.class})
     public SubjectBaseVO putBySubjectId(String subjectId, SubjectModifyForm subjectModifyForm) {
         Subject bySubjectId = subjectService.getBySubjectId(new SubjectId(subjectId));
-        Subject byVersionIdAndName = subjectService.getByVersionIdAndName(bySubjectId.versionId(), subjectModifyForm.getName());
-        if (byVersionIdAndName != null) {
-            // TODO Exception handle
-            throw new MxException("专题已存在！");
+        // 可修改的专题字段：名称及其描述。参考 SubjectModifyForm
+        // 1. 修改描述
+        if (bySubjectId.name().equals(subjectModifyForm.getName())) {
+            bySubjectId.setDescription(subjectModifyForm.getDescription());
         }
-        bySubjectId.setName(subjectModifyForm.getName());
-        bySubjectId.setDescription(subjectModifyForm.getDescription());
+        // 2. 修改名称
+        else {
+            Subject byVersionIdAndName = subjectService.getByVersionIdAndName(bySubjectId.versionId()
+                    , subjectModifyForm.getName());
+            if (byVersionIdAndName != null) {
+                // TODO Exception handle
+                throw new MxException("专题已存在！");
+            } else {
+                bySubjectId.setName(subjectModifyForm.getName());
+                bySubjectId.setDescription(subjectModifyForm.getDescription());
+            }
+        }
         subjectService.update(bySubjectId);
-        return subjectTranslator.convertToBaseVo(subjectService.getBySubjectId(new SubjectId(subjectId)));
+        return subjectTranslator.convertToBaseVo(bySubjectId);
     }
 
     @Transactional(rollbackFor = {Exception.class})

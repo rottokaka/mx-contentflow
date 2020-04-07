@@ -78,14 +78,23 @@ public class SectionApplicationService {
     @Transactional(rollbackFor = {Exception.class})
     public SectionBaseVO putBySectionId(String sectionId, SectionModifyForm sectionModifyForm) {
         Section bySectionId = sectionService.getBySectionId(new SectionId(sectionId));
-        Section byVersionIdAndName = sectionService.getByVersionIdAndName(bySectionId.versionId()
-                , sectionModifyForm.getName());
-        if (byVersionIdAndName != null) {
-            // TODO Exception Handle
-            throw new MxException("类型已存在！");
+        // 可修改的类型字段：名称及其描述。参考 SectionModifyForm
+        // 1. 修改描述
+        if (bySectionId.name().equals(sectionModifyForm.getName())) {
+            bySectionId.setDescription(sectionModifyForm.getDescription());
         }
-        bySectionId.setName(sectionModifyForm.getName());
-        bySectionId.setDescription(sectionModifyForm.getDescription());
+        // 2. 修改名称
+        else {
+            Section byVersionIdAndName = sectionService.getByVersionIdAndName(bySectionId.versionId()
+                    , sectionModifyForm.getName());
+            if (byVersionIdAndName != null) {
+                // TODO Exception Handle
+                throw new MxException("类型已存在！");
+            } else {
+                bySectionId.setName(sectionModifyForm.getName());
+                bySectionId.setDescription(sectionModifyForm.getDescription());
+            }
+        }
         sectionService.update(bySectionId);
         return sectionTranslator.convertToBaseVo(bySectionId);
     }

@@ -3,6 +3,7 @@ package org.mxframework.contentflow.service.pmc.translator;
 import org.mxframework.contentflow.domain.model.pmc.project.version.Version;
 import org.mxframework.contentflow.representation.pmc.version.VersionBase;
 import org.mxframework.contentflow.representation.pmc.version.VersionModifyForm;
+import org.mxframework.contentflow.representation.pmc.version.vo.VersionBaseVO;
 import org.mxframework.contentflow.representation.pmc.version.vo.VersionItemVO;
 import org.mxframework.contentflow.representation.pmc.version.vo.VersionManageVO;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,10 @@ public class VersionTranslator {
         versionBase.setProjectId(version.projectId().id());
         versionBase.setRank(version.rank());
         return versionBase;
+    }
+
+    public VersionBaseVO convertToBaseVo(Version version) {
+        return new VersionBaseVO(convertToBase(version));
     }
 
     public VersionItemVO convertToItemVo(Version version) {
