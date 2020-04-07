@@ -5,10 +5,9 @@ import org.mxframework.contentflow.constant.PaginationConstant;
 import org.mxframework.contentflow.constant.ccp.BlogConstant;
 import org.mxframework.contentflow.constant.ccp.SnippetConstant;
 import org.mxframework.contentflow.domain.model.ccp.product.blog.Blog;
+import org.mxframework.contentflow.representation.ccp.blog.form.BlogConfigModifyForm;
 import org.mxframework.contentflow.representation.ccp.blog.form.BlogCreateForm;
 import org.mxframework.contentflow.representation.ccp.blog.form.BlogModifyForm;
-import org.mxframework.contentflow.representation.ccp.blog.vo.BlogBaseVO;
-import org.mxframework.contentflow.representation.ccp.blog.form.BlogConfigModifyForm;
 import org.mxframework.contentflow.representation.sis.tag.vo.TagAtProductVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,15 +41,12 @@ public class BlogController {
     /**
      * 获取博客主页页面
      *
-     * @param model 模型
-     * @return 模型视图
+     * @return 主页路径
      */
     @GetMapping
-    public ModelAndView getIndex(Model model) {
+    public String getIndex() {
         logger.info("获取博客主页页面");
-        List<? extends BlogBaseVO> blogCardVoList = blogApplicationService.listPublicBlogs();
-        model.addAttribute("blogCardVoList", blogCardVoList);
-        return new ModelAndView("blog/index", "blogModel", model);
+        return "redirect:blog/explore";
     }
 
     /**
@@ -63,13 +59,13 @@ public class BlogController {
      * @param model   模型
      * @return 模型视图
      */
-    @GetMapping("more")
+    @GetMapping("explore")
     public ModelAndView getMore(@RequestParam(required = false, defaultValue = "") String keyword
             , @RequestParam(required = false, defaultValue = PaginationConstant.PAGINATION_DEFAULT_PAGE) String page
             , @RequestParam(required = false, defaultValue = PaginationConstant.PAGINATION_DEFAULT_SIZE) String size
             , @RequestParam(required = false, defaultValue = SnippetConstant.SNIPPET_SORT_DEFAULT_CREATED_DESC) String sort
             , Model model) {
-        logger.info("获取博客更多页面，分页信息，关键字：{}， 页码：{}， 每页数量：{}，排序：{}", keyword, page, size, sort);
+        logger.info("获取博客发现页面，分页信息，关键字：{}， 页码：{}， 每页数量：{}，排序：{}", keyword, page, size, sort);
         Pageable pageable = null;
         if (BlogConstant.BLOG_SORT_DEFAULT_CREATED_DESC.equals(sort)) {
             pageable = PageRequest.of(Integer.parseInt(page) - 1, Integer.parseInt(size), Sort.Direction.DESC, "gmtCreate");
@@ -83,7 +79,7 @@ public class BlogController {
         model.addAttribute("sort", sort);
         model.addAttribute("page", blogPage);
         model.addAttribute("blogCardVoList", content.isEmpty() ? null : blogApplicationService.listCardByBlogList(content));
-        return new ModelAndView("blog/more", "blogModel", model);
+        return new ModelAndView("blog/explore", "blogModel", model);
     }
 
     /**

@@ -21,6 +21,10 @@ public interface ProjectRepository {
 
     Collection<Project> projectsOfProperty(Integer perproty);
 
+    Collection<Project> projectsOfPropertyAndScopeAndAboveProjectId(Integer property, Integer scope, String aboveProjectId);
+
+    Collection<Project> projectsOfPropertyAndAboveProjectId(Integer property, String aboveProjectId);
+
     Collection<Project> projectsOfScope(Integer scope);
 
     Collection<Project> projectsOfAboveProjectId(String aboveProjectId);

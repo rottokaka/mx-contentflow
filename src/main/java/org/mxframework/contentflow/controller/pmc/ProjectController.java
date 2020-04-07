@@ -36,7 +36,7 @@ public class ProjectController {
      */
     @GetMapping
     public ModelAndView getIndex(Model model) {
-        List<ProjectItemVO> projectItemVoList = projectApplicationService.listItemVoTop();
+        List<ProjectItemVO> projectItemVoList = projectApplicationService.listPrivatePublicTop();
         model.addAttribute("projectItemVoList", projectItemVoList);
         return new ModelAndView("project/index", "projectModel", model);
     }
@@ -49,7 +49,7 @@ public class ProjectController {
      */
     @GetMapping("explore")
     public ModelAndView getExplore(Model model) {
-        model.addAttribute("projectItemVoList", projectApplicationService.listItemVoPublic());
+        model.addAttribute("projectItemVoList", projectApplicationService.listPublicTop());
         return new ModelAndView("project/list", "projectModel", model);
     }
 

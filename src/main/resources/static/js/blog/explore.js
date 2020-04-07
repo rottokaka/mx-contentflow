@@ -18,7 +18,7 @@ $(function () {
     function loadPage(page) {
         const sort = $('#blogSort').val();
         const keyword = $('#blogKeyword').val();
-        window.location = "/blog/more?page=" + page + "&size=" + PAGE_SIZE + "&sort=" + sort + "&keyword=" + keyword;
+        window.location = "/blog/explore?page=" + page + "&size=" + PAGE_SIZE + "&sort=" + sort + "&keyword=" + keyword;
     }
 
     // 获取当前页码

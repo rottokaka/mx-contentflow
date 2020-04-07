@@ -20,6 +20,10 @@ public interface ProjectJpaRepository extends JpaRepository<Project, Long> {
 
     List<Project> findAllByProperty(Integer property);
 
+    List<Project> findAllByPropertyAndScopeAndAboveProjectId(Integer property, Integer scope, String aboveProjectId);
+
+    List<Project> findAllByPropertyAndAboveProjectId(Integer property, String aboveProjectId);
+
     List<Project> findAllByScope(Integer scope);
 
     List<Project> findAllByAboveProjectId(String aboveProjectId);

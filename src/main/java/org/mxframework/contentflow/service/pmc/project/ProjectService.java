@@ -43,6 +43,14 @@ public class ProjectService {
         return (List<Project>) projectRepository.projectsOfProperty(property);
     }
 
+    public List<Project> listByPropertyAndScopeAndScopeAndAboveProjectId(Integer property, Integer scope, String aboveProjectId) {
+        return (List<Project>) projectRepository.projectsOfPropertyAndScopeAndAboveProjectId(property, scope, aboveProjectId);
+    }
+
+    public List<Project> listByPropertyAndAboveProjectId(Integer property, String aboveProjectId) {
+        return (List<Project>) projectRepository.projectsOfPropertyAndAboveProjectId(property, aboveProjectId);
+    }
+
     public List<Project> listByScope(Integer property) {
         return (List<Project>) projectRepository.projectsOfScope(property);
     }

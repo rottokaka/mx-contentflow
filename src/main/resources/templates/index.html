@@ -8,132 +8,48 @@
 <body>
 <div th:replace="~{fragment/header :: header}"></div>
 <div class="container" id="wrapper">
-    <div class="card">
-        <div class="card-header p-0">
-            <div class="jumbotron mb-0">
-                <h1 class="display-4">mxxxxxxx.com</h1>
-                <p class="lead">Mark Anything，积录，趁你还没忘记</p>
-                <hr class="my-4">
-                <p>积少成多，目之以录，所谓积录</p>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="container-fluid">
+                <p th:if="${blogCardVoList} == null">网站还未任何公开博客！</p>
+                <div class="card mt-1 border-0" th:if="${blogCardVoList} != null">
+                    <div th:replace="~{blog/fragment/card-list :: blogCardVoList}"></div>
+                    <div class="card-footer text-center p-0 ">
+                        <a href="/blog/explore">explore more>></a>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="card-body">
-            <div class="card-title d-flex justify-content-between">
-                <div>
-                    <p>7x代表一周的七天</p>
+        <div class="col-md-3">
+            <div class=" mt-1">
+                <div class="text-center">
+                    <img class="img-thumbnail rounded" th:src="@{/images/avatar-mx-959x959.jpg}" src="../static/images/avatar-mx-959x959.jpg" alt="MX">
                 </div>
-                <div>
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">星期</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">颜色</a>
-                            </div>
-                        </li>
-                    </ul>
+                <div class="border text-center"><strong>Make Anythings(X)</strong></div>
+                <ul class="list-group mt-2">
+                    <li class="list-group-item p-1" title="项目地址">
+                        <i class="fa fa-github fa-fw" aria-hidden="true"></i>&nbsp;<a href="https://github.com/rottokaka/mx-contentflow" target="_blank">rottokaka@github.com</a>
+                    </li>
+                    <li class="list-group-item p-1" title="邮箱地址">
+                        <i class="fa fa-envelope fa-fw" aria-hidden="true"></i>&nbsp;rottokaka@gmail.com
+                    </li>
+                    <li class="list-group-item p-1" title="登录帐号/密码">
+                        <i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>&nbsp;guest/guest
+                        <i class="fa fa-hand-o-left fa-fw float-md-right"></i>
+                    </li>
+                </ul>
+            </div>
+            <div class="mt-3" th:if="${projectItemVoList} != null">
+                <h5><strong>&nbsp;推荐项目</strong></h5>
+                <hr class="mt-0">
+                <div class="list-group" th:if="${projectItemVoList.size()} > 0">
+                    <a class="list-group-item list-group-item-action text-dark p-1" title="查看项目"
+                       th:each="projectItemVO : ${projectItemVoList}" th:attr="projectId=${projectItemVO.projectId}"
+                       href="project/detail.html" th:href="@{'/project/' + ${projectItemVO.projectId} + '/detail'}">
+                        <span th:text="${projectItemVO.name}"></span>
+                    </a>
                 </div>
             </div>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>星期\吃饭</th>
-                    <th>早上</th>
-                    <th>中午</th>
-                    <th>晚上</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>x[1]:星期一</td>
-                    <td>星期一早上吃饭</td>
-                    <td>星期一中午吃饭</td>
-                    <td>星期一晚上吃饭</td>
-                </tr>
-                <tr>
-                    <td>x[2]:星期二</td>
-                    <td>星期二早上吃饭</td>
-                    <td>星期二中午吃饭</td>
-                    <td>星期二晚上吃饭</td>
-                </tr>
-                <tr>
-                    <td>x[3]:星期三</td>
-                    <td>星期三早上吃饭</td>
-                    <td>星期三中午吃饭</td>
-                    <td>星期三晚上吃饭</td>
-                </tr>
-                <tr>
-                    <td>x[4]:星期四</td>
-                    <td>星期四早上吃饭</td>
-                    <td>星期四中午吃饭</td>
-                    <td>星期四晚上吃饭</td>
-                </tr>
-                <tr>
-                    <td>x[5]:星期五</td>
-                    <td>星期五早上吃饭</td>
-                    <td>星期五中午吃饭</td>
-                    <td>星期五晚上吃饭</td>
-                </tr>
-                <tr>
-                    <td>x[6]星期六</td>
-                    <td>星期六早上吃饭</td>
-                    <td>星期六中午吃饭</td>
-                    <td>星期六晚上吃饭</td>
-                </tr>
-                <tr>
-                    <td>x[7]:星期七</td>
-                    <td>星期七早上吃饭</td>
-                    <td>星期七中午吃饭</td>
-                    <td>星期七晚上吃饭</td>
-                </tr>
-                </tbody>
-            </table>
-            <hr>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>颜色\代码</th>
-                    <th>RGB</th>
-                    <th>十六进制</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>x[1]:红</td>
-                    <td>255,0,0</td>
-                    <td>#FF0000</td>
-                </tr>
-                <tr>
-                    <td>x[2]:橙</td>
-                    <td>255,165,0</td>
-                    <td>FFA500</td>
-                </tr>
-                <tr>
-                    <td>x[3]:黄</td>
-                    <td>255,255,0</td>
-                    <td>#FFFF00</td>
-                </tr>
-                <tr>
-                    <td>x[4]:绿</td>
-                    <td>0,128,0</td>
-                    <td>#008000</td>
-                </tr>
-                <tr>
-                    <td>x[5]:青</td>
-                    <td>0,255,255</td>
-                    <td>#00FFFF</td>
-                </tr>
-                <tr>
-                    <td>x[6]蓝</td>
-                    <td>0,0,255</td>
-                    <td>#0000FF</td>
-                </tr>
-                <tr>
-                    <td>x[7]:紫</td>
-                    <td>128,0,128</td>
-                    <td>#800080</td>
-                </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 </div>

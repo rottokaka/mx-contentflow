@@ -1,5 +1,7 @@
 package org.mxframework.contentflow.controller;
 
+import org.mxframework.contentflow.application.ccp.BlogApplicationService;
+import org.mxframework.contentflow.application.pmc.ProjectApplicationService;
 import org.mxframework.contentflow.constant.iaa.UserEnum;
 import org.mxframework.contentflow.domain.model.iaa.Authority;
 import org.mxframework.contentflow.domain.model.iaa.User;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,18 +30,19 @@ public class MainController {
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
     @Autowired
+    private ProjectApplicationService projectApplicationService;
+    @Autowired
+    private BlogApplicationService blogApplicationService;
+    @Autowired
     private AuthorityService authorityService;
     @Autowired
     private UserService userService;
 
     @GetMapping(value = "/")
-    public String root() {
-        return "forward:/blog";
-    }
-
-    @GetMapping(value = "/index")
-    public String index() {
-        return "forward:/blog";
+    public ModelAndView root(Model model) {
+        model.addAttribute("projectItemVoList", projectApplicationService.listPublicTop());
+        model.addAttribute("blogCardVoList", blogApplicationService.listPublicBlogs());
+        return new ModelAndView("index", "indexModel", model);
     }
 
     @GetMapping(value = "/login")
@@ -73,8 +77,4 @@ public class MainController {
         return "redirect:/login";
     }
 
-    @GetMapping("/404")
-    public String nfe() {
-        return "/404";
-    }
 }

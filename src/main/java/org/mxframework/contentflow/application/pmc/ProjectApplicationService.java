@@ -124,8 +124,9 @@ public class ProjectApplicationService {
         return projectTranslator.convertToItemDTO(projects);
     }
 
-    public List<ProjectItemVO> listItemVoPublic() {
-        List<Project> projectList = projectService.listByScope(ScopeConstant.SCOPE_PUBLIC);
+    public List<ProjectItemVO> listPublicTop() {
+        List<Project> projectList = projectService.listByPropertyAndAboveProjectId(ProjectConstant.PROJECT_PROPERTY_PUBLIC
+                , ProjectConstant.PROJECT_DEFAULT_ABOVE_ID);
         if (projectList != null && projectList.size() > 0) {
             return projectTranslator.convertToItemVo(projectList);
         } else {
@@ -133,9 +134,10 @@ public class ProjectApplicationService {
         }
     }
 
-    public List<ProjectItemVO> listItemVoTop() {
-        List<Project> projectList = projectService.listByAboveProjectIdIdAndScope(ProjectConstant.PROJECT_DEFAULT_ABOVE_ID
-                , ScopeConstant.SCOPE_PUBLIC);
+    public List<ProjectItemVO> listPrivatePublicTop() {
+        List<Project> projectList = projectService.listByPropertyAndScopeAndScopeAndAboveProjectId(ProjectConstant.PROJECT_PROPERTY_PRIVATE
+                , ScopeConstant.SCOPE_PUBLIC
+                , ProjectConstant.PROJECT_DEFAULT_ABOVE_ID);
         if (projectList != null && projectList.size() > 0) {
             return projectTranslator.convertToItemVo(projectList);
         } else {

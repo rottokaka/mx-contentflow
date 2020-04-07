@@ -51,6 +51,17 @@ public class HibernateProjectRepository implements ProjectRepository {
         return projectJpaRepository.findAllByProperty(perproty);
     }
 
+
+    @Override
+    public Collection<Project> projectsOfPropertyAndScopeAndAboveProjectId(Integer property, Integer scope, String aboveProjectId) {
+        return projectJpaRepository.findAllByPropertyAndScopeAndAboveProjectId(property, scope, aboveProjectId);
+    }
+
+    @Override
+    public Collection<Project> projectsOfPropertyAndAboveProjectId(Integer property, String aboveProjectId) {
+        return projectJpaRepository.findAllByPropertyAndAboveProjectId(property, aboveProjectId);
+    }
+
     @Override
     public Collection<Project> projectsOfScope(Integer scope) {
         return projectJpaRepository.findAllByScope(scope);
