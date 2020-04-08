@@ -82,9 +82,8 @@ public class BlogService {
         blogRepository.add(blog);
     }
 
-    public Blog updateBlog(Blog blog) {
+    public void update(Blog blog) {
         blogRepository.add(blog);
-        return blogRepository.blogOfBlogId(blog.blogId());
     }
 
     public void updateArchived(BlogId blogId, Integer factor) {

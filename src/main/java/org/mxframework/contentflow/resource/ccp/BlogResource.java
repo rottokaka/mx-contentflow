@@ -22,8 +22,9 @@ import javax.validation.Valid;
 /**
  * @author mx
  */
-@RestController
 @Api("Blog RESTful API")
+@RestController
+@RequestMapping("blogs")
 public class BlogResource {
     private static final Logger logger = LoggerFactory.getLogger(BlogResource.class);
 
@@ -36,7 +37,7 @@ public class BlogResource {
      * @return 返回结果[VO]
      */
     @ApiOperation("列出博客")
-    @GetMapping("/blogs")
+    @GetMapping
     public ResultVO list(@ApiParam("数据布局") String layout) {
         return ResultUtil.success(blogApplicationService.listVo(layout));
     }
@@ -48,7 +49,7 @@ public class BlogResource {
      * @return 结果[VO]
      */
     @ApiOperation("新建博客")
-    @PostMapping("/blogs")
+    @PostMapping
     @PreAuthorize("hasRole('USER')")
     public ResultVO post(@ApiParam("博客新建表单") @Valid @RequestBody BlogCreateForm blogCreateForm) {
         return ResultUtil.success(blogApplicationService.post(blogCreateForm));
@@ -61,7 +62,7 @@ public class BlogResource {
      * @return 结果[VO]
      */
     @ApiOperation("查找博客")
-    @GetMapping("/blogs/{blogId}")
+    @GetMapping("{blogId}")
     public ResultVO getByBlogId(@ApiParam("博客ID") @PathVariable String blogId, @ApiParam("数据布局") String layout) {
         return ResultUtil.success(blogApplicationService.getBaseByBlogId(blogId, layout));
     }
@@ -74,11 +75,11 @@ public class BlogResource {
      * @return 结果[VO]
      */
     @ApiOperation("更新博客")
-    @PutMapping("/blogs/{blogId}")
+    @PutMapping("{blogId}")
     @PreAuthorize("hasRole('USER')")
     public ResultVO putByBlogId(@ApiParam("博客ID") @PathVariable String blogId
             , @ApiParam("博客修改表单") @Valid @RequestBody BlogModifyForm blogModifyForm) {
-        return ResultUtil.success(blogApplicationService.putBlogByBlogId(new BlogId(blogId), blogModifyForm));
+        return ResultUtil.success(blogApplicationService.putBlogByBlogId(blogId, blogModifyForm));
     }
 
     /**
@@ -90,7 +91,7 @@ public class BlogResource {
      * @return 结果[VO]
      */
     @ApiOperation("更新博客配置")
-    @PatchMapping("/blogs/{blogId}/config")
+    @PatchMapping("{blogId}/config")
     @PreAuthorize("hasRole('USER')")
     public ResultVO patchConfigByBlogId(@ApiParam("博客ID") @PathVariable String blogId
             , @ApiParam("博客配置修改表单") @Valid @RequestBody BlogConfigModifyForm configUpdateVo) {
@@ -105,7 +106,7 @@ public class BlogResource {
      * @return 结果[VO]
      */
     @ApiOperation("删除博客")
-    @DeleteMapping("/blogs/{blogId}")
+    @DeleteMapping("{blogId}")
     @PreAuthorize("hasRole('USER')")
     @Transactional(rollbackFor = {Exception.class})
     public ResultVO deleteByBlogId(@ApiParam("博客ID") @PathVariable String blogId) {

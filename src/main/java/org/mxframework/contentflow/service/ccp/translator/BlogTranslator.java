@@ -6,6 +6,7 @@ import org.mxframework.contentflow.representation.ccp.blog.BlogBase;
 import org.mxframework.contentflow.representation.ccp.blog.dto.BlogBaseDTO;
 import org.mxframework.contentflow.representation.ccp.blog.dto.BlogCardDTO;
 import org.mxframework.contentflow.representation.ccp.blog.dto.BlogDetailDTO;
+import org.mxframework.contentflow.representation.ccp.blog.form.BlogModifyForm;
 import org.mxframework.contentflow.representation.ccp.blog.vo.BlogBaseVO;
 import org.mxframework.contentflow.representation.ccp.blog.vo.BlogCardVO;
 import org.mxframework.contentflow.representation.ccp.blog.vo.BlogDetailVO;
@@ -126,6 +127,10 @@ public class BlogTranslator {
         }
     }
 
+    public BlogModifyForm convertToModifyForm(Blog blog) {
+        return new BlogModifyForm(blog.title(), blog.content(), blog.contentHtml());
+    }
+
     public List<? extends BlogBaseVO> convertToVo(List<Blog> blogList, DataLayout layout) {
         switch (layout) {
             case DATA_LAYOUT_CARD:
@@ -144,4 +149,5 @@ public class BlogTranslator {
     public List<BlogManageVO> convertToManageVo(List<Blog> blogList) {
         return null;
     }
+
 }

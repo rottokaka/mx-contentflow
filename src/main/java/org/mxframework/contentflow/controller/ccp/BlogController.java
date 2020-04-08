@@ -7,7 +7,6 @@ import org.mxframework.contentflow.constant.ccp.SnippetConstant;
 import org.mxframework.contentflow.domain.model.ccp.product.blog.Blog;
 import org.mxframework.contentflow.representation.ccp.blog.form.BlogConfigModifyForm;
 import org.mxframework.contentflow.representation.ccp.blog.form.BlogCreateForm;
-import org.mxframework.contentflow.representation.ccp.blog.form.BlogModifyForm;
 import org.mxframework.contentflow.representation.sis.tag.vo.TagAtProductVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -178,9 +177,8 @@ public class BlogController {
     @PreAuthorize("hasRole('USER')")
     public ModelAndView getModify(@PathVariable String blogId, Model model) {
         logger.info("获取博客修改页面，通过博客ID：{}", blogId);
-        Blog blog = blogApplicationService.getByBlogId(blogId);
-        BlogModifyForm blogModifyForm = new BlogModifyForm((blog));
-        model.addAttribute("blogModifyForm", blogModifyForm);
+        model.addAttribute("blogId", blogId);
+        model.addAttribute("blogModifyForm", blogApplicationService.getModifyFormByBlogId(blogId));
         return new ModelAndView("blog/modify", "blogModel", model);
     }
 

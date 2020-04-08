@@ -1,4 +1,4 @@
-    /**
+/**
  * related html : blog/modify.html
  */
 $(function () {
@@ -35,7 +35,7 @@ $(function () {
     //==================================================================================================================
 
     // 更新博客
-    $("#updateBlog").click(function () {
+    $("#blogUpdate").click(function () {
         // 博客ID
         const blogId = $('#blogId').val();
         // 博客内容
@@ -43,21 +43,20 @@ $(function () {
         // 博客内容HTML形式
         const contentHtml = editor.getHTML(); // 获取 Textarea 保存的 HTML 源码
         /*const contentPreviewedHtml = editor.getPreviewedHTML();*/  // 获取预览窗口里的 HTML，在开启 watch 且没有开启 saveHTMLToTextarea 时使用
-        // 博客更新视图对象
-        const blogUpdateVo = {
+        // 博客修改表单
+        const blogModifyForm = {
             "title": $('#title').val(),
             "content": content,
             "contentHtml": contentHtml
         };
         $.ajax({
-            async: true,
             type: 'PUT',
             url: '/blogs/' + blogId,
             contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(blogUpdateVo),
+            data: JSON.stringify(blogModifyForm),
             success: function (data) {
                 if (data.valid) {
-                    window.location = data.data;
+                    window.location = "/blog/" + blogId + "/detail";
                     $("#userModal").modal('hide');
                 } else {
                     toastr.warning(data.message);

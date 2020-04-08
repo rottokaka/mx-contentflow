@@ -11,6 +11,7 @@ import org.mxframework.contentflow.domain.model.ccp.collaborator.Blogger;
 import org.mxframework.contentflow.domain.model.ccp.product.ProductType;
 import org.mxframework.contentflow.domain.model.ccp.product.blog.Blog;
 import org.mxframework.contentflow.domain.model.ccp.product.blog.BlogId;
+import org.mxframework.contentflow.exception.MxException;
 import org.mxframework.contentflow.representation.ccp.blog.dto.BlogCardDTO;
 import org.mxframework.contentflow.representation.ccp.blog.form.BlogConfigModifyForm;
 import org.mxframework.contentflow.representation.ccp.blog.form.BlogCreateForm;
@@ -68,7 +69,11 @@ public class BlogApplicationService {
     }
 
     public Blog getByBlogId(String blogId) {
-        return blogService.getByBlogId(new BlogId(blogId));
+        Blog byBlogId = blogService.getByBlogId(new BlogId(blogId));
+        if (blogId == null) {
+            throw new MxException("博客不存在！");
+        }
+        return byBlogId;
     }
 
     public BlogVO<? extends BlogBaseVO> getBaseByBlogId(String blogId, String layout) {
@@ -86,6 +91,10 @@ public class BlogApplicationService {
 
     public BlogDetailVO getDetailByBlogId(String blogId) {
         return blogTranslator.convertToDetailVo(blogService.getByBlogId(new BlogId(blogId)));
+    }
+
+    public BlogModifyForm getModifyFormByBlogId(String blogId) {
+        return blogTranslator.convertToModifyForm(getByBlogId(blogId));
     }
 
     public List<? extends BlogBaseVO> listVo(String layout) {
@@ -244,15 +253,16 @@ public class BlogApplicationService {
     }
 
     @Transactional(rollbackFor = {Exception.class})
-    public Blog putBlogByBlogId(BlogId blogId, BlogModifyForm blogModifyForm) {
-        Blog byCode = blogService.getByBlogId(blogId);
+    public Blog putBlogByBlogId(String blogId, BlogModifyForm blogModifyForm) {
+        Blog byCode = blogService.getByBlogId(new BlogId(blogId));
         byCode.setTitle("".equals(blogModifyForm.getTitle())
                 ? BlogUtil.getRegexResult(BlogConstant.BLOG_PATTERN_TITLE, blogModifyForm.getContent())
                 : blogModifyForm.getTitle());
         byCode.setSummary(BlogUtil.getRegexResult(BlogConstant.BLOG_PATTERN_SUMMARY, blogModifyForm.getContent()));
         byCode.setContent(blogModifyForm.getContent());
         byCode.setContentHtml(blogModifyForm.getContentHtml());
-        return blogService.updateBlog(byCode);
+        blogService.update(byCode);
+        return byCode;
     }
 
     @Transactional(rollbackFor = {Exception.class})
