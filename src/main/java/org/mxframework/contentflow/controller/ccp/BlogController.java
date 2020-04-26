@@ -193,9 +193,8 @@ public class BlogController {
     @PreAuthorize("hasRole('USER')")
     public ModelAndView getConfigModify(@PathVariable String blogId, Model model) {
         logger.info("获取博客配置修改页面，通过博客ID：{}", blogId);
-        Blog blog = blogApplicationService.getByBlogId(blogId);
-        BlogConfigModifyForm blogConfigModifyForm = new BlogConfigModifyForm(blog);
-        model.addAttribute("blogConfigModifyForm", blogConfigModifyForm);
+        model.addAttribute("blogConfigModifyId", blogId);
+        model.addAttribute("blogConfigModifyForm", blogApplicationService.getConfigModifyFormByBlogId(blogId));
         return new ModelAndView("blog/config/modify", "blogModel", model);
     }
 }

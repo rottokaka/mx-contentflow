@@ -89,6 +89,10 @@ public class BlogApplicationService {
         }
     }
 
+    public BlogConfigModifyForm getConfigModifyFormByBlogId(String blogId) {
+        return blogTranslator.convertToConfigModifyForm(getByBlogId(blogId));
+    }
+
     public BlogDetailVO getDetailByBlogId(String blogId) {
         return blogTranslator.convertToDetailVo(blogService.getByBlogId(new BlogId(blogId)));
     }
@@ -188,11 +192,7 @@ public class BlogApplicationService {
 
     public List<BlogManageVO> listManageVo() {
         List<Blog> blogList = blogService.listByBlogger(new Blogger(identityApplicationService.identity()));
-        if (blogList != null && blogList.size() > 0) {
-            return blogTranslator.convertToManageVo(blogList);
-        } else {
-            return null;
-        }
+        return blogTranslator.convertToManageVo(blogList);
     }
 
     public List<BlogCardVO> fillBlogCardVo(List<BlogCardVO> blogCardVoList) {

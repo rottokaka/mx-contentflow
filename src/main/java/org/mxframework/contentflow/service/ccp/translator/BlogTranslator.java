@@ -6,6 +6,7 @@ import org.mxframework.contentflow.representation.ccp.blog.BlogBase;
 import org.mxframework.contentflow.representation.ccp.blog.dto.BlogBaseDTO;
 import org.mxframework.contentflow.representation.ccp.blog.dto.BlogCardDTO;
 import org.mxframework.contentflow.representation.ccp.blog.dto.BlogDetailDTO;
+import org.mxframework.contentflow.representation.ccp.blog.form.BlogConfigModifyForm;
 import org.mxframework.contentflow.representation.ccp.blog.form.BlogModifyForm;
 import org.mxframework.contentflow.representation.ccp.blog.vo.BlogBaseVO;
 import org.mxframework.contentflow.representation.ccp.blog.vo.BlogCardVO;
@@ -106,6 +107,10 @@ public class BlogTranslator {
         return blogCardVoList;
     }
 
+    public BlogConfigModifyForm convertToConfigModifyForm(Blog blog) {
+        return new BlogConfigModifyForm(blog.title(), blog.scope(), blog.collectionNotAllowed());
+    }
+
     public BlogDetailVO convertToDetailVo(Blog blog) {
         BlogDetailVO blogDetailVo = new BlogDetailVO(convertToBase(blog));
         blogDetailVo.setAuthored(SecurityUtil.isPrincipal(blog.blogger().identify()));
@@ -127,6 +132,14 @@ public class BlogTranslator {
         }
     }
 
+    public List<BlogManageVO> convertToManageVo(List<Blog> blogList) {
+        List<BlogManageVO> blogManageVoList = new ArrayList<>();
+        for (Blog blog : blogList) {
+            blogManageVoList.add(new BlogManageVO(convertToBase(blog)));
+        }
+        return blogManageVoList;
+    }
+
     public BlogModifyForm convertToModifyForm(Blog blog) {
         return new BlogModifyForm(blog.title(), blog.content(), blog.contentHtml());
     }
@@ -143,10 +156,6 @@ public class BlogTranslator {
     }
 
     private List<BlogDetailDTO> convertToDetailDto(List<Blog> blogList) {
-        return null;
-    }
-
-    public List<BlogManageVO> convertToManageVo(List<Blog> blogList) {
         return null;
     }
 

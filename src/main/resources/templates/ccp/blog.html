@@ -1,7 +1,7 @@
-<div class="container" data-th-if="${blogManageVoList} == null">
+<div class="container-fluid" data-th-if="${blogManageVoList.size()} < 1">
     <h5>还没有任何博客</h5>
 </div>
-<div class="container" data-th-if="${blogManageVoList} != null">
+<div class="container-fluid" data-th-if="${blogManageVoList.size()} > 0">
     <table class="table table-striped">
         <thead>
         <tr>
@@ -19,34 +19,36 @@
         <tbody>
         <tr data-th-each="blogManageVo : ${blogManageVoList}">
             <td></td>
-            <td data-th-text="${blogManageVo.id}"></td>
+            <td data-th-text="${blogManageVo.blogId}"></td>
             <td data-th-text="${blogManageVo.title}"></td>
             <td>
-                <a class="text-dark blog-view" href="javascript:void (0)" data-th-attr="blogId=${blogManageVo.id}"
+                <a class="text-dark blog-view" href="javascript:void (0)" data-th-attr="blogId=${blogManageVo.blogId}"
                    data-toggle="modal" data-target="#blogModal" title="查看">
                     <i class="fa fa-eye fa-lg fa-fw"></i>
                 </a>
             </td>
             <td>
-                <span data-th-if="${blogManageVo.hidden} eq 0">公开</span>
-                <span data-th-if="${blogManageVo.hidden} eq 1">私密</span>
+                <span data-th-if="${blogManageVo.scope} eq 0">公开</span>
+                <span data-th-if="${blogManageVo.scope} eq 1" disabled>内部</span>
+                <span data-th-if="${blogManageVo.scope} eq 2" disabled>私密</span>
+                <span data-th-if="${blogManageVo.scope} eq 3">私人</span>
             </td>
             <td>
-                <span data-th-if="${blogManageVo.notAllowCollect} eq 0"> 允许</span>
-                <span data-th-if="${blogManageVo.notAllowCollect} eq 1"> 禁止</span>
+                <span data-th-if="${blogManageVo.collectionNotAllowed} eq 0"> 允许</span>
+                <span data-th-if="${blogManageVo.collectionNotAllowed} eq 1"> 禁止</span>
             </td>
             <td>[[${#dates.format(blogManageVo.gmtCreate, 'yyyy-MM-dd')}]]</td>
             <td>[[${#dates.format(blogManageVo.gmtModified, 'yyyy-MM-dd')}]]</td>
             <td class="d-flex align-items-center">
-                <a class="text-dark blog-config" href="javascript:void (0)" data-th-attr="blogId=${blogManageVo.id}"
+                <a class="text-dark blog-config" href="javascript:void (0)" data-th-attr="blogId=${blogManageVo.blogId}"
                    data-toggle="modal" data-target="#blogConfigModal" title="修改配置">
                     <i class="fa fa-cogs fa-lg fa-fw" aria-hidden="true"></i>
                 </a>
-                <a class="text-dark blog-update" href="javascript:void (0)" data-th-attr="blogId=${blogManageVo.id}"
+                <a class="text-dark blog-update" href="javascript:void (0)" data-th-attr="blogId=${blogManageVo.blogId}"
                    title="编辑内容">
                     <i class="fa fa-pencil-square-o fa-lg fa-fw" aria-hidden="true"></i>
                 </a>
-                <a class="text-dark blog-delete" href="javascript:void (0)" data-th-attr="blogId=${blogManageVo.id}"
+                <a class="text-dark blog-delete" href="javascript:void (0)" data-th-attr="blogId=${blogManageVo.blogId}"
                    title="删除博客">
                     <i class="fa fa-times fa-lg fa-fw" aria-hidden="true"></i>
                 </a>
