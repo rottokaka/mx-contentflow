@@ -12,7 +12,7 @@ import javax.persistence.Embeddable;
 public class BookId extends AbstractValueObject {
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "book_id_id")
+    @Column(name = "book_id_id", unique = true, nullable = false, columnDefinition = "VARCHAR(50) COMMENT '图书ID'")
     private String id;
 
     public BookId(String id) {

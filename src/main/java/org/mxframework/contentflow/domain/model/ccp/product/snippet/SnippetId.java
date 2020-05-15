@@ -11,7 +11,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class SnippetId extends AbstractValueObject {
 
-    @Column(name = "snippet_id_id")
+    @Column(name = "snippet_id_id", nullable = false, columnDefinition = "VARCHAR(50) COMMENT '片段ID'")
     private String id;
 
     public SnippetId(String id) {
@@ -19,7 +19,7 @@ public class SnippetId extends AbstractValueObject {
         this.setId(id);
     }
 
-    protected SnippetId(){
+    protected SnippetId() {
         super();
     }
 
@@ -29,5 +29,12 @@ public class SnippetId extends AbstractValueObject {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "SnippetId{" +
+                "id='" + id + '\'' +
+                '}';
     }
 }

@@ -5,6 +5,9 @@ import org.mxframework.contentflow.domain.model.sis.tag.TagRelevanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @author mx
+ */
 @Repository
 public class HibernateTagRelevanceRepository implements TagRelevanceRepository {
 

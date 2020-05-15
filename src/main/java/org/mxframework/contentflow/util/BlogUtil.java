@@ -1,10 +1,14 @@
 package org.mxframework.contentflow.util;
 
 import org.mxframework.contentflow.constant.ccp.BlogConstant;
-import org.mxframework.contentflow.domain.model.ccp.product.blog.Blog;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static org.mxframework.contentflow.constant.ccp.BlogConstant.BLOG_PATTERN_H1_STYLE_1;
+import static org.mxframework.contentflow.constant.ccp.BlogConstant.BLOG_PATTERN_H1_STYLE_2;
 
 /**
  * BlogUtil: 博客工具类
@@ -14,19 +18,22 @@ import java.util.regex.Pattern;
 public class BlogUtil {
 
     /**
-     * 详细提交
-     * 前提：标题可选，概要为空，内容非空
-     * 结果：标题可选，概要可选，内容非空
+     * 获取文本的标题，通过标题正则表达式
      *
-     * @param blog 博客
+     * @param snippet 片段
+     * @return 返回标题，如果没有匹配结果，返回<tt>null</tt>
      */
-    public static void handleContent(Blog blog) {
-        // 标题处理
-        if (null == blog.title() || "".equals(blog.title().trim())) {
-            blog.setTitle(BlogUtil.getRegexResult(BlogConstant.BLOG_PATTERN_TITLE, blog.content()));
+    public static String getTitleNullable(String snippet) {
+        snippet = snippet.substring(snippet.indexOf("|") + 1);
+        String title = BlogUtil.getRegexResultNullable(BLOG_PATTERN_H1_STYLE_1, snippet);
+        if (title == null) {
+            // System.lineSeparator() 使得 BLOG_PATTERN_H1_STYLE_2 正则表达式生效
+            title = BlogUtil.getRegexResultNullable(BLOG_PATTERN_H1_STYLE_2, System.lineSeparator() + snippet);
+            if (title != null) {
+                title = title.substring(title.lastIndexOf("#") + 1).trim();
+            }
         }
-        // 概要处理
-        blog.setSummary(BlogUtil.getRegexResult(BlogConstant.BLOG_PATTERN_SUMMARY, blog.content()));
+        return title;
     }
 
     /**
@@ -36,7 +43,7 @@ public class BlogUtil {
      * @param content 内容
      * @return String
      */
-    public static String getRegexResult(String regex, String content) {
+    public static String getRegexResultNullable(String regex, String content) {
 
         String regexResult = null;
         Pattern equal = Pattern.compile(regex);
@@ -49,6 +56,17 @@ public class BlogUtil {
             regexResult = equalOfMatcher.group(0).trim();
         }
         return regexResult;
+    }
+
+    public static List<String> getResults(String regex, String content) {
+        List<String> h2String = new ArrayList<>();
+        Pattern equal = Pattern.compile(regex);
+        Matcher equalOfMatcher = equal.matcher(content);
+        while (equalOfMatcher.find()) {
+            String regexResult = equalOfMatcher.group();
+            h2String.add(regexResult.trim());
+        }
+        return h2String;
     }
 
     public static void main(String[] args) {
@@ -66,6 +84,6 @@ public class BlogUtil {
                 "# sfasdfa s\n" +
                 "asdfasdfasdfasdf\n" +
                 "### sgfasdfasdf";
-        System.out.println(getRegexResult(BlogConstant.BLOG_PATTERN_SUMMARY, content));
+        System.out.println(getRegexResultNullable(BlogConstant.BLOG_PATTERN_SUMMARY, content));
     }
 }

@@ -288,7 +288,7 @@ $(function () {
                 success: function (data) {
                     if (data.valid) {
                         toastr.success("删除成功！");
-                        window.location.href = "/users/" + username;
+                        window.location.href = "/user/" + username;
                     } else {
                         toastr.warning(data.message);
                     }

@@ -275,7 +275,7 @@ public class AxisApplicationService {
         List<String> productIdList = new ArrayList<>(productList.size());
         productList.forEach(product -> productIdList.add(product.id()));
         // 更新博客配置，增加归档次数
-        blogApplicationService.patchArchivedByBlogId(productIdList, BlogConstant.BLOG_ARCHIVED_FACTOR_PLUS_AUGEND);
+        blogApplicationService.changeArchivedByBlogId(productIdList, BlogConstant.BLOG_ARCHIVED_FACTOR_PLUS_AUGEND);
         List<Axis> axisList = new ArrayList<>(productList.size());
         productList.forEach(product -> axisList.add(new Axis(product, project.projectId())));
         axisService.insertAll(axisList);
@@ -318,13 +318,13 @@ public class AxisApplicationService {
                 List<Axis> axisListFilled = fillAxisList(removeAxis, productList);
                 axisService.insertAll(axisListFilled);
             } else {
-                blogApplicationService.patchArchivedByBlogId(idsOfblog, BlogConstant.BLOG_ARCHIVED_FACTOR_MINUS_MINUEND);
+                blogApplicationService.changeArchivedByBlogId(idsOfblog, BlogConstant.BLOG_ARCHIVED_FACTOR_MINUS_MINUEND);
                 axisService.deleteAll(axisList);
             }
         }
         // 删除保存
         if (BlogConstant.BLOG_AXIS_PATTERN_DELETE.equals(pattern)) {
-            blogApplicationService.patchArchivedByBlogId(idsOfblog, BlogConstant.BLOG_ARCHIVED_FACTOR_MINUS_MINUEND);
+            blogApplicationService.changeArchivedByBlogId(idsOfblog, BlogConstant.BLOG_ARCHIVED_FACTOR_MINUS_MINUEND);
             axisService.deleteAll(axisList);
         }
     }

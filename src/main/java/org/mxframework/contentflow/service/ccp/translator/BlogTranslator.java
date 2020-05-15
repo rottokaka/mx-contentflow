@@ -14,7 +14,6 @@ import org.mxframework.contentflow.representation.ccp.blog.vo.BlogDetailVO;
 import org.mxframework.contentflow.representation.ccp.blog.vo.BlogManageVO;
 import org.mxframework.contentflow.util.SecurityUtil;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,41 +25,28 @@ import java.util.List;
 @Service
 public class BlogTranslator {
 
-    @Autowired
-    private TagTranslator tagTranslator;
-    @Autowired
-    private ReaderTranslator readerTranslator;
-
     private BlogBase convertToBase(Blog blog) {
-        if (blog != null) {
-            BlogBase blogBase = new BlogBase();
-            blogBase.setGmtCreate(blog.gmtCreate());
-            blogBase.setGmtModified(blog.gmtModified());
-            blogBase.setBlogId(blog.blogId().id());
-            blogBase.setBloggerIdentity(blog.blogger().identify());
-            blogBase.setTitle(blog.title());
-            blogBase.setSubTitle(blog.subTitle());
-            blogBase.setSummary(blog.summary());
-            blogBase.setContent(blog.content());
-            blogBase.setContentHtml(blog.contentHtml());
-            blogBase.setScope(blog.scope());
-            blogBase.setCollectionNotAllowed(blog.collectionNotAllowed());
-            blogBase.setArchived(blog.archived());
-            blogBase.setAboveBlogId(blog.aboveBlogId());
-            return blogBase;
-        } else {
-            return null;
-        }
+        BlogBase blogBase = new BlogBase();
+        blogBase.setGmtCreate(blog.gmtCreate());
+        blogBase.setGmtModified(blog.gmtModified());
+        blogBase.setBlogId(blog.blogId().id());
+        blogBase.setBloggerIdentity(blog.blogger().identify());
+        blogBase.setTitle(blog.title());
+        blogBase.setSubTitle(blog.subTitle());
+        blogBase.setSummary(blog.summary());
+        blogBase.setContent(blog.content());
+        blogBase.setContentHtml(blog.contentHtml());
+        blogBase.setScope(blog.scope());
+        blogBase.setCollectionNotAllowed(blog.collectionNotAllowed());
+        blogBase.setArchived(blog.archived());
+        blogBase.setAboveBlogId(blog.aboveBlogId());
+        return blogBase;
     }
 
     private BlogBaseDTO convertToBaseDto(Blog blog) {
-        if (blog != null) {
-            BlogBaseDTO blogBaseDTO = new BlogBaseDTO();
-            BeanUtils.copyProperties(this.convertToBase(blog), blogBaseDTO);
-            return blogBaseDTO;
-        } else {
-            return null;
-        }
+        BlogBaseDTO blogBaseDTO = new BlogBaseDTO();
+        BeanUtils.copyProperties(this.convertToBase(blog), blogBaseDTO);
+        return blogBaseDTO;
     }
 
     public List<BlogBaseDTO> convertToBaseDto(List<Blog> blogList) {

@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class BlogId extends AbstractValueObject implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "blog_id_id", nullable = false, columnDefinition = "VARCHAR(32) COMMENT '博客ID'", unique = true)
+    @Column(name = "blog_id_id", nullable = false, columnDefinition = "VARCHAR(50) COMMENT '博客ID'")
     private String id;
 
     public BlogId(String id) {

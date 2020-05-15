@@ -52,7 +52,7 @@ public class BlogResource {
     @PostMapping
     @PreAuthorize("hasRole('USER')")
     public ResultVO post(@ApiParam("博客新建表单") @Valid @RequestBody BlogCreateForm blogCreateForm) {
-        return ResultUtil.success(blogApplicationService.post(blogCreateForm));
+        return ResultUtil.success(blogApplicationService.createBlogByForm(blogCreateForm));
     }
 
     /**
@@ -79,7 +79,7 @@ public class BlogResource {
     @PreAuthorize("hasRole('USER')")
     public ResultVO putByBlogId(@ApiParam("博客ID") @PathVariable String blogId
             , @ApiParam("博客修改表单") @Valid @RequestBody BlogModifyForm blogModifyForm) {
-        return ResultUtil.success(blogApplicationService.putBlogByBlogId(blogId, blogModifyForm));
+        return ResultUtil.success(blogApplicationService.modifyBlogByBlogId(blogId, blogModifyForm));
     }
 
     /**
@@ -95,7 +95,7 @@ public class BlogResource {
     @PreAuthorize("hasRole('USER')")
     public ResultVO patchConfigByBlogId(@ApiParam("博客ID") @PathVariable String blogId
             , @ApiParam("博客配置修改表单") @Valid @RequestBody BlogConfigModifyForm configUpdateVo) {
-        blogApplicationService.patchConfig(new BlogId(blogId), configUpdateVo);
+        blogApplicationService.modifyBlogConfigByBlogId(new BlogId(blogId), configUpdateVo);
         return ResultUtil.success();
     }
 
@@ -110,7 +110,7 @@ public class BlogResource {
     @PreAuthorize("hasRole('USER')")
     @Transactional(rollbackFor = {Exception.class})
     public ResultVO deleteByBlogId(@ApiParam("博客ID") @PathVariable String blogId) {
-        blogApplicationService.deleteById(blogId);
+        blogApplicationService.deleteBlogByBlogId(blogId);
         return ResultUtil.success();
     }
 

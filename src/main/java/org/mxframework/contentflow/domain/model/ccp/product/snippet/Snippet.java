@@ -19,6 +19,7 @@ public class Snippet extends IdentifiedEntityObject {
 
     @NotNull(message = "片段ID不能为空")
     @Embedded
+    @Column(unique = true)
     private SnippetId snippetId;
     @NotNull(message = "创建者不能为空")
     @Embedded
@@ -71,10 +72,6 @@ public class Snippet extends IdentifiedEntityObject {
 
     public Snippet(SnippetId snippetId) {
         this(snippetId, null, null, null);
-    }
-
-    protected Snippet() {
-        super();
     }
 
     public SnippetId snippetId() {
@@ -133,8 +130,12 @@ public class Snippet extends IdentifiedEntityObject {
         if (scope != null) {
             this.scope = scope;
         } else {
-            scope = ScopeConstant.SCOPE_PRIVATE;
+            this.scope = ScopeConstant.SCOPE_PRIVATE;
         }
+    }
+
+    protected Snippet() {
+        super();
     }
 
     @Override
@@ -149,4 +150,5 @@ public class Snippet extends IdentifiedEntityObject {
                 ", scope=" + scope +
                 '}';
     }
+
 }

@@ -82,11 +82,37 @@ public class BlogConstant {
      */
     public static final Integer BLOG_CONTENT_DISPLAY_LENGTH = 140;
 
+    public static final String BLOG_PATTERN_H2_TITLE = ".*\\n\\s*(?--+)";
+
     /**
-     * Markdown文档的标题匹配
-     * ex: ========================================\n
+     * Markdown 标题一 样式[1]
+     * ex: =======\n
      */
-    public static final String BLOG_PATTERN_TITLE = ".*\\n\\s*(?==+)";
+    public static final String BLOG_PATTERN_H1_STYLE_1 = ".*\\n\\s*(?====+)";
+
+    /**
+     * Markdown 标题一 样式[2]
+     * ex: # 标题一\n
+     */
+    public static final String BLOG_PATTERN_H1_STYLE_2 = "(?<=\\r|\\n|\\r\\n)#{1}\\s.*";
+
+    /**
+     * Markdown 标题二 样式[1]
+     * ex: -------\n
+     */
+    public static final String BLOG_PATTERN_H2_STYLE_1 = ".*\\n\\s*(?=---+)";
+
+    /**
+     * Markdown 标题二 样式[2]
+     * ex: ## 标题二\n
+     */
+    public static final String BLOG_PATTERN_H2_STYLE_2 = "(?<=\\r|\\n|\\r\\n)#{2}\\s.*";
+
+    /**
+     * Markdown 标题三
+     * ex: ## 标题三\n
+     */
+    public static final String BLOG_PATTERN_H3 = "(?<=\\r|\\n|\\r\\n)#{3}\\s.*";
 
     /**
      * Markdown文档的概要匹配
@@ -98,6 +124,7 @@ public class BlogConstant {
      * 更新博客，涉及坐标，模式为添加
      */
     public static final String BLOG_AXIS_PATTERN_INSERT = "AXIS_INSERT";
+
     /**
      * 更新博客，涉及坐标，模式为移除
      */
