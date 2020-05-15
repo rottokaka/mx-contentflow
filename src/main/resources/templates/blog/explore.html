@@ -37,7 +37,7 @@
             </div>
         </div>
         <div th:if="${blogCardVoList} != null" th:replace="~{blog/fragment/card-list :: blogCardVoList}"></div>
-        <div class="card-footer" th:if="${page.totalPages} > 1" data-th-insert="~{fragment/pagination :: pagination}"></div>
+        <div class="card-footer" th:if="${page.totalPages} > 1" th:insert="~{fragment/pagination :: pagination}"></div>
     </div>
 </div>
 <div th:replace="~{fragment/footer :: footer}"></div>
