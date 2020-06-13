@@ -22,8 +22,6 @@ apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-apply plugin: 'war'
-
 group = 'org.mxframework'
 version = '0.0.1'
 
@@ -69,8 +67,6 @@ dependencies {
     compileOnly('org.projectlombok:lombok:1.18.10')
     testAnnotationProcessor('org.projectlombok:lombok:1.18.10')
     testCompileOnly('org.projectlombok:lombok:1.18.10')
-
-    providedCompile("org.springframework.boot:spring-boot-starter-tomcat")
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
