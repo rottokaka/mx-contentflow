@@ -1,13 +1,10 @@
 package org.mxframework.contentflow.constant.ccp;
 
-import lombok.Getter;
-
 /**
  * BlogExceptionEnum: 博客异常枚举
  *
  * @author mx
  */
-@Getter
 public enum BlogExceptionEnum {
 
     // 数据校验~
@@ -80,5 +77,13 @@ public enum BlogExceptionEnum {
     BlogExceptionEnum(String code, String message) {
         this.code = code;
         this.message = message;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

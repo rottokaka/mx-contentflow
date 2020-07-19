@@ -52,4 +52,5 @@ public class BlogException extends MxException {
     public void setBlogExceptionEnum(BlogExceptionEnum blogExceptionEnum) {
         this.blogExceptionEnum = blogExceptionEnum;
     }
+
 }

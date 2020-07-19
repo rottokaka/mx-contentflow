@@ -24,6 +24,7 @@ spring:
   jmx:
     enabled: false
 
+
 file:
   #文件导入路径
   importPath: /var/import/
@@ -33,3 +34,7 @@ file:
   upload-dir: /var/uploads/
   #文件下载路径
   download-dir: /var/downloads/
+
+logging:
+  file:
+   path: ./logs

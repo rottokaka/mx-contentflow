@@ -1,13 +1,10 @@
 package org.mxframework.contentflow.constant.iaa;
 
-import lombok.Getter;
-
 /**
  * UserEnum: 用户枚举
  *
  * @author mx
  */
-@Getter
 public enum UserEnum {
     /**
      * 用户的权限-ROOT
@@ -32,5 +29,13 @@ public enum UserEnum {
     UserEnum(Long id, String authority) {
         this.id = id;
         this.authority = authority;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getAuthority() {
+        return authority;
     }
 }

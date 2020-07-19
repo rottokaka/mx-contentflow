@@ -39,7 +39,7 @@ public class MainController {
     private UserService userService;
 
     @GetMapping(value = "/")
-    public ModelAndView root(Model model) {
+    public ModelAndView index(Model model) {
         model.addAttribute("projectItemVoList", projectApplicationService.listPublicTop());
         model.addAttribute("blogCardVoList", blogApplicationService.listPublicBlogs());
         return new ModelAndView("index", "indexModel", model);
