@@ -36,5 +36,4 @@ file:
   download-dir: /var/downloads/
 
 logging:
-  file:
    path: ./logs
